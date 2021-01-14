@@ -4,6 +4,7 @@ using Kolibri.Source;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Kolibri
 {
@@ -48,7 +49,6 @@ namespace Kolibri
             Globals.keyboard.Update();
             Globals.mouse.Update();
             ws.Update();
-
             Globals.keyboard.LateUpdate();
             Globals.mouse.LateUpdate();
             base.Update(gameTime);
@@ -56,7 +56,7 @@ namespace Kolibri
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.DarkGray);
+            GraphicsDevice.Clear(new Color(56,58,60));
             Globals.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             ws.Draw();
             Globals.spriteBatch.End();

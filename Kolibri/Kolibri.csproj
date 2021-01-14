@@ -27,6 +27,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Sprites\" />
-    <Folder Include="Source\Workspace\" />
   </ItemGroup>
 </Project>

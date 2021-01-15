@@ -36,7 +36,7 @@ namespace Kolibri.Source
         {
             for (int i = 0; i < Windows.Count; i++)
             {
-                Windows[i].Draw(offset, new Color(32,34,36));
+                Windows[i].Draw(offset, new Color(39,44,48));
             }
         }
 

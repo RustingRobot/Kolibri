@@ -23,7 +23,7 @@ namespace Kolibri.Engine
     public class Globals
     {
         public static PassObject PassWindow;
-
+        public static bool dragging;
         public static float screenHeight, screenWidth;
         public static string SystemFont;
         public static ContentManager content;

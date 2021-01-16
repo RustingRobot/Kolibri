@@ -60,9 +60,12 @@ namespace Kolibri.Source.workspace
         {
             base.Draw(OFFSET, COLOR);
             //Globals.primitives.DrawRect(new Vector2(pos.X - dim.X / 2, pos.Y - dim.Y / 2), new Vector2(dim.X, handleHeight), new Color(22, 24, 26)); //outer
-            Globals.primitives.DrawRect(new Vector2(pos.X - dim.X / 2 + border, pos.Y - dim.Y / 2 + border + handleHeight), new Vector2(dim.X - border*2, dim.Y - border*2 - handleHeight), new Color(56, 58, 60));   //inner
+            //Globals.primitives.DrawRect(new Vector2(pos.X - dim.X / 2 + border, pos.Y - dim.Y / 2 + border + handleHeight), new Vector2(dim.X - border*2, dim.Y - border*2 - handleHeight), new Color(56, 58, 60));   //inner
 
-            //Globals.primitives.DrawRect(new Vector2(pos.X - dim.X / 2, pos.Y - dim.Y / 2), new Vector2()
+            Globals.primitives.DrawRect(new Vector2(pos.X - dim.X / 2, pos.Y - dim.Y / 2), new Vector2(dim.X, handleHeight), new Color(39, 44, 48));    //handle
+            Globals.primitives.DrawRect(new Vector2(pos.X - dim.X / 2, pos.Y - dim.Y / 2), new Vector2(border, dim.Y), new Color(39, 44, 48));  //left
+            Globals.primitives.DrawRect(new Vector2(pos.X - dim.X / 2, pos.Y + dim.Y / 2 - border), new Vector2(dim.X, border), new Color(39, 44, 48));  //bottom
+            Globals.primitives.DrawRect(new Vector2(pos.X + dim.X / 2-border, pos.Y - dim.Y / 2), new Vector2(border, dim.Y), new Color(39, 44, 48));  //right
 
             Globals.primitives.DrawTxt(title, new Vector2(pos.X - dim.X / 2 + 8, pos.Y - dim.Y / 2 + 2), new Vector2(0.6f, 0.6f), new Color(100, 100, 100));   //title
         }

@@ -39,13 +39,13 @@ namespace Kolibri.Engine
         public virtual void Draw(Vector2 OFFSET)
         {   
             if(model != null)
-                Globals.spriteBatch.Draw(model, new Rectangle((int)(pos.X + OFFSET.X), (int)(pos.Y + OFFSET.Y), (int)dim.X, (int)dim.Y), null, Color.White, rot, new Vector2(model.Bounds.Width / 2, model.Bounds.Height / 2), new SpriteEffects(), 0);
+                Globals.spriteBatch.Draw(model, new Rectangle((int)(pos.X + OFFSET.X), (int)(pos.Y + OFFSET.Y), (int)dim.X, (int)dim.Y), null, Color.White, rot, Vector2.Zero, new SpriteEffects(), 0);
         }
 
         public virtual void Draw(Vector2 OFFSET, Color COLOR)
         {
             if (model != null)
-                Globals.spriteBatch.Draw(model, new Rectangle((int)(pos.X + OFFSET.X), (int)(pos.Y + OFFSET.Y), (int)dim.X, (int)dim.Y), null, COLOR, rot, new Vector2(model.Bounds.Width / 2, model.Bounds.Height / 2), new SpriteEffects(), 0);
+                Globals.spriteBatch.Draw(model, new Rectangle((int)(pos.X + OFFSET.X), (int)(pos.Y + OFFSET.Y), (int)dim.X, (int)dim.Y), null, COLOR, rot, Vector2.Zero, new SpriteEffects(), 0);
         }
     }
 }

@@ -12,12 +12,11 @@ namespace Kolibri.Engine
     public class EPrimitives
     {
         private Texture2D square;
-        private SpriteFont font;
 
         public EPrimitives()
         {
             square = Globals.content.Load<Texture2D>("Square");
-            font = Globals.content.Load<SpriteFont>(Globals.SystemFont);
+            Globals.font = Globals.content.Load<SpriteFont>(Globals.SystemFont);
         }
 
         public void DrawLine(Vector2 P1, Vector2 P2,int SIZE, Color COLOR)    //this must be called inside of a SpriteBatch!
@@ -34,7 +33,7 @@ namespace Kolibri.Engine
 
         public void DrawTxt(string TXT, Vector2 POS, Vector2 DIM, Color COLOR) //this must be called inside of a SpriteBatch!
         {
-            Globals.spriteBatch.DrawString(font, TXT, POS, COLOR, 0, Vector2.Zero, DIM, new SpriteEffects(), 0);
+            Globals.spriteBatch.DrawString(Globals.font, TXT, POS, COLOR, 0, Vector2.Zero, DIM, new SpriteEffects(), 0);
         }
     }
 }

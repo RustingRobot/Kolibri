@@ -11,7 +11,7 @@ namespace Kolibri
     public class Main : Game
     {
         private GraphicsDeviceManager graphics;
-        private Workspace ws;
+        private ObjManager ws;
         public Main()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -38,7 +38,7 @@ namespace Kolibri
             Globals.mouse = new EMouseControl();
             Globals.primitives = new EPrimitives();
 
-            ws = new Workspace();
+            ws = new ObjManager();
         }
 
         protected override void Update(GameTime gameTime)

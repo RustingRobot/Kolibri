@@ -1,5 +1,5 @@
 ﻿using Kolibri.Engine;
-using Kolibri.Source.workspace;
+using Kolibri.Source.Workspace;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -7,12 +7,12 @@ using System.Text;
 
 namespace Kolibri.Source
 {
-    public class Workspace
+    public class ObjManager
     {
         public Vector2 offset;
         public List<Window> Windows = new List<Window>();
 
-        public Workspace()
+        public ObjManager()
         {
             Globals.PassWindow = AddWindow;
             offset = Vector2.Zero;

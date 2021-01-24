@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Kolibri.Source.workspace
+namespace Kolibri.Source.Workspace
 {
     public class Window : ESprite2d
     {

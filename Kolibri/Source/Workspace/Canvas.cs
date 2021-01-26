@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace Kolibri.Source.Workspace
 {
-    public class Canvas
+    public class Canvas //pixel grid to draw on
     {
         Texture2D canvas;
         Vector2 pos, dim;
@@ -23,7 +23,7 @@ namespace Kolibri.Source.Workspace
             dim = DIM;
             canvas = new Texture2D(Globals.graphicsDevice, (int)dim.X, (int)dim.Y, false, SurfaceFormat.Color);
             pixels = new UInt32[(int)dim.X * (int)dim.Y];
-            for (int i = 0; i < pixels.Length; i++)
+            for (int i = 0; i < pixels.Length; i++) //set all pixel to white
             {
                 pixels[i] = 0xFFFFFFFF;
             }
@@ -32,9 +32,9 @@ namespace Kolibri.Source.Workspace
         {
             Globals.graphicsDevice.Textures[0] = null;
             delta = Globals.mouse.newMousePos - Globals.mouse.oldMousePos;
-            if (Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero) && Globals.mouse.LeftClickHold() && !Globals.dragging)
+            if (Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero) && Globals.mouse.LeftClickHold() && !Globals.dragging) //only calculate if the mouse is supposed to draw on the canvas
             {
-                pixels[(int)(Globals.mouse.newMousePos.Y - pos.Y) * (int)dim.X + (int)(Globals.mouse.newMousePos.X - pos.X)] = 0xFF000000;
+                pixels[(int)(Globals.mouse.newMousePos.Y - pos.Y) * (int)dim.X + (int)(Globals.mouse.newMousePos.X - pos.X)] = 0xFF000000;  //set one pixel to black
             }
             canvas.SetData<UInt32>(pixels, 0, (int)dim.X * (int)dim.Y);
         }

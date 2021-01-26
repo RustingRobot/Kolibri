@@ -9,7 +9,7 @@ using Kolibri.Engine;
 
 namespace Kolibri.Engine
 {
-    public class ETimer
+    public class ETimer //might get used later
     {
         public bool ready;
         protected int ms;

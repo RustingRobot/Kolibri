@@ -16,7 +16,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Kolibri.Engine.Input
 {
-    public class EMouseControl
+    public class EMouseControl //is linked to Globals!
     {
         public bool dragging, rightDrag;
         public Vector2 newMousePos, oldMousePos, firstMousePos, newMouseAdjustedPos, systemCursorPos, screenLoc;

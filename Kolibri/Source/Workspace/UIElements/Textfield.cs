@@ -31,7 +31,7 @@ namespace Kolibri.Source.Workspace.UIElements
             pos = relativePos + window.pos;
             width = Globals.font.MeasureString(content).X * 0.6f;
 
-            if (Globals.mouse.LeftClick())
+            if (Globals.mouse.LeftClick())  //set selected mode
             {
                 if(Globals.GetBoxOverlap(pos,dim,Globals.mouse.newMousePos, Vector2.Zero) && !selected)
                 {
@@ -45,7 +45,7 @@ namespace Kolibri.Source.Workspace.UIElements
                 }
             }
             
-            if(Globals.keyboard.pressedKeys.Count > 0)
+            if(Globals.keyboard.pressedKeys.Count > 0)  //add character
             {
                 if(Globals.keyboard.pressedKeys[0].print != lastChar && width < dim.X - 0.1f && selected)
                 {
@@ -58,7 +58,7 @@ namespace Kolibri.Source.Workspace.UIElements
                 lastChar = null;
             }
 
-            if (!Globals.keyboard.oldKeyboard.IsKeyDown(Keys.Back) && Globals.keyboard.newKeyboard.IsKeyDown(Keys.Back) && content.Length >= 1 && selected)
+            if (!Globals.keyboard.oldKeyboard.IsKeyDown(Keys.Back) && Globals.keyboard.newKeyboard.IsKeyDown(Keys.Back) && content.Length >= 1 && selected) //remove character
             {
                  content = content.Remove(content.Length-1);
             }

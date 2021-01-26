@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Kolibri.Engine
 {
-    public class EPrimitives
+    public class EPrimitives    //draw basic shapes  //is linked to Globals!
     {
         private Texture2D square;
 

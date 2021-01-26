@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Kolibri.Source.Workspace
 {
-    public class Window : ESprite2d
+    public class Window : ESprite2d //handles stuff like dragging and resizing of windows
     {
         public bool delete;
         public Vector2 minDim;

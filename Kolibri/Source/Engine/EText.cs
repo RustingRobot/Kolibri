@@ -17,7 +17,7 @@ using Kolibri.Engine;
 
 namespace Kolibri.Engine
 {
-    public class EText
+    public class EText //perhaps depricated
     {
         public Vector2 pos, dim, origin;
         public SpriteFont font;

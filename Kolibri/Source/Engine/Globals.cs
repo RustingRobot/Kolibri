@@ -20,7 +20,7 @@ namespace Kolibri.Engine
     public delegate void PassObject(object i);
     public delegate object PassObjectAndReturn(object i);
 
-    public class Globals
+    public class Globals    //every class has access to Globas so it's the ideal place to put stuff like mouse or keyboard controlls!
     {
         public static PassObject PassWindow;
         public static bool dragging;

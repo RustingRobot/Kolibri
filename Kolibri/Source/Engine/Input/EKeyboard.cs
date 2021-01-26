@@ -16,7 +16,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Kolibri.Engine.Input
 {
-    public class EKeyboard
+    public class EKeyboard //is linked to Globals!
     {
         public KeyboardState newKeyboard, oldKeyboard;
         public List<EKey> pressedKeys = new List<EKey>(), previousPressedKeys = new List<EKey>();

@@ -31,6 +31,7 @@ namespace Kolibri
 
         protected override void LoadContent()
         {
+            //set all Globals.*
             Globals.SystemFont = "galleryFont";
             Globals.spriteBatch = new SpriteBatch(GraphicsDevice);
             Globals.content = this.Content;
@@ -41,7 +42,7 @@ namespace Kolibri
             om = new ObjManager();
         }
 
-        protected override void Update(GameTime gameTime)
+        protected override void Update(GameTime gameTime)   //main update loop
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();

@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Kolibri.Source
 {
-    public class ObjManager
+    public class ObjManager //adds and removes all objects on screen
     {
         public Vector2 offset;
         public List<Window> Windows = new List<Window>();
@@ -18,14 +18,15 @@ namespace Kolibri.Source
         {
             Globals.PassWindow = AddWindow;
             offset = Vector2.Zero;
+            //add windows
             Globals.PassWindow(new Window(new Vector2(500,50),new Vector2(300,250),"I am a blank window"));
             Globals.PassWindow(new TestWindow(new Vector2(500, 350), new Vector2(400, 200)));
             canvas = new Canvas(new Vector2(50,50), new Vector2(400,400));
         }
         public virtual void Update()
         {
-            canvas.Update(offset);
-            for (int i = 0; i < Windows.Count; i++)
+            canvas.Update(offset);  //temporary
+            for (int i = 0; i < Windows.Count; i++) //dynamic windows update loop
             {
                 Windows[i].Update(offset);
                 if (Windows[i].delete)
@@ -38,8 +39,8 @@ namespace Kolibri.Source
 
         public virtual void Draw()
         {
-            canvas.Draw(offset);
-            for (int i = 0; i < Windows.Count; i++)
+            canvas.Draw(offset);    //temporary
+            for (int i = 0; i < Windows.Count; i++) //dynamic windows draw loop
             {
                 Windows[i].Draw(offset, new Color(56, 58, 60));
             }

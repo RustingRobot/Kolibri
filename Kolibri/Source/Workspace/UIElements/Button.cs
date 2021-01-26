@@ -16,7 +16,7 @@ namespace Kolibri.Source.Workspace.UIElements
         public static Event ClickEvent;
         public Vector2 strSize, relativePos;
         public Color color;
-       public Button(Event CLICKEVENT, Window WINDOW, Vector2 POS, Vector2 DIM, string LABEL) :base("Square", POS, DIM)      /*POS muss aber aus der Position des BUttons im Window plus der position des windows zusammengerechnet werden*/
+       public Button(Event CLICKEVENT, Window WINDOW, Vector2 POS, Vector2 DIM, string LABEL) :base("Square", POS, DIM)
         {
             ClickEvent = CLICKEVENT;
             label=LABEL;
@@ -28,10 +28,10 @@ namespace Kolibri.Source.Workspace.UIElements
 
        public override void Update(Vector2 OFFSET)
        {
-            pos = relativePos + window.pos;
+            pos = relativePos + window.pos; //pos needs to be a combination of the windows position and an offset. It also has to be updated every frame
             if (Globals.mouse.LeftClick()&&Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero))
             {
-                ClickEvent();
+                ClickEvent();   //let instantiator decide what function gets called
             };
            base.Update(OFFSET);
        }

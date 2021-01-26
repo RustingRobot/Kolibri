@@ -1,5 +1,7 @@
 ﻿using Kolibri.Engine;
 using Kolibri.Source.Workspace;
+using Kolibri.Source.Workspace.UIElements;
+using Kolibri.Source.Workspace.Windows;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -16,8 +18,8 @@ namespace Kolibri.Source
         {
             Globals.PassWindow = AddWindow;
             offset = Vector2.Zero;
-            Globals.PassWindow(new Window(new Vector2(500,50),new Vector2(300,250),"test"));
-            Globals.PassWindow(new Window(new Vector2(500, 350), new Vector2(400, 200), "window"));
+            Globals.PassWindow(new Window(new Vector2(500,50),new Vector2(300,250),"I am a blank window"));
+            Globals.PassWindow(new TestWindow(new Vector2(500, 350), new Vector2(400, 200)));
             canvas = new Canvas(new Vector2(50,50), new Vector2(400,400));
         }
         public virtual void Update()

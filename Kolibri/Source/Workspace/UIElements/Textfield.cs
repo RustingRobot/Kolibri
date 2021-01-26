@@ -10,78 +10,70 @@ namespace Kolibri.Source.Workspace.UIElements
 {
     public class Textfield : ESprite2d
     {
-        public delegate void Del();
-        private string content;
-        private Double maxchar;
-        private string title;
-        private Vector2 dim;
+        private string content, lastChar;
+        private Vector2 dim, relativePos;
         private Window window;
-
-        
-       public Textfield(Window WINDOW, Vector2 POS, Vector2 DIM , string TITLE) :base("Square", POS, DIM)    
+        private float width, txtHeight;
+        private bool selected;
+        public Color color;
+        public Textfield(Window WINDOW, Vector2 POS, Vector2 DIM , string CONTENT) :base("Square", POS, DIM)    
         {
             window = WINDOW;
-            title=TITLE;
-            pos = POS+window.pos;       
-            content = "";
+            relativePos = POS;       
+            content = CONTENT;
             dim = DIM;
-            Double value = Convert.ToDouble(Convert.ToInt32(dim.X) /8);
-            maxchar = Math.Round(value);
-
+            txtHeight = Globals.font.MeasureString("A").Y;
+            color = new Color(100, 100, 100);
         }
-    
-
-    private string lastChar;
-
-        private float width;
 
         public override void Update(Vector2 OFFSET)
-       {
-           width = Globals.font.MeasureString(content).X*0.3f;
-          
-           if(dim.X-0.8f >= width)
-            {
-                if(Globals.keyboard.pressedKeys.Count>0)
-                {
-                    // lastChar = Globals.keyboard.pressedKeys[Globals.keyboard.pressedKeys.Count-1].print;
+        {
+            pos = relativePos + window.pos;
+            width = Globals.font.MeasureString(content).X * 0.6f;
 
-                    if(Globals.keyboard.pressedKeys[0].print != lastChar)
-                    {
-                        lastChar= Globals.keyboard.pressedKeys[0].print;
-                        content += lastChar;
-                    }    
-                    else
-                    {
-                        lastChar=null;
-                    }
+            if (Globals.mouse.LeftClick())
+            {
+                if(Globals.GetBoxOverlap(pos,dim,Globals.mouse.newMousePos, Vector2.Zero) && !selected)
+                {
+                    color = new Color(140, 140, 140);
+                    selected = true;
+                }
+                else
+                {
+                    color = new Color(100, 100, 100);
+                    selected = false;
                 }
             }
-           
-
-           if (Globals.keyboard.newKeyboard.IsKeyDown(Keys.Back)&&content.Length>=1)
+            
+            if(Globals.keyboard.pressedKeys.Count > 0)
             {
-                content = content.Remove(content.Length-1);
+                if(Globals.keyboard.pressedKeys[0].print != lastChar && width < dim.X - 0.1f && selected)
+                {
+                    lastChar = Globals.keyboard.pressedKeys[0].print;
+                    content += lastChar;
+                }
+            }
+            else
+            {
+                lastChar = null;
             }
 
-            
+            if (!Globals.keyboard.oldKeyboard.IsKeyDown(Keys.Back) && Globals.keyboard.newKeyboard.IsKeyDown(Keys.Back) && content.Length >= 1 && selected)
+            {
+                 content = content.Remove(content.Length-1);
+            }
 
-        
-           
-           
-           Console.WriteLine(content);
-           base.Update(OFFSET);
-       }
-       public override void Draw(Vector2 OFFSET, Color COLOR)
-       {
-            base.Draw(OFFSET, COLOR);
+            Console.WriteLine(content);
+            base.Update(OFFSET);
+        }
+        public override void Draw(Vector2 OFFSET)
+        {
+            base.Draw(OFFSET);
             //field
-            Globals.primitives.DrawRect(pos,dim,new Color(100,100,100));
-            //label
-           // Globals.primitives.DrawTxt(content, new Vector2(pos.X + 8, pos.Y + 2), new Vector2(0.6f, 0.6f), new Color(39, 40, 48));
-               
-            Globals.primitives.DrawTxt(content, pos, new Vector2(0.3f, 0.3f), new Color(39,44,48));   
-            
-       } 
+            Globals.primitives.DrawRect(pos,dim, color);
+            //label        
+            Globals.primitives.DrawTxt(content.ToLower(), new Vector2(pos.X + 5, pos.Y + dim.Y / 2 - txtHeight / 4), new Vector2(0.6f, 0.6f), new Color(245, 255, 250));
+        } 
 
 
     }

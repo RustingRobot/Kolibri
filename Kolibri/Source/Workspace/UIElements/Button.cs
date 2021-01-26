@@ -12,35 +12,37 @@ namespace Kolibri.Source.Workspace.UIElements
         
         private bool ButtonClicked;
         private Window window;
-        public Del ClickEvent;
-       public Button(Del CLICKEVENT, Window WINDOW, Vector2 POS, Vector2 DIM, string LABEL) :base("Square", POS, DIM)      /*POS muss aber aus der Position des BUttons im Window plus der position des windows zusammengerechnet werden*/
+        public delegate void Event();
+        public static Event ClickEvent;
+        public Vector2 strSize, relativePos;
+        public Color color;
+       public Button(Event CLICKEVENT, Window WINDOW, Vector2 POS, Vector2 DIM, string LABEL) :base("Square", POS, DIM)      /*POS muss aber aus der Position des BUttons im Window plus der position des windows zusammengerechnet werden*/
         {
+            ClickEvent = CLICKEVENT;
             label=LABEL;
-            ClickEvent=CLICKEVENT;
             window = WINDOW;
-            pos = POS+window.pos;       /*Ich meine, dass man so das Problem, dass wenn sich das Fenster bewegt,
-                                        der Button mitbewegt werden muss, gelöst wird. Da die Position ja dann       
-                                        automatisch updatet(wenn das Fenster bewegt wird)und dann in der draw 
-                                        Funktion neu "gemalt" wird. Das ist jetzt als Frage zu verstehen, ob es
-                                        das Problem wirklich lösen tut.*/
+            relativePos = POS;
+            strSize = Globals.font.MeasureString(label) * 0.6f;
+            color = new Color(100, 100, 100);
         }
 
        public override void Update(Vector2 OFFSET)
        {
-           if(Globals.mouse.RightClick()||true&&Globals.GetBoxOverlap(pos, dim, Globals.mouse.firstMousePos, Vector2.Zero)||true)
-           {
-               ClickEvent();
-           };
+            pos = relativePos + window.pos;
+            if (Globals.mouse.LeftClick()&&Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero))
+            {
+                ClickEvent();
+            };
            base.Update(OFFSET);
        }
 
-       public override void Draw(Vector2 OFFSET, Color COLOR)
+       public override void Draw(Vector2 OFFSET)
        {
-            base.Draw(OFFSET, COLOR);
+            base.Draw(OFFSET);
             //field
-            Globals.primitives.DrawRect(pos,dim,new Color(100,100,100));
+            Globals.primitives.DrawRect(pos,dim, color);
             //label
-            Globals.primitives.DrawTxt(label, pos, new Vector2(0.6f, 0.6f), new Color(245,255,250));
+            Globals.primitives.DrawTxt(label, new Vector2(pos.X + dim.X / 2 - strSize.X / 2, pos.Y + dim.Y / 2 - strSize.Y / 2), new Vector2(0.6f, 0.6f), new Color(245,255,250));
            
        } 
 

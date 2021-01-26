@@ -16,7 +16,7 @@ namespace Kolibri.Source.Workspace
         private string title;
         private Vector2 clickOffset;
         public Window(Vector2 POS, Vector2 DIM, string TITLE) : base("Square", POS, DIM)
-        {
+        { 
             title = TITLE;
             minDim = new Vector2((float)(Globals.font.MeasureString(title).X * 0.6 + 16), border + handleHeight);
         }

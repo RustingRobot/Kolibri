@@ -30,6 +30,7 @@ namespace Kolibri.Engine
         public static ContentManager content;
         public static SpriteBatch spriteBatch;
         public static EPrimitives primitives;
+        public static GraphicsDevice graphicsDevice;
 
         public static EKeyboard keyboard;
         public static EMouseControl mouse;

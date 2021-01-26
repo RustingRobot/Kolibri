@@ -11,7 +11,7 @@ namespace Kolibri
     public class Main : Game
     {
         private GraphicsDeviceManager graphics;
-        private ObjManager ws;
+        private ObjManager om;
         public Main()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -37,8 +37,8 @@ namespace Kolibri
             Globals.keyboard = new EKeyboard();
             Globals.mouse = new EMouseControl();
             Globals.primitives = new EPrimitives();
-
-            ws = new ObjManager();
+            Globals.graphicsDevice = GraphicsDevice;
+            om = new ObjManager();
         }
 
         protected override void Update(GameTime gameTime)
@@ -48,7 +48,7 @@ namespace Kolibri
             Globals.gameTime = gameTime;
             Globals.keyboard.Update();
             Globals.mouse.Update();
-            ws.Update();
+            om.Update();
             Globals.keyboard.LateUpdate();
             Globals.mouse.LateUpdate();
             base.Update(gameTime);
@@ -58,7 +58,7 @@ namespace Kolibri
         {
             GraphicsDevice.Clear(new Color(56,58,60));
             Globals.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
-            ws.Draw();
+            om.Draw();
             Globals.spriteBatch.End();
             base.Draw(gameTime);
         }

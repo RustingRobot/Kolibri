@@ -21,7 +21,10 @@ namespace Kolibri.Source
             //add windows
             Globals.PassWindow(new Window(new Vector2(500,50),new Vector2(300,250),"I am a blank window"));
             Globals.PassWindow(new TestWindow(new Vector2(500, 350), new Vector2(400, 200)));
+
             canvas = new Canvas(new Vector2(50,50), new Vector2(400,400));
+
+            Globals.PassWindow(new Menu(new Vector2(0,0), new Vector2 (1000, 16)));
         }
         public virtual void Update()
         {

@@ -33,7 +33,7 @@ namespace Kolibri.Source.Workspace
             Globals.graphicsDevice.Textures[0] = null;
             if (Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero) && Globals.mouse.LeftClickHold() && !Globals.dragging) //only calculate if the mouse is supposed to draw on the canvas
             {
-                drawLine(Globals.mouse.oldMousePos, Globals.mouse.newMousePos, Color.CornflowerBlue);
+                drawLine(Globals.mouse.oldMousePos, Globals.mouse.newMousePos, Color.Gray);
             }
             canvas.SetData<UInt32>(pixels, 0, (int)dim.X * (int)dim.Y);
         }
@@ -44,38 +44,27 @@ namespace Kolibri.Source.Workspace
                 pixels[(int)(position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X)] = (uint)((color.A << 24) | (color.B << 16) | (color.G << 8) | (color.R << 0));
         }
 
-        public void drawLine(Vector2 pos0, Vector2 pos1, Color color)   //implementation of bresenham's line algorithm
+        public void drawLine(Vector2 pos0, Vector2 pos1, Color color)   //implementation of Bresenham's line algorithm
         {
-            float x = pos0.X, y = pos0.Y;
-            float dx = pos1.X - pos0.X;
-            float dy = pos1.Y - pos0.Y;
-            bool xFaster = dx > dy;
-            float f = (xFaster) ? dx / 2 : dy / 2;
-            setPixel(pos0, color);
-
-            while (x != pos1.X && y != pos1.Y) 
+            int dx = Math.Abs((int)pos1.X - (int)pos0.X);   //delta x
+            int dy = -Math.Abs((int)pos1.Y - (int)pos0.Y);  //delta y
+            int sx = pos0.X < pos1.X ? 1 : -1, sy = pos0.Y < pos1.Y ? 1 : -1;   //quatrant adjust
+            int e = dx + dy;    //error
+            while (true)
             {
-                if (xFaster)
+                setPixel(new Vector2(pos0.X, pos0.Y), color);
+                if (pos0.X == pos1.X && pos0.Y == pos1.Y) break;    //step end
+                int e2 = 2 * e;
+                if (e2 >= dy) 
                 {
-                    x++;
-                    f -= dy;
-                    if (f < 0)
-                    {
-                        y++;
-                        f += dx;
-                    }
+                    e += dy;
+                    pos0.X += sx;
                 }
-                else
+                if (e2 <= dx) 
                 {
-                    y++;
-                    f -= dx;
-                    if (f < 0)
-                    {
-                        x++;
-                        f += dy;
-                    }
+                    e += dx;
+                    pos0.Y += sy;
                 }
-            setPixel(new Vector2(x, y), color);
             }
         }
 

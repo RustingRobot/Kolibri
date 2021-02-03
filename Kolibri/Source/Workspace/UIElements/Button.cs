@@ -7,7 +7,7 @@ namespace Kolibri.Source.Workspace.UIElements
 {
     public class Button : ESprite2d
     {
-        public delegate void Del();
+  
         private string label;
         
         private bool ButtonClicked;
@@ -36,11 +36,11 @@ namespace Kolibri.Source.Workspace.UIElements
            base.Update(OFFSET);
        }
 
-       public override void Draw(Vector2 OFFSET)
+       public override void Draw(Vector2 OFFSET, Color COLOR)
        {
             base.Draw(OFFSET);
             //field
-            Globals.primitives.DrawRect(pos,dim, color);
+            Globals.primitives.DrawRect(pos,dim, COLOR);
             //label
             Globals.primitives.DrawTxt(label, new Vector2(pos.X + dim.X / 2 - strSize.X / 2, pos.Y + dim.Y / 2 - strSize.Y / 2), new Vector2(0.6f, 0.6f), new Color(245,255,250));
            

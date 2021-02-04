@@ -19,7 +19,6 @@ namespace Kolibri.Source.Workspace.Windows
         }
         public void click()
         {
-            Console.WriteLine("click");
             if (testBtn.color.R == 200)
             {
                 testBtn.color = new Color(100, 100, 100);

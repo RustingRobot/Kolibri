@@ -13,7 +13,7 @@ namespace Kolibri.Source.Workspace.UIElements
         private bool ButtonClicked;
         private Window window;
         public delegate void Event();
-        public static Event ClickEvent;
+        public Event ClickEvent;
         public Vector2 strSize, relativePos;
         public Color color;
        public Button(Event CLICKEVENT, Window WINDOW, Vector2 POS, Vector2 DIM, string LABEL) :base("Square", POS, DIM)

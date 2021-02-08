@@ -8,18 +8,14 @@ using Kolibri.Source.Workspace;
 
 namespace Kolibri.Source.Workspace.UIElements
 {
-    public class Textfield : ESprite2d
+    public class Textfield : UIElement
     {
         private string content, lastChar;
-        private Vector2 dim, relativePos;
-        private Window window;
         private float width, txtHeight;
         private bool selected;
         public Color color;
-        public Textfield(Window WINDOW, Vector2 POS, Vector2 DIM , string CONTENT) :base("Square", POS, DIM)    
-        {
-            window = WINDOW;
-            relativePos = POS;       
+        public Textfield(Window WINDOW, Vector2 POS, Vector2 DIM , string CONTENT) :base(WINDOW, POS, DIM)    
+        {      
             content = CONTENT;
             dim = DIM;
             txtHeight = Globals.font.MeasureString("A").Y;
@@ -28,7 +24,6 @@ namespace Kolibri.Source.Workspace.UIElements
 
         public override void Update(Vector2 OFFSET)
         {
-            pos = relativePos + window.pos;
             width = Globals.font.MeasureString(content).X * 0.6f;
 
             if (Globals.mouse.LeftClick())  //set selected mode

@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Kolibri.Source.Workspace.UIElements
 {
-    public class Menu : Window
+    public class Menu : ESprite2d
     {
         private Vector2 posb;
         public List<Button> menuitems = new List<Button>();
@@ -23,7 +23,7 @@ namespace Kolibri.Source.Workspace.UIElements
         public void openlistdatei(){
             Console.WriteLine("Datei is clicked");
             visible = true;
-            AddMenusubitem(new Button(openspeichern,this, posb + new Vector2(0,30),new Vector2(150,30),"Speichern"));
+            AddMenusubitem(new Button(openspeichern,null, posb + new Vector2(0,30),new Vector2(150,30),"Speichern"));
         }
     
         public void openlistbearbeiten(){
@@ -54,13 +54,13 @@ namespace Kolibri.Source.Workspace.UIElements
             }
         }
 
-       public Menu(Vector2 POS, Vector2 DIM) :base(POS, DIM,"")    
+       public Menu(Vector2 POS, Vector2 DIM) :base("square", POS,DIM)    
         {
             posb = pos+ new Vector2(30,4);
-            AddMenuitem(new Button(openlistdatei, this, posb, new Vector2( Globals.font.MeasureString("Datei").X * 0.6f,20), "Datei"));
+            AddMenuitem(new Button(openlistdatei, null, posb, new Vector2( Globals.font.MeasureString("Datei").X * 0.6f,20), "Datei"));
             Console.WriteLine("hello");
-            AddMenuitem(new Button(openlistbearbeiten, this, posb+ new Vector2(Globals.font.MeasureString("Datei").X * 0.6f + 20f,0), new Vector2( Globals.font.MeasureString("Bearbeiten").X * 0.6f,20), "Bearbeiten"));
-            AddMenuitem(new Button (openlisthelp, this, posb+ new Vector2(Globals.font.MeasureString("Datei").X * 0.6f + 20f + Globals.font.MeasureString("Bearbeiten").X * 0.6f + 20f,0), new Vector2( Globals.font.MeasureString("Help").X * 0.6f,20), "Help"));
+            AddMenuitem(new Button(openlistbearbeiten, null, posb+ new Vector2(Globals.font.MeasureString("Datei").X * 0.6f + 20f,0), new Vector2( Globals.font.MeasureString("Bearbeiten").X * 0.6f,20), "Bearbeiten"));
+            AddMenuitem(new Button (openlisthelp, null, posb+ new Vector2(Globals.font.MeasureString("Datei").X * 0.6f + 20f + Globals.font.MeasureString("Bearbeiten").X * 0.6f + 20f,0), new Vector2( Globals.font.MeasureString("Help").X * 0.6f,20), "Help"));
         }
            
        public override void Update(Vector2 OFFSET)

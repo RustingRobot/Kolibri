@@ -14,6 +14,7 @@ namespace Kolibri.Source
         public Vector2 offset;
         public List<Window> Windows = new List<Window>();
         public Canvas canvas;
+        public Menu menu;
         public ObjManager()
         {
             Globals.PassWindow = AddWindow;
@@ -23,8 +24,7 @@ namespace Kolibri.Source
             Globals.PassWindow(new TestWindow(new Vector2(500, 350), new Vector2(400, 200)));
 
             canvas = new Canvas(new Vector2(50,50), new Vector2(400,400));
-
-            Globals.PassWindow(new Menu(new Vector2(0,0), new Vector2 (1000, 16)));
+            menu = new Menu(Vector2.Zero, new Vector2(1000, 24));
         }
         public virtual void Update()
         {
@@ -38,6 +38,7 @@ namespace Kolibri.Source
                     i--;
                 }
             }
+            menu.Update(offset);
         }
 
         public virtual void Draw()
@@ -47,6 +48,7 @@ namespace Kolibri.Source
             {
                 Windows[i].Draw(offset, new Color(56, 58, 60));
             }
+            menu.Draw(offset, new Color(39, 44, 48));
         }
 
         public virtual void AddWindow(object INFO)

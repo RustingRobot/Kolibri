@@ -21,7 +21,6 @@ namespace Kolibri.Source.Workspace.UIElements
     
         private bool visible = false;
         public void openlistdatei(){
-            Console.WriteLine("Datei is clicked");
             visible = true;
             AddMenusubitem(new Button(openspeichern,null, posb + new Vector2(0,30),new Vector2(150,30),"Speichern"));
         }

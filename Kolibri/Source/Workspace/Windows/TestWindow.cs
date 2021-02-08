@@ -12,10 +12,12 @@ namespace Kolibri.Source.Workspace.Windows
         private Button testBtn;
         private Textfield testField;
 
+        private Slider testslider;
         public TestWindow(Vector2 POS, Vector2 DIM) : base(POS, DIM, "Test Window")
         {
             testBtn = new Button(click, this, new Vector2(20, 40), new Vector2(90, 30), "click me!");
             testField = new Textfield(this, new Vector2(20, 80), new Vector2(220, 30), "click to edit text");
+            testslider = new Slider(0, 100, 10, this, new Vector2(20, 120), new Vector2(200, 3), "Example");
         }
         public void click()
         {
@@ -34,6 +36,7 @@ namespace Kolibri.Source.Workspace.Windows
             base.Update(OFFSET);
             testBtn.Update(OFFSET);
             testField.Update(OFFSET);
+            testslider.Update(OFFSET);
         }
 
         public override void Draw(Vector2 OFFSET, Color COLOR)
@@ -41,6 +44,7 @@ namespace Kolibri.Source.Workspace.Windows
             base.Draw(OFFSET, COLOR);
             testBtn.Draw(OFFSET);
             testField.Draw(OFFSET);
+            testslider.Draw(OFFSET);
         }
     }
 }

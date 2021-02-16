@@ -13,7 +13,7 @@ namespace Kolibri.Source.Workspace.Windows
 
         public CanvasWindow(Vector2 POS, Vector2 DIM) : base(POS, DIM, "Canvas")
         {
-            canvas = new Canvas(this, new Vector2(50, 50), new Vector2(400, 400));
+            canvas = new Canvas(this, new Vector2(20, 35), new Vector2(400, 400));
         }
 
         public override void Update(Vector2 OFFSET)

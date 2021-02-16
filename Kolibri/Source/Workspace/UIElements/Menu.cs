@@ -56,10 +56,10 @@ namespace Kolibri.Source.Workspace.UIElements
        public Menu(Vector2 POS, Vector2 DIM) :base("square", POS,DIM)    
         {
             posb = pos+ new Vector2(30,4);
-            AddMenuitem(new Button(openlistdatei, null, posb, new Vector2( Globals.font.MeasureString("Datei").X * 0.6f,20), "Datei"));
+            AddMenuitem(new Button(openlistdatei, null, posb, new Vector2( Globals.font.MeasureString("Datei").X * Globals.fontSize.X, 20), "Datei"));
             Console.WriteLine("hello");
-            AddMenuitem(new Button(openlistbearbeiten, null, posb+ new Vector2(Globals.font.MeasureString("Datei").X * 0.6f + 20f,0), new Vector2( Globals.font.MeasureString("Bearbeiten").X * 0.6f,20), "Bearbeiten"));
-            AddMenuitem(new Button (openlisthelp, null, posb+ new Vector2(Globals.font.MeasureString("Datei").X * 0.6f + 20f + Globals.font.MeasureString("Bearbeiten").X * 0.6f + 20f,0), new Vector2( Globals.font.MeasureString("Help").X * 0.6f,20), "Help"));
+            AddMenuitem(new Button(openlistbearbeiten, null, posb+ new Vector2(Globals.font.MeasureString("Datei").X * Globals.fontSize.X + 20f,0), new Vector2( Globals.font.MeasureString("Bearbeiten").X * 0.6f,20), "Bearbeiten"));
+            AddMenuitem(new Button (openlisthelp, null, posb+ new Vector2(Globals.font.MeasureString("Datei").X * Globals.fontSize.X + 20f + Globals.font.MeasureString("Bearbeiten").X * 0.6f + 20f,0), new Vector2( Globals.font.MeasureString("Help").X * 0.6f,20), "Help"));
         }
            
        public override void Update(Vector2 OFFSET)

@@ -9,14 +9,13 @@ using System.Collections.Generic;
 
 namespace Kolibri.Source.Workspace
 {
-    public class Canvas //pixel grid to draw on
+    public class Canvas : UIElement //pixel grid to draw on
     {
         Texture2D canvas;
-        Vector2 pos, dim;
         UInt32[] pixels;
         Random rnd = new Random();
         //List<Vector2> mousePoints = new List<Vector2>();
-        public Canvas(Vector2 POS, Vector2 DIM)
+        public Canvas(Window WINDOW, Vector2 POS, Vector2 DIM) : base(WINDOW, POS, DIM)
         {
             pos = POS;
             dim = DIM;
@@ -27,7 +26,7 @@ namespace Kolibri.Source.Workspace
                 pixels[i] = 0xFFFFFFFF;
             }
         }
-        public void Update(Vector2 OFFSET)
+        public override void Update(Vector2 OFFSET)
         {
             //drawLine(new Vector2(65, 65), Globals.mouse.newMousePos, Color.Red);
             Globals.graphicsDevice.Textures[0] = null;
@@ -68,7 +67,7 @@ namespace Kolibri.Source.Workspace
             }
         }
 
-        public void Draw(Vector2 OFFSET)
+        public override void Draw(Vector2 OFFSET)
         {
             Globals.spriteBatch.Draw(canvas, new Rectangle( (int)pos.X, (int)pos.Y, (int)dim.X, (int)dim.Y), Color.White);
         }

@@ -33,6 +33,7 @@ namespace Kolibri
         {
             //set all Globals.*
             Globals.SystemFont = "galleryFont";
+            Globals.fontSize = new Vector2(0.5f,0.5f);
             Globals.spriteBatch = new SpriteBatch(GraphicsDevice);
             Globals.content = this.Content;
             Globals.keyboard = new EKeyboard();
@@ -57,7 +58,7 @@ namespace Kolibri
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(new Color(56,58,60));
+            GraphicsDevice.Clear(new Color(73,78,80));
             Globals.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             om.Draw();
             Globals.spriteBatch.End();

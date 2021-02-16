@@ -26,6 +26,7 @@ namespace Kolibri.Engine
         public static bool dragging;
         public static float screenHeight, screenWidth;
         public static string SystemFont;
+        public static Vector2 fontSize;
         public static SpriteFont font;
         public static ContentManager content;
         public static SpriteBatch spriteBatch;

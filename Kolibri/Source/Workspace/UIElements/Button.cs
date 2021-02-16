@@ -20,7 +20,7 @@ namespace Kolibri.Source.Workspace.UIElements
             ClickEvent = CLICKEVENT;
             label=LABEL;
             window = WINDOW;
-            strSize = Globals.font.MeasureString(label) * 0.6f;
+            strSize = Globals.font.MeasureString(label) * Globals.fontSize.X;
             color = new Color(100, 100, 100);
         }
 
@@ -39,7 +39,7 @@ namespace Kolibri.Source.Workspace.UIElements
             //field
             Globals.primitives.DrawRect(pos,dim, color);
             //label
-            Globals.primitives.DrawTxt(label, new Vector2(pos.X + dim.X / 2 - strSize.X / 2, pos.Y + dim.Y / 2 - strSize.Y / 2), new Vector2(0.6f, 0.6f), new Color(245,255,250));
+            Globals.primitives.DrawTxt(label, new Vector2(pos.X + dim.X / 2 - strSize.X / 2, pos.Y + dim.Y / 2 - strSize.Y / 2), Globals.fontSize, new Color(245,255,250));
            
        } 
 

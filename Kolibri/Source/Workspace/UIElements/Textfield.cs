@@ -24,7 +24,7 @@ namespace Kolibri.Source.Workspace.UIElements
 
         public override void Update(Vector2 OFFSET)
         {
-            width = Globals.font.MeasureString(content).X * 0.6f;
+            width = Globals.font.MeasureString(content).X * Globals.fontSize.X;
 
             if (Globals.mouse.LeftClick())  //set selected mode
             {
@@ -67,7 +67,7 @@ namespace Kolibri.Source.Workspace.UIElements
             //field
             Globals.primitives.DrawRect(pos,dim, color);
             //label        
-            Globals.primitives.DrawTxt(content.ToLower(), new Vector2(pos.X + 5, pos.Y + dim.Y / 2 - txtHeight / 4), new Vector2(0.6f, 0.6f), new Color(245, 255, 250));
+            Globals.primitives.DrawTxt(content.ToLower(), new Vector2(pos.X + 5, pos.Y + dim.Y / 2 - txtHeight / 4), Globals.fontSize, new Color(245, 255, 250));
         } 
 
 

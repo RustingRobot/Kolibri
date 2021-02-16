@@ -46,8 +46,8 @@ namespace Kolibri.Source.Workspace.UIElements
        public override void Draw(Vector2 OFFSET)
        {
             base.Draw(OFFSET);
-            Globals.primitives.DrawTxt(Convert.ToString(start), new Vector2(pos.X, pos.Y+15),new Vector2(0.4f, 0.4f), new Color(245,255,250));
-            Globals.primitives.DrawTxt(Convert.ToString(end), new Vector2(pos.X + dim.X, pos.Y+15),new Vector2(0.4f, 0.4f), new Color(245,255,250));
+            Globals.primitives.DrawTxt(Convert.ToString(start), new Vector2(pos.X, pos.Y+15), new Vector2(Globals.fontSize.X - 0.1f, Globals.fontSize.X - 0.1f), new Color(245,255,250));
+            Globals.primitives.DrawTxt(Convert.ToString(end), new Vector2(pos.X + dim.X, pos.Y+15), new Vector2(Globals.fontSize.X - 0.1f, Globals.fontSize.X - 0.1f), new Color(245,255,250));
             
             for (int i = 0; i < end/steplength+1; i++) 
             {
@@ -55,7 +55,7 @@ namespace Kolibri.Source.Workspace.UIElements
 
             }
 
-            Globals.primitives.DrawTxt(label, new Vector2 (pos.X+dim.X +20, pos.Y-5),new Vector2(0.4f, 0.4f), new Color(245,255,250));
+            Globals.primitives.DrawTxt(label, new Vector2 (pos.X+dim.X +20, pos.Y-5),new Vector2(Globals.fontSize.X - 0.1f, Globals.fontSize.X - 0.1f), new Color(245,255,250));
             
             Globals.primitives.DrawRect(pos, new Vector2(dim.X,3), color);
 

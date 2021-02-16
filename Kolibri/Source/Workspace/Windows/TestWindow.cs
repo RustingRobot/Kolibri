@@ -44,6 +44,8 @@ namespace Kolibri.Source.Workspace.Windows
             base.Draw(OFFSET, COLOR);
             testBtn.Draw(OFFSET);
             testField.Draw(OFFSET);
+            Globals.primitives.DrawTxt($"x: {Globals.screenWidth}", new Vector2(10 + pos.X, 100 + pos.Y), Globals.fontSize, Color.Gray);
+            Globals.primitives.DrawTxt($"y: {Globals.screenHeight}", new Vector2(10 + pos.X, 120 + pos.Y), Globals.fontSize, Color.Gray);
             //testslider.Draw(OFFSET);
         }
     }

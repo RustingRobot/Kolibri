@@ -17,6 +17,17 @@ namespace Kolibri
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            Window.AllowUserResizing = true;
+            Window.ClientSizeChanged += OnResize;
+        }
+
+        public void OnResize(Object sender, EventArgs e)
+        {
+            graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+            graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
+            graphics.ApplyChanges();
+            Globals.screenWidth = graphics.PreferredBackBufferWidth;
+            Globals.screenHeight = graphics.PreferredBackBufferHeight;
         }
 
         protected override void Initialize()

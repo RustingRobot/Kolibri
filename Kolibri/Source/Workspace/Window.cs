@@ -11,7 +11,7 @@ namespace Kolibri.Source.Workspace
     {
         public bool delete;
         public Vector2 minDim;
-        private float handleHeight = 20, border = 3, initXPos;
+        private float handleHeight = 20, border = 3, initXPos, initXWidth;
         private bool[] dragged = new bool[4];    //0 = Handle; 1 = Bottom; 2 = Right; 3 = Left
         private string title;
         private Vector2 clickOffset;
@@ -74,24 +74,27 @@ namespace Kolibri.Source.Workspace
                 if (!Globals.dragging)
                 {
                     borderColors[3] = selectedBorder;
+                    initXWidth = dim.X;
                     initXPos = pos.X;
                 }
                 if (dragged[3] || (!Globals.dragging && Globals.mouse.LeftClickHold()))
                 {
                     Globals.dragging = true;
                     dragged[3] = true;
-                    clickOffset = Globals.mouse.oldMousePos - pos;
-                    if (dim.X > minDim.X || (Globals.mouse.newMousePos.X - Globals.mouse.oldMousePos.X < 0 && Globals.mouse.newMousePos.X < pos.X))
+                    if (dim.X > minDim.X || (Globals.mouse.newMousePos.X - Globals.mouse.oldMousePos.X < 0 && Globals.mouse.oldMousePos.X < pos.X))
                     {
-                        dim.X -= Globals.mouse.newMousePos.X - Globals.mouse.oldMousePos.X;
+                        clickOffset = (Globals.mouse.oldMousePos.X > pos.X)? Globals.mouse.oldMousePos - pos: Vector2.Zero;
+                        //dim.X -= Globals.mouse.newMousePos.X - Globals.mouse.oldMousePos.X;
                         pos.X = Globals.mouse.newMousePos.X - clickOffset.X;
-                        //pos.X = Globals.mouse.newMousePos.X - initXPos;
+                        dim.X = initXWidth - (pos.X - initXPos);
                     }
-                    else
+                    if (dim.X < minDim.X)
                     {
                         dim.X = minDim.X;
-                        //pos.X = Globals.mouse.newMousePos.X - clickOffset.X;
+                        pos.X = initXPos + (initXWidth - minDim.X);
+                        
                     }
+                    
                 }
             }
             else { borderColors[3] = defaultBorder; }

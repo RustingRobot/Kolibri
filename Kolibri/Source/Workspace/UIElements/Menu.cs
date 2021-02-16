@@ -79,6 +79,7 @@ namespace Kolibri.Source.Workspace.UIElements
             {
                 menusubitems[i].Update(OFFSET);
             }
+            dim.X = Globals.screenWidth;
         }
 
         public override void Draw(Vector2 OFFSET, Color COLOR)

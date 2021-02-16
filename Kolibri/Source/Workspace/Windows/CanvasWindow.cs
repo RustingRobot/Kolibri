@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Kolibri.Engine;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,11 +9,11 @@ namespace Kolibri.Source.Workspace.Windows
 {
     class CanvasWindow : Window
     {
-        Canvas canvas;
+        public Canvas canvas;
 
         public CanvasWindow(Vector2 POS, Vector2 DIM) : base(POS, DIM, "Canvas")
         {
-            canvas = new Canvas(this, new Vector2(10, 10), new Vector2(200, 200));
+            canvas = new Canvas(this, new Vector2(50, 50), new Vector2(400, 400));
         }
 
         public override void Update(Vector2 OFFSET)
@@ -20,10 +22,12 @@ namespace Kolibri.Source.Workspace.Windows
             canvas.Update(OFFSET);
         }
 
-        public override void Draw(Vector2 OFFSET)
+        public override void Draw(Vector2 OFFSET, Color COLOR)
         {
-            base.Draw(OFFSET);
+            base.Draw(OFFSET, COLOR);
+            beginWindowContent();
             canvas.Draw(OFFSET);
+            endWindowContent();
         }
     }
 }

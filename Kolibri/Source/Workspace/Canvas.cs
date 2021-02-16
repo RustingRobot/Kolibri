@@ -13,8 +13,7 @@ namespace Kolibri.Source.Workspace
     {
         Texture2D canvas;
         UInt32[] pixels;
-        Random rnd = new Random();
-        //List<Vector2> mousePoints = new List<Vector2>();
+
         public Canvas(Window WINDOW, Vector2 POS, Vector2 DIM) : base(WINDOW, POS, DIM)
         {
             pos = POS;
@@ -28,13 +27,13 @@ namespace Kolibri.Source.Workspace
         }
         public override void Update(Vector2 OFFSET)
         {
-            //drawLine(new Vector2(65, 65), Globals.mouse.newMousePos, Color.Red);
             Globals.graphicsDevice.Textures[0] = null;
             if (Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero) && Globals.mouse.LeftClickHold() && !Globals.dragging) //only calculate if the mouse is supposed to draw on the canvas
             {
                 drawLine(Globals.mouse.oldMousePos, Globals.mouse.newMousePos, Color.Gray);
             }
             canvas.SetData<UInt32>(pixels, 0, (int)dim.X * (int)dim.Y);
+            base.Update(OFFSET);
         }
 
         public void setPixel(Vector2 position, Color color)

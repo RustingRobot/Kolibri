@@ -84,7 +84,6 @@ namespace Kolibri.Source.Workspace
                     if (dim.X > minDim.X || (Globals.mouse.newMousePos.X - Globals.mouse.oldMousePos.X < 0 && Globals.mouse.oldMousePos.X < pos.X))
                     {
                         clickOffset = (Globals.mouse.oldMousePos.X > pos.X)? Globals.mouse.oldMousePos - pos: Vector2.Zero;
-                        //dim.X -= Globals.mouse.newMousePos.X - Globals.mouse.oldMousePos.X;
                         pos.X = Globals.mouse.newMousePos.X - clickOffset.X;
                         dim.X = initXWidth - (pos.X - initXPos);
                     }
@@ -106,6 +105,24 @@ namespace Kolibri.Source.Workspace
             }
             base.Update(OFFSET);
         }
+
+        public void beginWindowContent()
+        {
+            Globals.spriteBatch.End();
+            RasterizerState rs = new RasterizerState();
+            rs.ScissorTestEnable = true;
+            Globals.spriteBatch.GraphicsDevice.RasterizerState = rs;
+            Globals.spriteBatch.GraphicsDevice.ScissorRectangle = new Rectangle((int)(pos.X + border), (int)(pos.Y + handleHeight), (int)(dim.X - border * 2), (int)(dim.Y - border - handleHeight));
+            Globals.spriteBatch.Begin(rasterizerState: rs);
+        }
+
+        public void endWindowContent()
+        {
+            Globals.spriteBatch.End();
+            //Globals.spriteBatch.GraphicsDevice.RasterizerState.ScissorTestEnable = false;
+            Globals.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+        }
+
         public override void Draw(Vector2 OFFSET, Color COLOR)
         {
             base.Draw(OFFSET, COLOR);

@@ -11,6 +11,7 @@ namespace Kolibri.Source.Workspace.Windows
     {
         private Button testBtn;
         private Textfield testField;
+        private int clicks = 0;
 
         private Slider testslider;
         public TestWindow(Vector2 POS, Vector2 DIM) : base(POS, DIM, "Test Window")
@@ -21,14 +22,8 @@ namespace Kolibri.Source.Workspace.Windows
         }
         public void click()
         {
-            if (testBtn.color.R == 200)
-            {
-                testBtn.color = new Color(100, 100, 100);
-            }
-            else
-            {
-                testBtn.color = new Color(200, 100, 100);
-            }
+            clicks++;
+            testBtn.label = $"clicks: {clicks}";
         }
 
         public override void Update(Vector2 OFFSET)

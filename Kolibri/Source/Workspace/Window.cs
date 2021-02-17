@@ -1,4 +1,5 @@
 ﻿using Kolibri.Engine;
+using Kolibri.Source.Workspace.UIElements;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -17,13 +18,17 @@ namespace Kolibri.Source.Workspace
         private Vector2 clickOffset;
         private Color defaultBorder, selectedBorder;
         private Color[] borderColors;
+        private Button deleteButton;
         public Window(Vector2 POS, Vector2 DIM, string TITLE) : base("Square", POS, DIM)
         { 
             title = TITLE;
-            minDim = new Vector2((float)(Globals.font.MeasureString(title).X * Globals.fontSize.X + 16), border + handleHeight);
+            minDim = new Vector2((float)(Globals.font.MeasureString(title).X * Globals.fontSize.X + 16 + 15), border + handleHeight);
             defaultBorder = new Color(39, 44, 48);
             selectedBorder = new Color(60, 104, 148);
             borderColors = new Color[4] { defaultBorder, defaultBorder, defaultBorder, defaultBorder };
+            deleteButton = new Button(closeWindow, this, new Vector2(dim.X - 17.5f, 2.5f), new Vector2(15, 15), "x");
+            deleteButton.normColor = Color.Transparent;
+            deleteButton.hoverColor = Color.Transparent;
         }
 
         public override void Update(Vector2 OFFSET)
@@ -103,7 +108,22 @@ namespace Kolibri.Source.Workspace
                 Globals.dragging = false;
                 for (int i = 0; i < dragged.Length; i++) dragged[i] = false;
             }
+            deleteButton.relativePos.X = dim.X - 17.5f;
+            deleteButton.Update(OFFSET);
             base.Update(OFFSET);
+        }
+
+        public override void Draw(Vector2 OFFSET, Color COLOR)
+        {
+            base.Draw(OFFSET, COLOR);
+            //borders
+            Globals.primitives.DrawRect(new Vector2(pos.X, pos.Y), new Vector2(border, dim.Y), borderColors[3]);  //left
+            Globals.primitives.DrawRect(new Vector2(pos.X + dim.X - border, pos.Y), new Vector2(border, dim.Y), borderColors[2]);  //right
+            Globals.primitives.DrawRect(new Vector2(pos.X, pos.Y + dim.Y - border), new Vector2(dim.X, border), borderColors[1]);  //bottom
+            Globals.primitives.DrawRect(new Vector2(pos.X, pos.Y), new Vector2(dim.X, handleHeight), borderColors[0]);    //handle
+            //title
+            Globals.primitives.DrawTxt(title, new Vector2(pos.X + 8, pos.Y + 2), Globals.fontSize, new Color(200, 200, 200));
+            deleteButton.Draw(OFFSET);
         }
 
         public void beginWindowContent()
@@ -123,16 +143,9 @@ namespace Kolibri.Source.Workspace
             Globals.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
         }
 
-        public override void Draw(Vector2 OFFSET, Color COLOR)
+        public void closeWindow()
         {
-            base.Draw(OFFSET, COLOR);
-            //borders
-            Globals.primitives.DrawRect(new Vector2(pos.X, pos.Y), new Vector2(border, dim.Y), borderColors[3]);  //left
-            Globals.primitives.DrawRect(new Vector2(pos.X + dim.X - border, pos.Y), new Vector2(border, dim.Y), borderColors[2]);  //right
-            Globals.primitives.DrawRect(new Vector2(pos.X, pos.Y + dim.Y - border), new Vector2(dim.X, border), borderColors[1]);  //bottom
-            Globals.primitives.DrawRect(new Vector2(pos.X, pos.Y), new Vector2(dim.X, handleHeight), borderColors[0]);    //handle
-            //title
-            Globals.primitives.DrawTxt(title, new Vector2(pos.X + 8, pos.Y + 2), Globals.fontSize, new Color(200, 200, 200));
+            delete = true;
         }
     }
 }

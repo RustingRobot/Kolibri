@@ -8,34 +8,40 @@ namespace Kolibri.Source.Workspace.UIElements
     public class Button : UIElement
     {
   
-        private string label;
-        
+        public string label;
         private bool ButtonClicked;
         public delegate void Event();
         public Event ClickEvent;
-        public Vector2 strSize, relativePos;
-        public Color color;
+        public Vector2 strSize;
+        public Color color, normColor, hoverColor, clickColor;
        public Button(Event CLICKEVENT, Window WINDOW, Vector2 POS, Vector2 DIM, string LABEL) :base(WINDOW, POS, DIM)
-        {
-            ClickEvent = CLICKEVENT;
-            label=LABEL;
-            window = WINDOW;
-            strSize = Globals.font.MeasureString(label) * Globals.fontSize.X;
-            color = new Color(100, 100, 100);
-        }
+       {
+           ClickEvent = CLICKEVENT;
+           label=LABEL;
+           window = WINDOW;
+           strSize = Globals.font.MeasureString(label) * Globals.fontSize.X;
+           normColor = new Color(100, 100, 100);
+           hoverColor = new Color(120, 120, 120);
+           clickColor = new Color(150, 150, 150);
+       }
 
        public override void Update(Vector2 OFFSET)
        {
-            if (Globals.mouse.LeftClick()&&Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero))
+            if (Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero))
             {
-                ClickEvent();   //let instantiator decide what function gets called
-            };
-           base.Update(OFFSET);
+                if(!Globals.mouse.LeftClickHold()) color = hoverColor;
+                if (Globals.mouse.LeftClick())
+                {
+                     color = clickColor;
+                     ClickEvent();   //let instantiator decide what function gets called
+                }
+            }
+            else color = normColor;
+            base.Update(OFFSET);
        }
 
        public override void Draw(Vector2 OFFSET)
        {
-            base.Draw(OFFSET);
             //field
             Globals.primitives.DrawRect(pos,dim, color);
             //label

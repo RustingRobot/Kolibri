@@ -21,8 +21,14 @@ namespace Kolibri.Source.Workspace.UIElements
     
         private bool visible = false;
         public void openlistdatei(){
-            visible = true;
-            AddMenusubitem(new Button(openspeichern,null, posb + new Vector2(0,30),new Vector2(150,30),"Speichern"));
+            if(visible==true){
+                cleanScreen();
+                visible= false;
+            }
+            if(visible==false){
+                AddMenusubitem(new Button(openspeichern,null, posb + new Vector2(0,30),new Vector2(150,30),"Speichern"));
+                visible= true;
+            }
         }
     
         public void openlistbearbeiten(){
@@ -49,7 +55,9 @@ namespace Kolibri.Source.Workspace.UIElements
         public void cleanScreen(){
             for (int i = 0; i < menusubitems.Count; i++) 
             {
-                menusubitems.Remove(menusubitems[i]);
+                Console.WriteLine(menusubitems.Count);
+                menusubitems.RemoveAt(i);
+                Console.WriteLine(menusubitems.Count);
             }
         }
 
@@ -64,11 +72,12 @@ namespace Kolibri.Source.Workspace.UIElements
            
        public override void Update(Vector2 OFFSET)
         {
-           /* if(visible||true && Globals.mouse.RightClick()||true&&Globals.GetBoxOverlap(posb + new Vector2(0,30), new Vector2(150,1*30), Globals.mouse.newMousePos, Vector2.Zero)||false)
+   /*        if(visible==true && Globals.mouse.RightClick()==true&&Globals.GetBoxOverlap(posb + new Vector2(0,30), new Vector2(150,1*30), Globals.mouse.newMousePos, Vector2.Zero)==false)
             {
                 cleanScreen();
-            }*/
-
+                visible = false;
+            }
+*/
 
             base.Update(OFFSET);
             for (int i = 0; i < menuitems.Count; i++) 

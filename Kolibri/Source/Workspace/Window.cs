@@ -18,10 +18,11 @@ namespace Kolibri.Source.Workspace
         float handleHeight = 20, border = 3, initXPos, initXWidth;
         bool[] dragged = new bool[4];    //0 = Handle; 1 = Bottom; 2 = Right; 3 = Left
         string title;
-        Vector2 clickOffset;
+        Vector2 clickOffset, undockedDim;
         Color defaultBorder, selectedBorder;
         Color[] borderColors;
         Button deleteButton;
+        Texture2D xTexture, pinTexture;
 
 
         public Window(Vector2 POS, Vector2 DIM, string TITLE) : base("Square", POS, DIM)
@@ -31,9 +32,14 @@ namespace Kolibri.Source.Workspace
             defaultBorder = new Color(39, 44, 48);
             selectedBorder = new Color(60, 104, 148);
             borderColors = new Color[4] { defaultBorder, defaultBorder, defaultBorder, defaultBorder };
-            deleteButton = new Button(closeWindow, this, new Vector2(dim.X - 17.5f, 2.5f), new Vector2(15, 15), "x");
+            deleteButton = new Button(closeWindow, this, new Vector2(dim.X - 17.5f, 2.5f), new Vector2(15, 15), "");
+
+            xTexture = Globals.content.Load<Texture2D>("x");
+            pinTexture = Globals.content.Load<Texture2D>("BoxOutline");
+            deleteButton.model = xTexture;
             deleteButton.normColor = Color.Transparent;
             deleteButton.hoverColor = Color.Transparent;
+            deleteButton.imgSize = new Vector2(0.54f, 0.54f);
         }
 
         public override void Update(Vector2 OFFSET)
@@ -45,7 +51,7 @@ namespace Kolibri.Source.Workspace
                 if (TopCI == null && dragged[0] || (Globals.interactWindow == null && Globals.mouse.LeftClickHold()))
                 {
                     Globals.interactWindow = this;
-                    ObjManager.toFront(this);
+                    if (!docked) ObjManager.toFront(this);
                     dragged[0] = true;
                     clickOffset = Globals.mouse.oldMousePos - pos;
                     pos = Globals.mouse.newMousePos - clickOffset;
@@ -111,9 +117,20 @@ namespace Kolibri.Source.Workspace
             if (docked)
             {
                 if (LeftCI != null) pos.X = DockSpace.XConstraintValues[(int)LeftCI];
-                if (RightCI != null) dim.X = DockSpace.XConstraintValues[(int)RightCI];
+                
+                if (RightCI != null) dim.X = DockSpace.XConstraintValues[(int)RightCI] - pos.X;
+                if (dim.X < minDim.X) pos.X -= minDim.X - dim.X;
+                
                 if (TopCI != null) pos.Y = DockSpace.YConstraintValues[(int)TopCI];
-                if (BottomCI != null) dim.Y = DockSpace.YConstraintValues[(int)BottomCI];
+                
+                if (BottomCI != null) dim.Y = DockSpace.YConstraintValues[(int)BottomCI] - pos.Y + 24;
+                if (dim.Y < minDim.Y) pos.Y -= minDim.Y - dim.Y;
+                deleteButton.model = pinTexture;
+            }
+            else 
+            { 
+                deleteButton.model = xTexture;
+                undockedDim = dim;
             }
 
             if (!Globals.mouse.LeftClickHold() && Globals.interactWindow == this)
@@ -158,7 +175,18 @@ namespace Kolibri.Source.Workspace
 
         public void closeWindow()
         {
-            delete = true;
+            if (docked)
+            {
+                LeftCI = null;
+                RightCI = null;
+                TopCI = null;
+                BottomCI = null;
+                docked = false;
+                dim = undockedDim;
+                pos.X += (pos.X > Globals.screenWidth / 2) ? -20 : 20;
+                pos.Y += (pos.Y > Globals.screenHeight / 2) ? -20 : 20;
+            }
+            else delete = true;
         }
     }
 }

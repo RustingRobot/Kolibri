@@ -11,7 +11,7 @@ namespace Kolibri.Source.Workspace
         public Vector2 relativePos;
         public Window window;
 
-        public UIElement(Window WINDOW, Vector2 POS, Vector2 DIM) : base("Square", POS, DIM)
+        public UIElement(Window WINDOW, Vector2 POS, Vector2 DIM) : base(null, POS, DIM)
         {
             window = WINDOW;
             relativePos = POS;

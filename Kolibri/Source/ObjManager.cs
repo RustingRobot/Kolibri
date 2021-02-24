@@ -5,6 +5,7 @@ using Kolibri.Source.Workspace.Windows;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Kolibri.Source
@@ -58,6 +59,12 @@ namespace Kolibri.Source
         {
             Windows.Remove(WINDOW);
             Windows.Add(WINDOW);
+        }
+
+        public static void toBack(Window WINDOW)
+        {
+            Windows.Remove(WINDOW);
+            Windows = Windows.Prepend(WINDOW).ToList();
         }
     }
 }

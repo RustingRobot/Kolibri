@@ -46,7 +46,7 @@ namespace Kolibri.Source.Workspace.UIElements
             Globals.primitives.DrawRect(pos,dim, color);
             //label
             Globals.primitives.DrawTxt(label, new Vector2(pos.X + dim.X / 2 - strSize.X / 2, pos.Y + dim.Y / 2 - strSize.Y / 2), Globals.fontSize, new Color(245,255,250));
-           
+            base.DrawCentered(OFFSET);
        } 
 
     }

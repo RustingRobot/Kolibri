@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Kolibri.Source.Workspace.UIElements
@@ -38,29 +39,26 @@ namespace Kolibri.Source.Workspace.UIElements
         {
             if (Globals.GetBoxOverlap(rotPos, rotDim, Globals.mouse.newMousePos, Vector2.Zero))
             {
-                switch (type)
-                {
-                    case "top":
-
-                        break;
-                    case "left":
-                        Globals.interactWindow.LeftCI = 0;
-                        Globals.interactWindow.TopCI = 0;
-                        Globals.interactWindow.BottomCI = 1;
-                        Globals.interactWindow.docked = true;
-                        break;
-                    case "right":
-
-                        break;
-                    case "bottom":
-
-                        break;
-                }
+                if(type != "right") Globals.interactWindow.LeftCI = 0;
+                if(type != "left") Globals.interactWindow.RightCI = 1;
+                if(type != "top") Globals.interactWindow.BottomCI = 1;
+                if(type != "bottom") Globals.interactWindow.TopCI = 0;
+                Globals.interactWindow.docked = true;
+                ObjManager.toBack(Globals.interactWindow);
             }
         }
 
         public override void Update(Vector2 OFFSET)
         {
+            if(Globals.GetBoxOverlap(rotPos, rotDim, Globals.mouse.newMousePos, Vector2.Zero))
+            {
+            }
+            if(type == "top")
+            {
+                Debug.WriteLine("WINDOW pos | x: " + rotPos.X + " y: " + rotPos.Y);
+                Debug.WriteLine("MOUSE pos | x: " + Globals.mouse.newMousePos.X + " y: " + Globals.mouse.newMousePos.Y);
+            }
+
             if (Globals.interactWindow != null && !Globals.interactWindow.docked)
             {
                 if (Globals.GetBoxOverlap(rotPos, rotDim, Globals.mouse.newMousePos, Vector2.Zero))
@@ -74,8 +72,8 @@ namespace Kolibri.Source.Workspace.UIElements
                 switch (type)
                 {
                     case "top":
-                        rotDim = -dim - new Vector2(10);
-                        rotPos = pos + new Vector2(5);
+                        rotDim = dim + new Vector2(10);
+                        rotPos = pos - dim - new Vector2(5);
                         break;
                     case "left":
                         rotDim = new Vector2(dim.Y + 10, dim.X + 10);

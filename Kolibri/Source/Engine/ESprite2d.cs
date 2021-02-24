@@ -20,15 +20,17 @@ namespace Kolibri.Engine
     public class ESprite2d
     {
         public float rot;
-        public Vector2 pos, dim;
+        public Vector2 pos, dim, imgSize;
         public Texture2D model;
 
         public ESprite2d(string PATH, Vector2 POS, Vector2 DIM)
         {
             pos = POS;
             dim = DIM;
+            imgSize = Vector2.One;
 
-            model = Globals.content.Load<Texture2D>(PATH);
+            if (PATH != null)
+                model = Globals.content.Load<Texture2D>(PATH);
         }
 
         public virtual void Update(Vector2 OFFSET)
@@ -39,13 +41,19 @@ namespace Kolibri.Engine
         public virtual void Draw(Vector2 OFFSET)
         {   
             if(model != null)
-                Globals.spriteBatch.Draw(model, new Rectangle((int)(pos.X + OFFSET.X), (int)(pos.Y + OFFSET.Y), (int)dim.X, (int)dim.Y), null, Color.White, rot, Vector2.Zero, new SpriteEffects(), 0);
+                Globals.spriteBatch.Draw(model, new Rectangle((int)(pos.X + OFFSET.X), (int)(pos.Y + OFFSET.Y), (int)(dim.X * imgSize.X), (int)(dim.Y * imgSize.Y)), null, Color.White, rot, Vector2.Zero, new SpriteEffects(), 0);
         }
 
         public virtual void Draw(Vector2 OFFSET, Color COLOR)
         {
             if (model != null)
-                Globals.spriteBatch.Draw(model, new Rectangle((int)(pos.X + OFFSET.X), (int)(pos.Y + OFFSET.Y), (int)dim.X, (int)dim.Y), null, COLOR, rot, Vector2.Zero, new SpriteEffects(), 0);
+                Globals.spriteBatch.Draw(model, new Rectangle((int)(pos.X + OFFSET.X), (int)(pos.Y + OFFSET.Y), (int)(dim.X * imgSize.X), (int)(dim.Y * imgSize.Y)), null, COLOR, rot, Vector2.Zero, new SpriteEffects(), 0);
+        }
+
+        public virtual void DrawCentered(Vector2 OFFSET)
+        {
+            if (model != null)
+                Globals.spriteBatch.Draw(model, new Rectangle((int)(pos.X + OFFSET.X + (dim.X * imgSize.X / 2)), (int)(pos.Y + OFFSET.Y + (dim.Y * imgSize.Y / 2)), (int)(dim.X * imgSize.X), (int)(dim.Y * imgSize.Y)), null, Color.White, rot, Vector2.Zero, new SpriteEffects(), 0);
         }
     }
 }

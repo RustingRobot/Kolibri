@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Kolibri.Engine.Input;
+using Kolibri.Source.Workspace;
 #endregion
 
 namespace Kolibri.Engine
@@ -23,7 +24,7 @@ namespace Kolibri.Engine
     public class Globals    //every class has access to Globas so it's the ideal place to put stuff like mouse or keyboard controlls!
     {
         public static PassObject PassWindow;
-        public static bool dragging;
+        public static Window interactWindow;
         public static float screenHeight, screenWidth;
         public static string SystemFont;
         public static Vector2 fontSize;

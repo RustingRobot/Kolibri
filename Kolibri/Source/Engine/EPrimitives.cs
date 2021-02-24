@@ -28,7 +28,12 @@ namespace Kolibri.Engine
 
         public void DrawRect(Vector2 POS, Vector2 DIM, Color COLOR)    //this must be called inside of a SpriteBatch!
         {
-            Globals.spriteBatch.Draw(square,new Rectangle((int)POS.X, (int)POS.Y, (int)DIM.X, (int)DIM.Y),COLOR);
+            Globals.spriteBatch.Draw(square,new Rectangle((int)POS.X, (int)POS.Y, (int)DIM.X, (int)DIM.Y), COLOR);
+        }
+
+        public void DrawRect(Vector2 POS, Vector2 DIM, float ROT, Color COLOR)    //this must be called inside of a SpriteBatch!
+        {
+            Globals.spriteBatch.Draw(square, new Rectangle((int)POS.X, (int)POS.Y, (int)DIM.X, (int)DIM.Y),null , COLOR, ROT, new Vector2(-0,-0), SpriteEffects.None, 0);
         }
 
         public void DrawTxt(string TXT, Vector2 POS, Vector2 DIM, Color COLOR) //this must be called inside of a SpriteBatch!

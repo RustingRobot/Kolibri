@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
-namespace Kolibri.Source.Workspace
+namespace Kolibri.Source.Workspace.UIElements
 {
     public class Canvas : UIElement //pixel grid to draw on
     {
@@ -28,7 +28,7 @@ namespace Kolibri.Source.Workspace
         public override void Update(Vector2 OFFSET)
         {
             Globals.graphicsDevice.Textures[0] = null;
-            if (Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero) && Globals.mouse.LeftClickHold() && !Globals.dragging) //only calculate if the mouse is supposed to draw on the canvas
+            if (Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero) && Globals.mouse.LeftClickHold() && Globals.interactWindow == null) //only calculate if the mouse is supposed to draw on the canvas
             {
                 drawLine(Globals.mouse.oldMousePos, Globals.mouse.newMousePos, Color.Gray);
             }

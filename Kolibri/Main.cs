@@ -67,9 +67,9 @@ namespace Kolibri
             base.Update(gameTime);
         }
 
-        protected override void Draw(GameTime gameTime)
+        protected override void Draw(GameTime gameTime) //main draw loop
         {
-            GraphicsDevice.Clear(new Color(73,78,80));
+            GraphicsDevice.Clear(new Color(73,78,80));  //BG color
             Globals.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             om.Draw();
             Globals.spriteBatch.End();

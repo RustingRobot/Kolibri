@@ -16,7 +16,7 @@ namespace Kolibri.Source.Workspace.UIElements
             label=LABEL;
             window = WINDOW;
             strSize = Globals.font.MeasureString(label) * Globals.fontSize.X;
-            color = new Color(100, 100, 100);
+            color = Color.Gray;
         }
 
        public override void Update(Vector2 OFFSET)
@@ -25,11 +25,8 @@ namespace Kolibri.Source.Workspace.UIElements
        }
 
        public override void Draw(Vector2 OFFSET)
-       {
-            base.Draw(OFFSET);
-            
-            Globals.primitives.DrawTxt(label, new Vector2(pos.X + dim.X / 2 - strSize.X / 2, pos.Y + dim.Y / 2 - strSize.Y / 2), Globals.fontSize, color);
-           
+       {        
+            Globals.primitives.DrawTxt(label, new Vector2(pos.X + dim.X / 2 - strSize.X / 2, pos.Y + dim.Y / 2 - strSize.Y / 2), Globals.fontSize, color); 
        } 
 
     }

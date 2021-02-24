@@ -12,13 +12,18 @@ namespace Kolibri.Source.Workspace
     {
         public bool delete;
         public Vector2 minDim;
-        private float handleHeight = 20, border = 3, initXPos, initXWidth;
-        private bool[] dragged = new bool[4];    //0 = Handle; 1 = Bottom; 2 = Right; 3 = Left
-        private string title;
-        private Vector2 clickOffset;
-        private Color defaultBorder, selectedBorder;
-        private Color[] borderColors;
-        private Button deleteButton;
+        public int? LeftCI, RightCI, TopCI, BottomCI; // CI = Constraint Index
+        public bool docked = false;
+
+        float handleHeight = 20, border = 3, initXPos, initXWidth;
+        bool[] dragged = new bool[4];    //0 = Handle; 1 = Bottom; 2 = Right; 3 = Left
+        string title;
+        Vector2 clickOffset;
+        Color defaultBorder, selectedBorder;
+        Color[] borderColors;
+        Button deleteButton;
+
+
         public Window(Vector2 POS, Vector2 DIM, string TITLE) : base("Square", POS, DIM)
         { 
             title = TITLE;
@@ -36,10 +41,10 @@ namespace Kolibri.Source.Workspace
             //Handle movement
             if(dragged[0] || Globals.GetBoxOverlap(new Vector2(pos.X, pos.Y), new Vector2(dim.X, handleHeight), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero))
             {
-                if(!Globals.dragging) borderColors[0] = selectedBorder;
-                if (dragged[0] || (!Globals.dragging && Globals.mouse.LeftClickHold()))
+                if(Globals.interactWindow == null) borderColors[0] = selectedBorder;
+                if (TopCI == null && dragged[0] || (Globals.interactWindow == null && Globals.mouse.LeftClickHold()))
                 {
-                    Globals.dragging = true;
+                    Globals.interactWindow = this;
                     ObjManager.toFront(this);
                     dragged[0] = true;
                     clickOffset = Globals.mouse.oldMousePos - pos;
@@ -50,10 +55,10 @@ namespace Kolibri.Source.Workspace
             //bottom border
             if (dragged[1] || Globals.GetBoxOverlap(new Vector2(pos.X, pos.Y + dim.Y - border), new Vector2(dim.X, border), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero)) 
             {
-                if (!Globals.dragging) borderColors[1] = selectedBorder;
-                if (dragged[1] || (!Globals.dragging && Globals.mouse.LeftClickHold()))
+                if (Globals.interactWindow == null) borderColors[1] = selectedBorder;
+                if (BottomCI == null && dragged[1] || (Globals.interactWindow == null && Globals.mouse.LeftClickHold()))
                 {
-                    Globals.dragging = true;
+                    Globals.interactWindow = this;
                     dragged[1] = true;
                     dim.Y = Globals.mouse.newMousePos.Y - pos.Y;
                     if (dim.Y < minDim.Y) dim.Y = minDim.Y;
@@ -63,10 +68,10 @@ namespace Kolibri.Source.Workspace
             //right border
             if (dragged[2] || Globals.GetBoxOverlap(new Vector2(pos.X + dim.X - border, pos.Y), new Vector2(border, dim.Y), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero)) 
             {
-                if (!Globals.dragging) borderColors[2] = selectedBorder;
-                if (dragged[2] || (!Globals.dragging && Globals.mouse.LeftClickHold()))
+                if (Globals.interactWindow == null) borderColors[2] = selectedBorder;
+                if (RightCI == null && dragged[2] || (Globals.interactWindow == null && Globals.mouse.LeftClickHold()))
                 {
-                    Globals.dragging = true;
+                    Globals.interactWindow = this;
                     dragged[2] = true;
                     dim.X = Globals.mouse.newMousePos.X - pos.X;
                     if (dim.X < minDim.X) dim.X = minDim.X;
@@ -76,15 +81,15 @@ namespace Kolibri.Source.Workspace
             //left border
             if (dragged[3] || Globals.GetBoxOverlap(new Vector2(pos.X, pos.Y), new Vector2(border, dim.Y), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero)) 
             {
-                if (!Globals.dragging)
+                if (Globals.interactWindow == null)
                 {
                     borderColors[3] = selectedBorder;
                     initXWidth = dim.X;
                     initXPos = pos.X;
                 }
-                if (dragged[3] || (!Globals.dragging && Globals.mouse.LeftClickHold()))
+                if (LeftCI == null && dragged[3] || (Globals.interactWindow == null && Globals.mouse.LeftClickHold()))
                 {
-                    Globals.dragging = true;
+                    Globals.interactWindow = this;
                     dragged[3] = true;
                     if (dim.X > minDim.X || (Globals.mouse.newMousePos.X - Globals.mouse.oldMousePos.X < 0 && Globals.mouse.oldMousePos.X < pos.X))
                     {
@@ -103,9 +108,18 @@ namespace Kolibri.Source.Workspace
             }
             else { borderColors[3] = defaultBorder; }
 
-            if (!Globals.mouse.LeftClickHold() && Globals.dragging)
+            if (docked)
             {
-                Globals.dragging = false;
+                if (LeftCI != null) pos.X = DockSpace.XConstraintValues[(int)LeftCI];
+                if (RightCI != null) dim.X = DockSpace.XConstraintValues[(int)RightCI];
+                if (TopCI != null) pos.Y = DockSpace.YConstraintValues[(int)TopCI];
+                if (BottomCI != null) dim.Y = DockSpace.YConstraintValues[(int)BottomCI];
+            }
+
+            if (!Globals.mouse.LeftClickHold() && Globals.interactWindow == this)
+            {
+                DockSpace.applyDocking();
+                Globals.interactWindow = null;
                 for (int i = 0; i < dragged.Length; i++) dragged[i] = false;
             }
             deleteButton.relativePos.X = dim.X - 17.5f;
@@ -126,7 +140,7 @@ namespace Kolibri.Source.Workspace
             deleteButton.Draw(OFFSET);
         }
 
-        public void beginWindowContent()
+        public void beginWindowContent()    //needed for a new sprite batch that's masking what's inside
         {
             Globals.spriteBatch.End();
             RasterizerState rs = new RasterizerState();
@@ -136,10 +150,9 @@ namespace Kolibri.Source.Workspace
             Globals.spriteBatch.Begin(rasterizerState: rs);
         }
 
-        public void endWindowContent()
+        public void endWindowContent()  //switch back to normal sprite batch
         {
             Globals.spriteBatch.End();
-            //Globals.spriteBatch.GraphicsDevice.RasterizerState.ScissorTestEnable = false;
             Globals.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
         }
 

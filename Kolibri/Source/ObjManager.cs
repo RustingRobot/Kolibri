@@ -35,6 +35,7 @@ namespace Kolibri.Source
                     i--;
                 }
             }
+            DockSpace.Update();
             menu.Update(offset);
         }
 
@@ -45,6 +46,7 @@ namespace Kolibri.Source
                 Windows[i].Draw(offset, new Color(56, 58, 60));
             }
             menu.Draw(offset, new Color(39, 44, 48));
+            DockSpace.Draw();
         }
 
         public virtual void AddWindow(object INFO)

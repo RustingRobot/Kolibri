@@ -21,14 +21,11 @@ namespace Kolibri.Source.Workspace.UIElements
     
         private bool visible = false;
         public void openlistdatei(){
-            if(visible==true){
-                cleanScreen();
-                visible= false;
-            }
-            if(visible==false){
-                AddMenusubitem(new Button(openspeichern,null, posb + new Vector2(0,30),new Vector2(150,30),"Speichern"));
-                visible= true;
-            }
+            if(visible)
+            { cleanScreen();}
+            else 
+            { AddMenusubitem(new Button(openspeichern,null, posb + new Vector2(0,30),new Vector2(150,30),"Speichern"));}
+            visible = !visible;
         }
     
         public void openlistbearbeiten(){

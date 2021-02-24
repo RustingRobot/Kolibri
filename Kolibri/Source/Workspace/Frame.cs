@@ -2,6 +2,7 @@ using Kolibri.Engine;
 using Kolibri.Engine.Input;
 using Kolibri.Source;
 using Kolibri.Source.Workspace;
+using Kolibri.Source.Workspace.UIElements;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -16,11 +17,13 @@ namespace Kolibri.Source.Workspace
 
         Frame predFrame;
         Frame succFrame;
-        public Frame(Window WINDOW,Frame PRED, Frame SUCC, Vector2 POS, Vector2 DIM): base(WINDOW, POS, DIM)
+        Canvas canvas;
+        public Frame(Canvas CANVAS, Window WINDOW,Frame PRED, Frame SUCC, Vector2 POS, Vector2 DIM): base(WINDOW, POS, DIM)
         {
+            canvas = CANVAS;
             pos = POS;
             dim = DIM;
-            pixels = new uint[(int)Canvas.dim.X*(int)Canvas.dimY]; //hier wäre ja die Dimension des Objektes Canvas der Klasse Canvas gut, aber wie lässt sich das aufrufen 
+            pixels = new uint[(int)canvas.dim.X*(int)canvas.dim.Y]; //hier wäre ja die Dimension des Objektes Canvas der Klasse Canvas gut, aber wie lässt sich das aufrufen 
             for (int i = 0; i < pixels.Length; i++) /*wenn ein Frame hinzugefügt wird, ist der erstmal Weiß, 
                                                     dann kann man ja wenn man die Timeline hat, sich in einem 
                                                     bestimmten Frame befindet(also der aktuelle), und auf 

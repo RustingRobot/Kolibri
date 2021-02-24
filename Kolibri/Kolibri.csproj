@@ -11,6 +11,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Icon.bmp" />
+    <None Remove="Source\Workspace\Windows\CanvasWindow.cs~RF1adef4c1.TMP" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icon.bmp" />

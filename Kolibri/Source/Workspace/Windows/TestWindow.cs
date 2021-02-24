@@ -13,11 +13,12 @@ namespace Kolibri.Source.Workspace.Windows
         private Textfield testField;
         private Label testLabel;
         private Slider testslider;
+        int clicks = 0;
         public TestWindow(Vector2 POS, Vector2 DIM) : base(POS, DIM, "Test Window")
         {
             testBtn = new Button(click, this, new Vector2(10, 25), new Vector2(90, 25), "click me!");
             testField = new Textfield(this, new Vector2(10, 55), new Vector2(220, 25), "click to edit text");
-            testLabel = new Label(this, new Vector2(10, 25), new Vector2(90, 25), "teeeeest");
+            testLabel = new Label(this, new Vector2(10, 140), new Vector2(90, 25), "teeeeest");
             //testslider = new Slider(0, 100, 10, this, new Vector2(20, 120), new Vector2(200, 3), "Example");
         }
         public void click()

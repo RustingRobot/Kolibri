@@ -39,10 +39,10 @@ namespace Kolibri.Source.Workspace.UIElements
         {
             if (Globals.GetBoxOverlap(rotPos, rotDim, Globals.mouse.newMousePos, Vector2.Zero))
             {
-                if(type != "right") Globals.interactWindow.LeftCI = 0;
-                if(type != "left") Globals.interactWindow.RightCI = 1;
-                if(type != "top") Globals.interactWindow.BottomCI = 1;
-                if(type != "bottom") Globals.interactWindow.TopCI = 0;
+                if (type != "right") Globals.interactWindow.LeftCI = 0; else DockSpace.WindowFraming[2] = Globals.interactWindow;
+                if (type != "left") Globals.interactWindow.RightCI = 1; else DockSpace.WindowFraming[3] = Globals.interactWindow;
+                if (type != "top") Globals.interactWindow.BottomCI = 1; else DockSpace.WindowFraming[0] = Globals.interactWindow;
+                if (type != "bottom") Globals.interactWindow.TopCI = 0; else DockSpace.WindowFraming[1] = Globals.interactWindow;
                 Globals.interactWindow.docked = true;
                 ObjManager.toBack(Globals.interactWindow);
             }
@@ -50,25 +50,9 @@ namespace Kolibri.Source.Workspace.UIElements
 
         public override void Update(Vector2 OFFSET)
         {
-            if(Globals.GetBoxOverlap(rotPos, rotDim, Globals.mouse.newMousePos, Vector2.Zero))
-            {
-            }
-            if(type == "top")
-            {
-                Debug.WriteLine("WINDOW pos | x: " + rotPos.X + " y: " + rotPos.Y);
-                Debug.WriteLine("MOUSE pos | x: " + Globals.mouse.newMousePos.X + " y: " + Globals.mouse.newMousePos.Y);
-            }
-
             if (Globals.interactWindow != null && !Globals.interactWindow.docked)
             {
-                if (Globals.GetBoxOverlap(rotPos, rotDim, Globals.mouse.newMousePos, Vector2.Zero))
-                {
-                    color = selectedColor;
-                }
-                else
-                {
-                    color = normColor;
-                }
+                color = (Globals.GetBoxOverlap(rotPos, rotDim, Globals.mouse.newMousePos, Vector2.Zero)) ? selectedColor : normColor;
                 switch (type)
                 {
                     case "top":

@@ -13,12 +13,15 @@ namespace Kolibri.Source.Workspace
         static DockIcon top, bottom, left, right;
         static int border = 10;
         public static List<float> XConstraintValues = new List<float>(), YConstraintValues = new List<float>();
+        public static Window[] WindowFraming = new Window[4]; //0 = Top; 1 = Bottom; 2 = Right; 3 = Left
         static DockSpace()
         {
             top = new DockIcon("top");
             bottom = new DockIcon("bottom");
             left = new DockIcon("left");
             right = new DockIcon("right");
+
+            Array.Fill(WindowFraming, new Window(Vector2.Zero, Vector2.Zero, "null"));
 
             XConstraintValues.Add(0); //left Border
             YConstraintValues.Add(24); //top Border
@@ -30,10 +33,10 @@ namespace Kolibri.Source.Workspace
         {
             XConstraintValues[1] = Globals.screenWidth;
             YConstraintValues[1] = Globals.screenHeight - 24;
-            top.pos = new Vector2(Globals.screenWidth / 2 + top.dim.X / 2, border + 24 + top.dim.Y);
-            bottom.pos = new Vector2(Globals.screenWidth / 2 - bottom.dim.X / 2, Globals.screenHeight - bottom.dim.Y - border);
-            left.pos = new Vector2(border + left.dim.X / 2, Globals.screenHeight / 2 - left.dim.Y);
-            right.pos = new Vector2(Globals.screenWidth - border - right.dim.X / 2, Globals.screenHeight / 2 + right.dim.Y + border / 2);
+            top.pos = new Vector2((Globals.screenWidth - WindowFraming[2].dim.X - WindowFraming[3].dim.X) / 2 + top.dim.X / 2 + WindowFraming[3].dim.X, border + 24 + top.dim.Y + WindowFraming[0].dim.Y);
+            bottom.pos = new Vector2((Globals.screenWidth - WindowFraming[2].dim.X - WindowFraming[3].dim.X) / 2 - bottom.dim.X / 2 + WindowFraming[3].dim.X, Globals.screenHeight - bottom.dim.Y - border - WindowFraming[1].dim.Y);
+            left.pos = new Vector2(border + left.dim.X / 2 + WindowFraming[3].dim.X, (Globals.screenHeight - WindowFraming[1].dim.Y - WindowFraming[0].dim.Y) / 2 - left.dim.Y + WindowFraming[0].dim.Y);
+            right.pos = new Vector2(Globals.screenWidth - border - right.dim.X / 2 - WindowFraming[2].dim.X, (Globals.screenHeight - WindowFraming[1].dim.Y - WindowFraming[0].dim.Y) / 2 + right.dim.Y + border / 2 + WindowFraming[0].dim.Y);
             bottom.Update(Vector2.Zero);
             left.Update(Vector2.Zero);
             right.Update(Vector2.Zero);

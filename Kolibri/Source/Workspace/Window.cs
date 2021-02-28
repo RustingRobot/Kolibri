@@ -116,14 +116,14 @@ namespace Kolibri.Source.Workspace
 
             if (docked)
             {
-                if (LeftCW != null) pos.X = LeftCW.dim.X + LeftCW.pos.X;
+                if (LeftCW != null) pos.X = LeftCW.dim.X + LeftCW.pos.X - border;
                 
-                if (RightCW != null) dim.X = RightCW.pos.X - pos.X;
+                if (RightCW != null) dim.X = RightCW.pos.X - pos.X + border;
                 if (dim.X < minDim.X) pos.X -= minDim.X - dim.X;
                 
-                if (TopCW != null) pos.Y = TopCW.dim.Y + TopCW.pos.Y;
+                if (TopCW != null) pos.Y = TopCW.dim.Y + TopCW.pos.Y ;
                 
-                if (BottomCW != null) dim.Y = BottomCW.pos.Y - pos.Y;
+                if (BottomCW != null) dim.Y = BottomCW.pos.Y - pos.Y + border;
                 if (dim.Y < minDim.Y) pos.Y -= minDim.Y - dim.Y;
                 deleteButton.model = pinTexture;
             }

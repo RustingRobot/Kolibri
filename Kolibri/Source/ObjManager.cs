@@ -27,7 +27,7 @@ namespace Kolibri.Source
         }
         public virtual void Update()
         {
-            for (int i = 0; i < Windows.Count; i++) //dynamic windows update loop
+            for (int i = Windows.Count -1; i > -1; i--) //dynamic windows update loop
             {
                 Windows[i].Update(offset);
                 if (Windows[i].delete)

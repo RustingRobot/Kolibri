@@ -181,6 +181,7 @@ namespace Kolibri.Source.Workspace
                 if (this == DockSpace.WindowFraming[2]) DockSpace.WindowFraming[2] = RightCW;
                 if (this == DockSpace.WindowFraming[0]) DockSpace.WindowFraming[0] = TopCW;
                 if (this == DockSpace.WindowFraming[1]) DockSpace.WindowFraming[1] = BottomCW;
+                ObjManager.CWRemoveUpdate(this, TopCW, BottomCW, RightCW, LeftCW);
                 LeftCW = null;
                 RightCW = null;
                 TopCW = null;

@@ -66,5 +66,16 @@ namespace Kolibri.Source
             Windows.Remove(WINDOW);
             Windows = Windows.Prepend(WINDOW).ToList();
         }
+
+        public static void CWRemoveUpdate(Window removedWindow, Window Top, Window Bottom, Window Right, Window Left)
+        {
+            for (int i = 0; i < Windows.Count(); i++)
+            {
+                if (Windows[i].TopCW == removedWindow) Windows[i].TopCW = Top;
+                if (Windows[i].BottomCW == removedWindow) Windows[i].BottomCW = Bottom;
+                if (Windows[i].RightCW == removedWindow) Windows[i].RightCW = Right;
+                if (Windows[i].LeftCW == removedWindow) Windows[i].LeftCW = Left;
+            }
+        }
     }
 }

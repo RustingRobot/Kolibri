@@ -135,7 +135,7 @@ namespace Kolibri.Source.Workspace
 
             if (!Globals.mouse.LeftClickHold() && Globals.interactWindow == this)
             {
-                DockSpace.applyDocking();
+                if (!docked) DockSpace.applyDocking();
                 Globals.interactWindow = null;
                 for (int i = 0; i < dragged.Length; i++) dragged[i] = false;
             }

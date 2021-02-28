@@ -40,16 +40,17 @@ namespace Kolibri.Source.Workspace.UIElements
             if (Globals.GetBoxOverlap(rotPos, rotDim, Globals.mouse.newMousePos, Vector2.Zero))
             {
                 Window[] tempWindowFraming = DockSpace.WindowFraming;
-                if (type != "left") Globals.interactWindow.RightCW = tempWindowFraming[2];  //new Window(Globals.interactWindow.pos, Globals.interactWindow.dim, Globals.interactWindow.title);
-                if (type != "right") Globals.interactWindow.LeftCW = tempWindowFraming[3];  //new Window(Globals.interactWindow.pos, Globals.interactWindow.dim, Globals.interactWindow.title);
-                if (type != "bottom") Globals.interactWindow.TopCW = tempWindowFraming[0];  //new Window(Globals.interactWindow.pos, Globals.interactWindow.dim, Globals.interactWindow.title);
-                if (type != "top") Globals.interactWindow.BottomCW = tempWindowFraming[1];  //new Window(Globals.interactWindow.pos, Globals.interactWindow.dim, Globals.interactWindow.title);
+                if (type != "left") Globals.interactWindow.RightCW = tempWindowFraming[2];
+                if (type != "right") Globals.interactWindow.LeftCW = tempWindowFraming[3];
+                if (type != "bottom") Globals.interactWindow.TopCW = tempWindowFraming[0];
+                if (type != "top") Globals.interactWindow.BottomCW = tempWindowFraming[1];
                 if (type == "left") DockSpace.WindowFraming[3] = Globals.interactWindow;
                 if (type == "right") DockSpace.WindowFraming[2] = Globals.interactWindow;
                 if (type == "bottom") DockSpace.WindowFraming[1] = Globals.interactWindow;
                 if (type == "top") DockSpace.WindowFraming[0] = Globals.interactWindow;
                 Globals.interactWindow.docked = true;
                 ObjManager.toBack(Globals.interactWindow);
+                Debug.WriteLine("docking");
             }
         }
 

@@ -23,9 +23,9 @@ namespace Kolibri.Source.Workspace
             right = new DockIcon("right");
 
             topWin = new Window(new Vector2(0, 24), new Vector2(Globals.screenWidth, 0), "");
-            bottomWin = new Window(new Vector2(Globals.screenHeight, 0), new Vector2(Globals.screenWidth, 0), "");
+            bottomWin = new Window(new Vector2(0, Globals.screenHeight), new Vector2(Globals.screenWidth, 0), "");
             rightWin = new Window(new Vector2(Globals.screenWidth, 0), new Vector2(0, Globals.screenHeight), "");
-            leftWin = new Window(new Vector2(0, 0), new Vector2(0, Globals.screenHeight), "");
+            leftWin = new Window(new Vector2(0), new Vector2(0, Globals.screenHeight), "");
             //Array.Fill(WindowFraming, new Window(Vector2.Zero, Vector2.Zero, "null"));
 
 

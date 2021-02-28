@@ -126,7 +126,6 @@ namespace Kolibri.Source.Workspace
                 if (BottomCW != null) dim.Y = BottomCW.pos.Y - pos.Y + 24;
                 if (dim.Y < minDim.Y) pos.Y -= minDim.Y - dim.Y;
                 deleteButton.model = pinTexture;
-                Debug.WriteLine(TopCW.dim.Y);
             }
             else 
             { 

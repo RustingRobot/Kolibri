@@ -123,7 +123,7 @@ namespace Kolibri.Source.Workspace
                 
                 if (TopCW != null) pos.Y = TopCW.dim.Y + TopCW.pos.Y;
                 
-                if (BottomCW != null) dim.Y = BottomCW.pos.Y - pos.Y + 24;
+                if (BottomCW != null) dim.Y = BottomCW.pos.Y - pos.Y;
                 if (dim.Y < minDim.Y) pos.Y -= minDim.Y - dim.Y;
                 deleteButton.model = pinTexture;
             }
@@ -177,6 +177,10 @@ namespace Kolibri.Source.Workspace
         {
             if (docked)
             {
+                if (this == DockSpace.WindowFraming[3]) DockSpace.WindowFraming[3] = LeftCW;
+                if (this == DockSpace.WindowFraming[2]) DockSpace.WindowFraming[2] = RightCW;
+                if (this == DockSpace.WindowFraming[0]) DockSpace.WindowFraming[0] = TopCW;
+                if (this == DockSpace.WindowFraming[1]) DockSpace.WindowFraming[1] = BottomCW;
                 LeftCW = null;
                 RightCW = null;
                 TopCW = null;

@@ -12,7 +12,6 @@ namespace Kolibri.Source.Workspace
     {
         static DockIcon top, bottom, left, right;
         static int border = 10;
-        public static List<float> XConstraintValues = new List<float>(), YConstraintValues = new List<float>();
         public static Window[] WindowFraming = new Window[4]; //0 = Top; 1 = Bottom; 2 = Right; 3 = Left
         public static Window topWin, bottomWin, rightWin, leftWin;
         static DockSpace()
@@ -26,28 +25,26 @@ namespace Kolibri.Source.Workspace
             bottomWin = new Window(new Vector2(0, Globals.screenHeight), new Vector2(Globals.screenWidth, 0), "");
             rightWin = new Window(new Vector2(Globals.screenWidth, 0), new Vector2(0, Globals.screenHeight), "");
             leftWin = new Window(new Vector2(0), new Vector2(0, Globals.screenHeight), "");
-            //Array.Fill(WindowFraming, new Window(Vector2.Zero, Vector2.Zero, "null"));
-
 
             WindowFraming[0] = topWin;
             WindowFraming[1] = bottomWin;
             WindowFraming[2] = rightWin;
             WindowFraming[3] = leftWin;
-
-            XConstraintValues.Add(0); //left Border
-            YConstraintValues.Add(24); //top Border
-            XConstraintValues.Add(Globals.screenWidth); // right Border
-            YConstraintValues.Add(Globals.screenHeight - 24); //bottom Border
         }
 
         public static void Update()
         {
-            XConstraintValues[1] = Globals.screenWidth;
-            YConstraintValues[1] = Globals.screenHeight - 24;
-            top.pos = new Vector2((Globals.screenWidth - WindowFraming[2].dim.X - WindowFraming[3].dim.X) / 2 + top.dim.X / 2 + WindowFraming[3].dim.X, border + top.dim.Y + WindowFraming[0].dim.Y + WindowFraming[0].pos.Y);
-            bottom.pos = new Vector2((Globals.screenWidth - WindowFraming[2].dim.X - WindowFraming[3].dim.X) / 2 - bottom.dim.X / 2 + WindowFraming[3].dim.X, Globals.screenHeight - bottom.dim.Y - border - WindowFraming[1].dim.Y);
-            left.pos = new Vector2(border + left.dim.X / 2 + WindowFraming[3].dim.X, (Globals.screenHeight - WindowFraming[1].dim.Y - WindowFraming[0].dim.Y - WindowFraming[0].pos.Y) / 2 - left.dim.Y + WindowFraming[0].dim.Y + WindowFraming[0].pos.Y);
-            right.pos = new Vector2(Globals.screenWidth - border - right.dim.X / 2 - WindowFraming[2].dim.X, (Globals.screenHeight - WindowFraming[1].dim.Y - WindowFraming[0].dim.Y - WindowFraming[0].pos.Y) / 2 + right.dim.Y + border / 2 + WindowFraming[0].dim.Y + WindowFraming[0].pos.Y);
+            topWin.dim.X = Globals.screenWidth;
+            bottomWin.pos.Y = Globals.screenHeight;
+            bottomWin.dim.X = Globals.screenWidth;
+            rightWin.pos.X = Globals.screenWidth;
+            rightWin.dim.Y = Globals.screenHeight;
+            leftWin.dim.Y = Globals.screenHeight;
+
+            top.pos = new Vector2((Globals.screenWidth - (Globals.screenWidth - WindowFraming[2].pos.X) - WindowFraming[3].dim.X + WindowFraming[3].pos.X) / 2 + top.dim.X / 2 + WindowFraming[3].dim.X, border + top.dim.Y + WindowFraming[0].dim.Y + WindowFraming[0].pos.Y);
+            bottom.pos = new Vector2((Globals.screenWidth - (Globals.screenWidth - WindowFraming[2].pos.X) - WindowFraming[3].dim.X + WindowFraming[3].pos.X) / 2 - bottom.dim.X / 2 + WindowFraming[3].dim.X, Globals.screenHeight - bottom.dim.Y - border - WindowFraming[1].dim.Y);
+            left.pos = new Vector2(border + left.dim.X / 2 + WindowFraming[3].dim.X + WindowFraming[3].pos.X, (Globals.screenHeight - WindowFraming[1].dim.Y - WindowFraming[0].dim.Y - WindowFraming[0].pos.Y) / 2 - left.dim.Y + WindowFraming[0].dim.Y + WindowFraming[0].pos.Y);
+            right.pos = new Vector2(Globals.screenWidth - border - right.dim.X / 2 - (Globals.screenWidth - WindowFraming[2].pos.X), (Globals.screenHeight - WindowFraming[1].dim.Y - WindowFraming[0].dim.Y - WindowFraming[0].pos.Y) / 2 + right.dim.Y + border / 2 + WindowFraming[0].dim.Y + WindowFraming[0].pos.Y);
             bottom.Update(Vector2.Zero);
             left.Update(Vector2.Zero);
             right.Update(Vector2.Zero);

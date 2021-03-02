@@ -13,7 +13,7 @@ namespace Kolibri.Engine
     {
         private Texture2D square;
 
-        public EPrimitives()
+        public EPrimitives() 
         {
             square = Globals.content.Load<Texture2D>("Square");
             Globals.font = Globals.content.Load<SpriteFont>(Globals.SystemFont);

@@ -26,9 +26,9 @@ namespace Kolibri.Source.Workspace.UIElements
         {
             width = Globals.font.MeasureString(content).X * Globals.fontSize.X;
 
-            if (Globals.mouse.LeftClick())  //set selected mode
+            if (Globals.mouse.LeftClick())
             {
-                if(Globals.GetBoxOverlap(pos,dim,Globals.mouse.newMousePos, Vector2.Zero) && !selected)
+                if(Clicked() && !selected)   //set selected mode
                 {
                     color = new Color(140, 140, 140);
                     selected = true;

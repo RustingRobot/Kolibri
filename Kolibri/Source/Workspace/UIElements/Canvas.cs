@@ -28,7 +28,7 @@ namespace Kolibri.Source.Workspace.UIElements
         public override void Update(Vector2 OFFSET)
         {
             Globals.graphicsDevice.Textures[0] = null;
-            if (Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero) && Globals.mouse.LeftClickHold() && Globals.interactWindow == null) //only calculate if the mouse is supposed to draw on the canvas
+            if (MouseHover() && Globals.mouse.LeftClickHold() && Globals.interactWindow == null) //only calculate if the mouse is supposed to draw on the canvas
             {
                 drawLine(Globals.mouse.oldMousePos, Globals.mouse.newMousePos, Color.Gray);
             }

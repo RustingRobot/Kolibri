@@ -164,7 +164,7 @@ namespace Kolibri.Source.Workspace
             rs.ScissorTestEnable = true;
             Globals.spriteBatch.GraphicsDevice.RasterizerState = rs;
             Globals.spriteBatch.GraphicsDevice.ScissorRectangle = new Rectangle((int)(pos.X + border), (int)(pos.Y + handleHeight), (int)(dim.X - border * 2), (int)(dim.Y - border - handleHeight));
-            Globals.spriteBatch.Begin(rasterizerState: rs);
+            Globals.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, rasterizerState: rs);
         }
 
         public void endWindowContent()  //switch back to normal sprite batch

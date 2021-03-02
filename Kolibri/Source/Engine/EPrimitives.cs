@@ -12,7 +12,7 @@ namespace Kolibri.Engine
     public class EPrimitives    //draw basic shapes  //is linked to Globals!
     {
         private Texture2D square;
-
+        
         public EPrimitives() 
         {
             square = Globals.content.Load<Texture2D>("Square");

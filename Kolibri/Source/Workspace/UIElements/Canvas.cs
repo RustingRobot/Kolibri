@@ -6,11 +6,15 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Kolibri.Source.Workspace.UIElements
 {
     public class Canvas : UIElement //pixel grid to draw on
     {
+        public Vector2 offset = Vector2.Zero;
+        public float zoom = 1;
+
         Texture2D canvas;
         UInt32[] pixels;
 
@@ -30,10 +34,12 @@ namespace Kolibri.Source.Workspace.UIElements
             Globals.graphicsDevice.Textures[0] = null;
             if (MouseHover() && Globals.mouse.LeftClickHold() && Globals.interactWindow == null) //only calculate if the mouse is supposed to draw on the canvas
             {
-                drawLine(Globals.mouse.oldMousePos, Globals.mouse.newMousePos, Color.Gray);
+                Debug.WriteLine(Globals.mouse.oldMousePos.X / zoom);
+                drawLine((Globals.mouse.oldMousePos / zoom - offset), (Globals.mouse.newMousePos / zoom - offset), Color.Gray);
             }
+
             canvas.SetData<UInt32>(pixels, 0, (int)dim.X * (int)dim.Y);
-            base.Update(OFFSET);
+            base.Update(OFFSET + offset);
         }
 
         public void setPixel(Vector2 position, Color color)
@@ -53,12 +59,12 @@ namespace Kolibri.Source.Workspace.UIElements
                 setPixel(new Vector2(pos0.X, pos0.Y), color);
                 if (pos0.X == pos1.X && pos0.Y == pos1.Y) break;    //step end
                 int e2 = 2 * e;
-                if (e2 >= dy) 
+                if (e2 >= dy)
                 {
                     e += dy;
                     pos0.X += sx;
                 }
-                if (e2 <= dx) 
+                if (e2 <= dx)
                 {
                     e += dx;
                     pos0.Y += sy;
@@ -68,7 +74,7 @@ namespace Kolibri.Source.Workspace.UIElements
 
         public override void Draw(Vector2 OFFSET)
         {
-            Globals.spriteBatch.Draw(canvas, new Rectangle( (int)pos.X, (int)pos.Y, (int)dim.X, (int)dim.Y), Color.White);
+            Globals.spriteBatch.Draw(canvas, new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
         }
     }
 }

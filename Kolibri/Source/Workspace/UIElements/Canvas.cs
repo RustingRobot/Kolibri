@@ -12,10 +12,13 @@ namespace Kolibri.Source.Workspace.UIElements
     public class Canvas : UIElement //pixel grid to draw on
     {
         Texture2D canvas;
-        UInt32[] pixels;
+        public UInt32[] pixels;
+
+        
 
         public Canvas(Window WINDOW, Vector2 POS, Vector2 DIM) : base(WINDOW, POS, DIM)
         {
+            
             pos = POS;
             dim = DIM;
             canvas = new Texture2D(Globals.graphicsDevice, (int)dim.X, (int)dim.Y, false, SurfaceFormat.Color);
@@ -33,6 +36,9 @@ namespace Kolibri.Source.Workspace.UIElements
                 drawLine(Globals.mouse.oldMousePos, Globals.mouse.newMousePos, Color.Gray);
             }
             canvas.SetData<UInt32>(pixels, 0, (int)dim.X * (int)dim.Y);
+
+            
+
             base.Update(OFFSET);
         }
 

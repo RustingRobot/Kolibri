@@ -15,19 +15,21 @@ namespace Kolibri.Source.Workspace.Windows
 
         public CanvasWindow(Vector2 POS, Vector2 DIM) : base(POS, DIM, "Canvas")
         {
-            canvas = new Canvas(this, new Vector2(20, 35), new Vector2(400, 400));
+            canvas = new Canvas(this, new Vector2(20, 35), new Vector2(200, 400));
         }
 
         public override void Update(Vector2 OFFSET)
         {
             base.Update(OFFSET);
-            if(Globals.keyboard.newKeyboard.GetPressedKeys().Length > 0) Debug.WriteLine(Globals.keyboard.newKeyboard.GetPressedKeys()[0].ToString());
-            if(Globals.keyboard.GetPress("LeftShift"))
-                canvas.offset.X += (Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue) * 0.2f;
-            else if(Globals.keyboard.GetPress("LeftControl") && Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue != 0)
-                canvas.zoom += (Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue > 0)? 0.1f : -0.1f;
-            else
-                canvas.offset.Y += (Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue) * 0.2f; 
+            if (Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero))
+            {
+                if (Globals.keyboard.GetPress("LeftShift"))
+                    canvas.offset.X += (Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue) * 0.2f;
+                else if (Globals.keyboard.GetPress("LeftControl") && Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue != 0)
+                    canvas.zoom += (Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue > 0) ? 0.1f : -0.1f;
+                else
+                    canvas.offset.Y += (Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue) * 0.2f;
+            }
             canvas.Update(OFFSET);
         }
 

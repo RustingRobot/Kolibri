@@ -34,8 +34,8 @@ namespace Kolibri.Source.Workspace.UIElements
             Globals.graphicsDevice.Textures[0] = null;
             if (MouseHover() && Globals.mouse.LeftClickHold() && Globals.interactWindow == null) //only calculate if the mouse is supposed to draw on the canvas
             {
-                Debug.WriteLine(Globals.mouse.oldMousePos.X / zoom);
-                drawLine((Globals.mouse.oldMousePos / zoom - offset), (Globals.mouse.newMousePos / zoom - offset), Color.Gray);
+                Debug.WriteLine(zoom);
+                drawLine((Globals.mouse.oldMousePos - offset), (Globals.mouse.newMousePos - offset), Color.Gray);
             }
 
             canvas.SetData<UInt32>(pixels, 0, (int)dim.X * (int)dim.Y);
@@ -45,7 +45,7 @@ namespace Kolibri.Source.Workspace.UIElements
         public void setPixel(Vector2 position, Color color)
         {
             if((int)(position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X) < pixels.Length && (int)(position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X) > 0)
-                pixels[(int)(position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X)] = (uint)((color.A << 24) | (color.B << 16) | (color.G << 8) | (color.R << 0));
+                pixels[(int)((position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X))] = (uint)((color.A << 24) | (color.B << 16) | (color.G << 8) | (color.R << 0));
         }
 
         public void drawLine(Vector2 pos0, Vector2 pos1, Color color)   //implementation of Bresenham's line algorithm

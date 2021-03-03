@@ -21,5 +21,19 @@ namespace Kolibri.Source.Workspace
             if(window != null) pos = relativePos + window.pos; //pos needs to be a combination of the windows position and an offset. It also has to be updated every frame
             base.Update(OFFSET);
         }
+
+        public bool Clicked()
+        {
+            if (window != null)
+                return Globals.mouse.LeftClick() && Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero) && Globals.GetBoxOverlap(new Vector2(window.pos.X + window.border, window.pos.Y + window.handleHeight), new Vector2(window.dim.X - window.border * 2, window.dim.Y - window.border - window.handleHeight), Globals.mouse.newMousePos, Vector2.Zero);
+            return false;
+        }
+
+        public bool MouseHover()
+        {
+            if(window != null)
+                return Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero) && Globals.GetBoxOverlap(new Vector2(window.pos.X + window.border, window.pos.Y + window.handleHeight), new Vector2(window.dim.X - window.border * 2, window.dim.Y - window.border - window.handleHeight), Globals.mouse.newMousePos, Vector2.Zero);
+            return false;
+        }
     }
 }

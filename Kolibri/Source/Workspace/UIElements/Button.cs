@@ -27,10 +27,10 @@ namespace Kolibri.Source.Workspace.UIElements
 
        public override void Update(Vector2 OFFSET)
        {
-            if (Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero))
+            if (MouseHover())
             {
                 if(!Globals.mouse.LeftClickHold()) color = hoverColor;
-                if (Globals.mouse.LeftClick())
+                if (Clicked())
                 {
                      color = clickColor;
                      ClickEvent();   //let instantiator decide what function gets called

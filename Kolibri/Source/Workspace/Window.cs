@@ -16,8 +16,8 @@ namespace Kolibri.Source.Workspace
         public Window LeftCW, RightCW, TopCW, BottomCW; // CI = Constraint Index
         public bool docked = false;
         public string title;
+        public float handleHeight = 20, border = 3, initXPos, initXWidth;
 
-        float handleHeight = 20, border = 3, initXPos, initXWidth;
         bool[] dragged = new bool[4];    //0 = Handle; 1 = Bottom; 2 = Right; 3 = Left
         Vector2 clickOffset, undockedDim;
         Color defaultBorder, selectedBorder;

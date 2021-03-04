@@ -9,7 +9,6 @@ namespace Kolibri.Source.Workspace.UIElements
     {
   
         public string label;
-        private bool ButtonClicked;
         public delegate void Event();
         public Event ClickEvent;
         public Vector2 strSize;

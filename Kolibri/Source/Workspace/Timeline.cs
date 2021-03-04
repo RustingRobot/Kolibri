@@ -14,7 +14,7 @@ namespace Kolibri.Source.Workspace
 {
     public class Timeline
     {
-        public int currentFrame = 0;
+        public int currentFrame = 0, selectEndFrame;
         public List<Frame> frames = new List<Frame>();
 
         Window window;
@@ -36,16 +36,46 @@ namespace Kolibri.Source.Workspace
 
         public void Update()
         {
+            if (Globals.keyboard.OnPress("Left") && currentFrame > 0 && selectEndFrame > 0) 
+            {
+                selectEndFrame--;
+                if (!Globals.keyboard.GetPress("LeftShift"))
+                {
+                    currentFrame--;
+                    Globals.canvas.pixels = frames[currentFrame].pixels;
+                }
+            }
+            else if (Globals.keyboard.OnPress("Right") && currentFrame < frames.Count - 1 && selectEndFrame < frames.Count - 1) 
+            {
+                selectEndFrame++;
+                if (!Globals.keyboard.GetPress("LeftShift"))
+                {
+                    currentFrame++;
+                    Globals.canvas.pixels = frames[currentFrame].pixels;
+                }
+            }
+
             for (int i = 0; i < frames.Count; i++)
             {
                 frames[i].Update(new Vector2(70 + (i * (frames[i].dim.X + 2)), 55));
             }
 
-            Debug.WriteLine(frames.Count);
             if(window.dim.X / (frames[0].dim.X + 2) > frames.Count)
             {
                 frames.Add(new Frame(window, this));
             }
-        }     
+        }
+
+        public void clearFrames()
+        {
+            int i = currentFrame;
+            frames[i].clearFrame();
+            while (selectEndFrame != i)
+            {
+                i += (selectEndFrame > i) ? 1 : -1;
+                frames[i].clearFrame();
+                
+            }
+        }
     }
 }

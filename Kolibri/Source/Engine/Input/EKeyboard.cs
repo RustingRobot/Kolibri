@@ -43,12 +43,31 @@ namespace Kolibri.Engine.Input
             }
         }
 
-        public bool GetPress(string KEY)
+        public bool GetPress(string KEY) //if button is pressed
         {
             for (int i = 0; i < pressedKeys.Count; i++)
             {
                 if(pressedKeys[i].key == KEY)
                 {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool OnPress(string KEY) //if button was pressed on frame
+        {
+            for (int i = 0; i < pressedKeys.Count; i++)
+            {
+                if (pressedKeys[i].key == KEY)
+                {
+                    for (int j = 0; j < previousPressedKeys.Count; j++)
+                    {
+                        if (previousPressedKeys[j].key == KEY)
+                        {
+                            return false;
+                        }
+                    }
                     return true;
                 }
             }

@@ -14,38 +14,33 @@ namespace Kolibri.Source.Workspace.Windows
     {
         public Timeline timeline;
 
-        //Button clearFrameBtn;
+        Button clearFrameBtn;
         Texture2D clearFrame;
 
-        public TimelineWindow( Vector2 POS, Vector2 DIM) : base(POS, DIM, "")
+        public TimelineWindow( Vector2 POS, Vector2 DIM) : base(POS, DIM, "Timeline")
         {   
             timeline = new Timeline(this);
-            //clearFrameBtn = new Button(clearCurrentFrame, this, new Vector2(7, 24), new Vector2(18, 18), "clear");
+            clearFrameBtn = new Button(timeline.clearFrames, this, new Vector2(7, 24), new Vector2(18, 18), "");
 
             clearFrame = Globals.content.Load<Texture2D>("clearFrame");
 
-            //clearFrameBtn.normColor = Color.Transparent;
-            //clearFrameBtn.imgSize = new Vector2(0.9f, 0.9f);
+            clearFrameBtn.normColor = Color.Transparent;
+            clearFrameBtn.imgSize = new Vector2(0.6f, 0.6f);
             //clearFrameBtn.model = clearFrame;
         }
 
         public override void Update(Vector2 OFFSET)
         {
             base.Update(OFFSET);
-            //clearFrameBtn.Update(OFFSET);
+            clearFrameBtn.Update(OFFSET);
             timeline.Update();
-        }
-
-        public void clearCurrentFrame()
-        {
-            timeline.frames[timeline.currentFrame].clearFrame();
         }
 
         public override void Draw(Vector2 OFFSET, Color COLOR)
         {
             base.Draw(OFFSET, COLOR);
             beginWindowContent();
-            //clearFrameBtn.Draw(OFFSET);
+            clearFrameBtn.Draw(OFFSET);
             Globals.primitives.DrawLine(new Vector2(pos.X, pos.Y + 47), new Vector2(pos.X + dim.X, pos.Y + 47), 2, new Color(39, 44, 48));
             timeline.Draw();
             endWindowContent();

@@ -14,11 +14,11 @@ namespace Kolibri.Source.Workspace
 {
     public class Frame: UIElement
     {
-        UInt32[] pixels;
+        public UInt32[] pixels;
         Timeline timeline;
 
         Color color;
-        int border = 2;
+        int border = 2, index;
 
         public Frame(Window WINDOW, Timeline TIMELINE): base(WINDOW, Vector2.Zero, new Vector2(15, 25))
         {
@@ -36,6 +36,7 @@ namespace Kolibri.Source.Workspace
         public override void Update(Vector2 OFFSET)
         {
             pos = OFFSET + window.pos;
+            index = timeline.frames.IndexOf(this);
             if (timeline.frames[timeline.currentFrame] == this)
             {
                 color = new Color(60, 104, 148);
@@ -46,9 +47,17 @@ namespace Kolibri.Source.Workspace
                 color = Color.LightGray;
                 if (Clicked())
                 {
-                    timeline.currentFrame = timeline.frames.IndexOf(this);
-                    Globals.canvas.pixels = pixels;
+                    timeline.selectEndFrame = index;
+                    if (!Globals.keyboard.GetPress("LeftShift"))
+                    {
+                        timeline.currentFrame = index;
+                        Globals.canvas.pixels = pixels;
+                    }
                 }
+            }
+            else if ((index <= timeline.selectEndFrame && index > timeline.currentFrame) || (index >= timeline.selectEndFrame && index < timeline.currentFrame))
+            {
+                color = new Color(104, 152, 165);
             }
             else color = Color.Gray;
             base.Update(OFFSET);

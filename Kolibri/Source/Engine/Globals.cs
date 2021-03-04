@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Kolibri.Engine.Input;
 using Kolibri.Source.Workspace;
+using Kolibri.Source.Workspace.UIElements;
 #endregion
 
 namespace Kolibri.Engine
@@ -33,6 +34,7 @@ namespace Kolibri.Engine
         public static SpriteBatch spriteBatch;
         public static EPrimitives primitives;
         public static GraphicsDevice graphicsDevice;
+        public static Canvas canvas;
 
         public static EKeyboard keyboard;
         public static EMouseControl mouse;

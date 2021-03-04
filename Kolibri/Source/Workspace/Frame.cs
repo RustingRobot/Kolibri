@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Kolibri.Source.Workspace
 {
@@ -15,38 +16,28 @@ namespace Kolibri.Source.Workspace
     {
         UInt32[] pixels;
 
-        Frame predFrame;
-        Frame succFrame;
-        Canvas canvas;
-        public Frame(Canvas CANVAS, Window WINDOW,Frame PRED, Frame SUCC, Vector2 POS, Vector2 DIM): base(WINDOW, POS, DIM)
+        public Frame(Window WINDOW): base(WINDOW, Vector2.Zero, new Vector2(15, 25))
         {
-            canvas = CANVAS;
-            pos = POS;
-            dim = DIM;
-            pixels = new uint[(int)canvas.dim.X*(int)canvas.dim.Y]; //hier wäre ja die Dimension des Objektes Canvas der Klasse Canvas gut, aber wie lässt sich das aufrufen 
-            for (int i = 0; i < pixels.Length; i++) /*wenn ein Frame hinzugefügt wird, ist der erstmal Weiß, 
-                                                    dann kann man ja wenn man die Timeline hat, sich in einem 
-                                                    bestimmten Frame befindet(also der aktuelle), und auf 
-                                                    einen Button klickt der dann die Pixels vom Canvas auf den 
-                                                    aktuellen Frame kopiert*/
+            pixels = new uint[(int)Globals.canvas.dim.X*(int)Globals.canvas.dim.Y];
+            /*wenn ein Frame hinzugefügt wird, ist der erstmal Weiß, 
+            dann kann man ja wenn man die Timeline hat, sich in einem 
+            bestimmten Frame befindet(also der aktuelle), und auf 
+            einen Button klickt der dann die Pixels vom Canvas auf den 
+            aktuellen Frame kopiert*/
+            for (int i = 0; i < pixels.Length; i++) 
             {
-                pixels[i] = 0xFFFFFFFF;
+                pixels[i] = 0xFFFFFF00;
             }
-            predFrame = PRED;
-            succFrame = SUCC;
         }
 
         public override void Update(Vector2 OFFSET)
         {
-            
+            base.Update(OFFSET);
         }
         public override void Draw(Vector2 OFFSET)
         {
-           /*so n kleines Vorschau-Fenster für den Frame(wie Folien bei Präsentationen) 
-           sollten in der Timeline erstellt werden, dass dort immer der aktuellen Frame 
-           dann abgebildet wird, also dass man da z.B. drei Frames anzeigen lässt und 
-           dann wenn man auf so nen Pfeil klickt, der halt die Frames davor bzw. dahinter 
-           anzeigt und ein markierter Frame ist der aktuelle*/
+            Globals.primitives.DrawRect(OFFSET + window.pos, dim, Color.Gray);
+            Debug.WriteLine("hi");
         }
     }
 }

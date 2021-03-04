@@ -19,10 +19,13 @@ namespace Kolibri.Source
         {
             Globals.PassWindow = AddWindow;
             offset = Vector2.Zero;
+
+            Window canvasWindow = new CanvasWindow(new Vector2(50, 50), new Vector2(400, 400));
+            Globals.canvas = new Canvas(canvasWindow, new Vector2(20, 35), new Vector2(200, 200));
             //add windows
             Globals.PassWindow(new Window(new Vector2(500,50),new Vector2(300,250),"I am a blank window"));
-            Globals.PassWindow(new TestWindow(new Vector2(500, 350), new Vector2(400, 200)));
-            Globals.PassWindow(new CanvasWindow(new Vector2(50, 50), new Vector2(400, 400)));
+            Globals.PassWindow(new TimelineWindow(new Vector2(500, 350), new Vector2(400, 200)));
+            Globals.PassWindow(canvasWindow);
             menu = new Menu(Vector2.Zero, new Vector2(1000, 24));
         }
         public virtual void Update()

@@ -14,9 +14,9 @@ namespace Kolibri.Source.Workspace.UIElements
     {
         public Vector2 offset = Vector2.Zero;
         public float zoom = 1;
+        public UInt32[] pixels;
 
         Texture2D canvas;
-        UInt32[] pixels;
 
         public Canvas(Window WINDOW, Vector2 POS, Vector2 DIM) : base(WINDOW, POS, DIM)
         {

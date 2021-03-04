@@ -8,12 +8,13 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Kolibri.Source.Workspace
 {
     public class Timeline
     {
-        public int currentFrame = 1;
+        public int currentFrame = 0;
         public List<Frame> frames = new List<Frame>();
 
         Window window;
@@ -21,35 +22,30 @@ namespace Kolibri.Source.Workspace
         public Timeline(Window WINDOW)
         {
             window = WINDOW;
-            frames.Add(new Frame(window));
-            frames.Add(new Frame(window));
-            frames.Add(new Frame(window));
+            frames.Add(new Frame(window, this));
         }
 
         public void Draw()
         {
+            Globals.primitives.DrawTxt("Layer 1", new Vector2(10, 58) + window.pos,Globals.fontSize, Color.Gray);
             for (int i = 0; i < frames.Count; i++)
             {
-                frames[i].Draw(new Vector2(30 + (i * (frames[i].dim.X + 5)), 80));
+                frames[i].Draw(new Vector2(70 + (i * (frames[i].dim.X + 2)), 55));
             }
         }
 
-
-        public void addFrame()
+        public void Update()
         {
-            frames.Insert(currentFrame + 1,new Frame(window));     //erstmal am Ende hinzugefügt
-            currentFrame++;
-        }
+            for (int i = 0; i < frames.Count; i++)
+            {
+                frames[i].Update(new Vector2(70 + (i * (frames[i].dim.X + 2)), 55));
+            }
 
-        public void deleteFrame()
-        {
-            frames.RemoveAt(currentFrame);
-        }
-
-        public void swapFrames()
-        {
-            
-        }
-         
+            Debug.WriteLine(frames.Count);
+            if(window.dim.X / (frames[0].dim.X + 2) > frames.Count)
+            {
+                frames.Add(new Frame(window, this));
+            }
+        }     
     }
 }

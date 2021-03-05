@@ -10,8 +10,8 @@ namespace Kolibri
 {
     public class Main : Game
     {
-        private GraphicsDeviceManager graphics;
-        private ObjManager om;
+        GraphicsDeviceManager graphics;
+        ObjManager om;
         public Main()
         {
             graphics = new GraphicsDeviceManager(this);

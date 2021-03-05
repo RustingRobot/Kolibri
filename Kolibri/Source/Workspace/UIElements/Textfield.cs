@@ -10,7 +10,8 @@ namespace Kolibri.Source.Workspace.UIElements
 {
     public class Textfield : UIElement
     {
-        private string content, lastChar;
+        public string content, lastChar;
+        public bool numberField;
         private float width, txtHeight;
         private bool selected;
         public Color color;
@@ -44,8 +45,12 @@ namespace Kolibri.Source.Workspace.UIElements
             {
                 if(Globals.keyboard.pressedKeys[0].print != lastChar && width < dim.X - 0.1f && selected)
                 {
-                    lastChar = Globals.keyboard.pressedKeys[0].print;
-                    content += lastChar;
+                    int number;
+                    if(!(numberField && !Int32.TryParse(Globals.keyboard.pressedKeys[0].print, out number)))
+                    {
+                        lastChar = Globals.keyboard.pressedKeys[0].print;
+                        content += lastChar;
+                    }
                 }
             }
             else

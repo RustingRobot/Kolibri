@@ -34,7 +34,6 @@ namespace Kolibri.Source.Workspace.UIElements
             Globals.graphicsDevice.Textures[0] = null;
             if (MouseHover() && Globals.mouse.LeftClickHold() && Globals.interactWindow == null) //only calculate if the mouse is supposed to draw on the canvas
             {
-                Debug.WriteLine(zoom);
                 drawLine((Globals.mouse.oldMousePos - offset), (Globals.mouse.newMousePos - offset), Color.Gray);
             }
 

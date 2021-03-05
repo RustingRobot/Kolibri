@@ -13,6 +13,7 @@ namespace Kolibri.Source.Workspace.Windows
     class TimelineWindow : Window
     {
         public Timeline timeline;
+        public PlaybackWindow pbWindow;
 
         Button clearFrameBtn;
         Texture2D clearFrame;

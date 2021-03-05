@@ -66,6 +66,27 @@ namespace Kolibri.Source.Workspace
             }
         }
 
+        public void nextFrame()
+        {
+            selectEndFrame++;
+            currentFrame++;
+            Globals.canvas.pixels = frames[currentFrame].pixels;
+        }
+
+        public void prevFrame()
+        {
+            selectEndFrame--;
+            currentFrame--;
+            Globals.canvas.pixels = frames[currentFrame].pixels;
+        }
+
+        public void gotoFrame(int FRAME)
+        {
+            selectEndFrame = FRAME;
+            currentFrame = FRAME;
+            Globals.canvas.pixels = frames[FRAME].pixels;
+        }
+
         public void clearFrames()
         {
             int i = currentFrame;

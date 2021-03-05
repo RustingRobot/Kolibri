@@ -25,10 +25,11 @@ namespace Kolibri.Source
             //add windows
             Globals.PassWindow(new Window(new Vector2(500,50),new Vector2(300,250),"I am a blank window"));
             Globals.PassWindow(new TimelineWindow(new Vector2(500, 350), new Vector2(400, 200)));
+            Globals.PassWindow(new PlaybackWindow(new Vector2(50, 500), new Vector2(300, 200)));
             Globals.PassWindow(canvasWindow);
             menu = new Menu(Vector2.Zero, new Vector2(1000, 24));
         }
-        public virtual void Update()
+        public void Update()
         {
             for (int i = Windows.Count -1; i > -1; i--) //dynamic windows update loop
             {
@@ -43,7 +44,7 @@ namespace Kolibri.Source
             menu.Update(offset);
         }
 
-        public virtual void Draw()
+        public void Draw()
         {
             for (int i = 0; i < Windows.Count; i++) //dynamic windows draw loop
             {

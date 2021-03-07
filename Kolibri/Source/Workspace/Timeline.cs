@@ -16,18 +16,20 @@ namespace Kolibri.Source.Workspace
     {
         public int currentFrame = 0, selectEndFrame;
         public List<Frame> frames = new List<Frame>();
-
+        
+        int layerIndex;
         Window window;
 
-        public Timeline(Window WINDOW)
+        public Timeline(int LAYERINDEX,Window WINDOW)
         {
+            layerIndex = LAYERINDEX;
             window = WINDOW;
-            frames.Add(new Frame(window, this));
+            frames.Add(new Frame(layerIndex,window, this));
         }
 
         public void Draw()
         {
-            Globals.primitives.DrawTxt("Layer 1", new Vector2(10, 58) + window.pos,Globals.fontSize, Color.Gray);
+            //Globals.primitives.DrawTxt("Layer 1", new Vector2(10, 58) + window.pos,Globals.fontSize, Color.Gray);
             for (int i = 0; i < frames.Count; i++)
             {
                 frames[i].Draw(new Vector2(70 + (i * (frames[i].dim.X + 2)), 55));
@@ -62,7 +64,7 @@ namespace Kolibri.Source.Workspace
 
             if(window.dim.X / (frames[0].dim.X + 2) > frames.Count)
             {
-                frames.Add(new Frame(window, this));
+                frames.Add(new Frame(layerIndex,window, this));
             }
         }
 

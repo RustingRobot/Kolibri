@@ -12,6 +12,7 @@ namespace Kolibri
     {
         GraphicsDeviceManager graphics;
         ObjManager om;
+        Texture2D colorMap;
         public Main()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -52,6 +53,7 @@ namespace Kolibri
             Globals.primitives = new EPrimitives();
             Globals.graphicsDevice = GraphicsDevice;
             om = new ObjManager();
+            colorMap = Content.Load<Texture2D>("ColorMap");
         }
 
         protected override void Update(GameTime gameTime)   //main update loop

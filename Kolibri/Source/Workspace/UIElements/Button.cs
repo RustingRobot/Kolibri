@@ -36,6 +36,7 @@ namespace Kolibri.Source.Workspace.UIElements
                 }
             }
             else color = normColor;
+  
             base.Update(OFFSET);
        }
 

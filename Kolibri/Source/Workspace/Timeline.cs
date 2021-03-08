@@ -20,8 +20,11 @@ namespace Kolibri.Source.Workspace
         int layerIndex;
         Window window;
 
-        public Timeline(int LAYERINDEX,Window WINDOW)
+        Layer layer;
+
+        public Timeline(Layer LAYER, int LAYERINDEX,Window WINDOW)
         {
+            layer = LAYER;
             layerIndex = LAYERINDEX;
             window = WINDOW;
             frames.Add(new Frame(layerIndex,window, this));
@@ -29,6 +32,7 @@ namespace Kolibri.Source.Workspace
 
         public void Draw()
         {
+            
             //Globals.primitives.DrawTxt("Layer 1", new Vector2(10, 58) + window.pos,Globals.fontSize, Color.Gray);
             for (int i = 0; i < frames.Count; i++)
             {
@@ -38,33 +42,36 @@ namespace Kolibri.Source.Workspace
 
         public void Update()
         {
-            if (Globals.keyboard.OnPress("Left") && currentFrame > 0 && selectEndFrame > 0) 
+            if(layer.currentLayer == true)
             {
-                selectEndFrame--;
-                if (!Globals.keyboard.GetPress("LeftShift"))
+                if (Globals.keyboard.OnPress("Left") && currentFrame > 0 && selectEndFrame > 0) 
                 {
-                    currentFrame--;
-                    Globals.canvas.pixels = frames[currentFrame].pixels;
+                    selectEndFrame--;
+                    if (!Globals.keyboard.GetPress("LeftShift"))
+                    {
+                        currentFrame--;
+                        Globals.canvas.pixels = frames[currentFrame].pixels;
+                    }
                 }
-            }
-            else if (Globals.keyboard.OnPress("Right") && currentFrame < frames.Count - 1 && selectEndFrame < frames.Count - 1) 
-            {
-                selectEndFrame++;
-                if (!Globals.keyboard.GetPress("LeftShift"))
+                else if (Globals.keyboard.OnPress("Right") && currentFrame < frames.Count - 1 && selectEndFrame < frames.Count - 1) 
                 {
-                    currentFrame++;
-                    Globals.canvas.pixels = frames[currentFrame].pixels;
+                    selectEndFrame++;
+                    if (!Globals.keyboard.GetPress("LeftShift"))
+                    {
+                        currentFrame++;
+                        Globals.canvas.pixels = frames[currentFrame].pixels;
+                    }
                 }
-            }
 
-            for (int i = 0; i < frames.Count; i++)
-            {
-                frames[i].Update(new Vector2(70 + (i * (frames[i].dim.X + 2)), 55));
-            }
+                for (int i = 0; i < frames.Count; i++)
+                {
+                    frames[i].Update(new Vector2(70 + (i * (frames[i].dim.X + 2)), 55));
+                }
 
-            if(window.dim.X / (frames[0].dim.X + 2) > frames.Count)
-            {
-                frames.Add(new Frame(layerIndex,window, this));
+                if(window.dim.X / (frames[0].dim.X + 2) > frames.Count)
+                {
+                    frames.Add(new Frame(layerIndex,window, this));
+                }
             }
         }
 

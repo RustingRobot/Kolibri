@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Kolibri.Source.Workspace.UIElements;
+
 
 namespace Kolibri.Source.Workspace.UIElements
 {
@@ -15,6 +17,8 @@ namespace Kolibri.Source.Workspace.UIElements
         public Vector2 offset = Vector2.Zero;
         public float zoom = 1;
         public UInt32[] pixels;
+        private Color color;
+        private ColorPicker cp;
 
         Texture2D canvas;
 
@@ -34,7 +38,11 @@ namespace Kolibri.Source.Workspace.UIElements
             Globals.graphicsDevice.Textures[0] = null;
             if (MouseHover() && Globals.mouse.LeftClickHold() && Globals.interactWindow == null) //only calculate if the mouse is supposed to draw on the canvas
             {
-                drawLine((Globals.mouse.oldMousePos - offset), (Globals.mouse.newMousePos - offset), Color.Gray);
+                if (cp == null)
+                {
+                    cp = (ColorPicker)ObjManager.Windows.Find(x => x.GetType().Name == "ColorPicker");
+                }
+                drawLine((Globals.mouse.oldMousePos - offset), (Globals.mouse.newMousePos - offset), cp.currentColor);
             }
 
             canvas.SetData<UInt32>(pixels, 0, (int)dim.X * (int)dim.Y);

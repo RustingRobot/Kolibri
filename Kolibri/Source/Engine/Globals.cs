@@ -28,7 +28,7 @@ namespace Kolibri.Engine
         public static PassObject PassWindow;
         public static Window interactWindow;
         public static float screenHeight, screenWidth;
-        public static string SystemFont;
+        public static string SystemFont, activeTool;
         public static Vector2 fontSize;
         public static SpriteFont font;
         public static ContentManager content;

@@ -31,7 +31,7 @@ namespace Kolibri.Source.Workspace
 
         public bool MouseHover()
         {
-            if(window != null)
+            if (window != null)
                 return Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero) && Globals.GetBoxOverlap(new Vector2(window.pos.X + window.border, window.pos.Y + window.border), new Vector2(window.dim.X - window.border * 2, window.dim.Y - window.border * 2), Globals.mouse.newMousePos, Vector2.Zero);
             return false;
         }

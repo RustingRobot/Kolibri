@@ -8,9 +8,11 @@ namespace Kolibri.Source.Workspace.UIElements
     public class Button : UIElement
     {
   
-        public string label;
+        public string label, option;
         public delegate void Event();
+        public delegate void optionEvent(string s);
         public Event ClickEvent;
+        public optionEvent ClickOptionEvent;
         public Vector2 strSize;
         public Color color, normColor, hoverColor, clickColor;
        public Button(Event CLICKEVENT, Window WINDOW, Vector2 POS, Vector2 DIM, string LABEL) :base(WINDOW, POS, DIM)
@@ -24,7 +26,19 @@ namespace Kolibri.Source.Workspace.UIElements
            clickColor = new Color(150, 150, 150);
        }
 
-       public override void Update(Vector2 OFFSET)
+        public Button(optionEvent CLICKEVENT, string OPTION, Window WINDOW, Vector2 POS, Vector2 DIM, string LABEL) : base(WINDOW, POS, DIM)
+        {
+            ClickOptionEvent = CLICKEVENT;
+            option = OPTION;
+            label = LABEL;
+            window = WINDOW;
+            strSize = Globals.font.MeasureString(label) * Globals.fontSize.X;
+            normColor = new Color(100, 100, 100);
+            hoverColor = new Color(120, 120, 120);
+            clickColor = new Color(150, 150, 150);
+        }
+
+        public override void Update(Vector2 OFFSET)
        {
             if (MouseHover())
             {
@@ -32,7 +46,10 @@ namespace Kolibri.Source.Workspace.UIElements
                 if (Clicked())
                 {
                      color = clickColor;
-                     ClickEvent();   //let instantiator decide what function gets called
+                    if (ClickOptionEvent == null)
+                        ClickEvent();   //let instantiator decide what function gets called
+                    else
+                        ClickOptionEvent(option);
                 }
             }
             else color = normColor;

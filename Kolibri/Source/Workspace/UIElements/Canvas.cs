@@ -34,7 +34,20 @@ namespace Kolibri.Source.Workspace.UIElements
             Globals.graphicsDevice.Textures[0] = null;
             if (MouseHover() && Globals.mouse.LeftClickHold() && Globals.interactWindow == null) //only calculate if the mouse is supposed to draw on the canvas
             {
-                drawLine((Globals.mouse.oldMousePos - offset), (Globals.mouse.newMousePos - offset), Color.Gray);
+                switch (Globals.activeTool)
+                {
+                    case ("Brush"):
+                        drawLine(Globals.mouse.oldMousePos - offset, Globals.mouse.newMousePos - offset, Color.Gray);
+                        break;
+                    case ("Erasor"):
+                        drawLine(Globals.mouse.oldMousePos - offset, Globals.mouse.newMousePos - offset, Color.White);
+                        break;
+                    case ("BucketFill"):
+                        FloodFill(Globals.mouse.newMousePos - offset, Color.Gray);
+                        break;
+                    default:
+                        break;
+                }
             }
 
             canvas.SetData<UInt32>(pixels, 0, (int)dim.X * (int)dim.Y);
@@ -43,8 +56,18 @@ namespace Kolibri.Source.Workspace.UIElements
 
         public void setPixel(Vector2 position, Color color)
         {
-            if((int)(position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X) < pixels.Length && (int)(position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X) > 0)
+            if((int)(position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X) < pixels.Length && (int)(position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X) >= 0)
                 pixels[(int)((position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X))] = (uint)((color.A << 24) | (color.B << 16) | (color.G << 8) | (color.R << 0));
+        }
+
+        public Color getPixel(Vector2 position)
+        {
+            if ((int)(position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X) < pixels.Length && (int)(position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X) >= 0)
+            {
+                return new Color(pixels[(int)((position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X))]);
+            }
+            else
+                return Color.Transparent;
         }
 
         public void drawLine(Vector2 pos0, Vector2 pos1, Color color)   //implementation of Bresenham's line algorithm
@@ -70,6 +93,72 @@ namespace Kolibri.Source.Workspace.UIElements
                 }
             }
         }
+
+        void drawCircle(Vector2 centerPos, int x, int y)
+        {
+            setPixel(new Vector2(centerPos.X + x, centerPos.Y + y), Color.Gray);
+            setPixel(new Vector2(centerPos.X - x, centerPos.Y + y), Color.Gray);
+            setPixel(new Vector2(centerPos.X + x, centerPos.Y - y), Color.Gray);
+            setPixel(new Vector2(centerPos.X - x, centerPos.Y - y), Color.Gray);
+            setPixel(new Vector2(centerPos.X + y, centerPos.Y + x), Color.Gray);
+            setPixel(new Vector2(centerPos.X - y, centerPos.Y + x), Color.Gray);
+            setPixel(new Vector2(centerPos.X + y, centerPos.Y - x), Color.Gray);
+            setPixel(new Vector2(centerPos.X - y, centerPos.Y - x), Color.Gray);
+        }
+
+        public void drawCircle(Vector2 centerPos, int r)
+        {
+            int x = 0, y = r;
+            int d = 3 - 2 * r;
+            drawCircle(centerPos, x, y);
+            while (y >= x)
+            {
+                // for each pixel we will
+                // draw all eight pixels
+
+                x++;
+
+                // check for decision parameter
+                // and correspondingly 
+                // update d, x, y
+                if (d > 0)
+                {
+                    y--;
+                    d = d + 4 * (x - y) + 10;
+                }
+                else
+                    d = d + 4 * x + 6;
+                drawCircle(centerPos, x, y);
+            }
+        }
+
+        private void FloodFill(Vector2 pt, Color color)
+        {
+            pt = pt -  pos;
+            Stack<Vector2> pixels = new Stack<Vector2>();
+            Color targetColor = getPixel(pt);
+            if (targetColor == color) return;
+            pixels.Push(pt);
+
+            while (pixels.Count > 0)
+            {
+                Vector2 a = pixels.Pop();
+                if (a.X < dim.X && a.X >= 0 && a.Y < dim.Y && a.Y >= 0)//in bounds
+                {
+                    if (getPixel(a) == targetColor)
+                    {
+                        setPixel(a, color);
+                        pixels.Push(new Vector2(a.X - 1, a.Y));
+                        pixels.Push(new Vector2(a.X + 1, a.Y));
+                        pixels.Push(new Vector2(a.X, a.Y - 1));
+                        pixels.Push(new Vector2(a.X, a.Y + 1));
+                    }
+                }
+            }
+            return;
+        }
+
+
 
         public override void Draw(Vector2 OFFSET)
         {

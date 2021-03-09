@@ -37,13 +37,13 @@ namespace Kolibri.Source.Workspace.UIElements
                 switch (Globals.activeTool)
                 {
                     case ("Brush"):
-                        drawLine(Globals.mouse.oldMousePos - offset, Globals.mouse.newMousePos - offset, Color.Gray);
+                        drawLine(Globals.mouse.oldMousePos - offset - pos, Globals.mouse.newMousePos - offset - pos, Color.Gray);
                         break;
                     case ("Erasor"):
-                        drawLine(Globals.mouse.oldMousePos - offset, Globals.mouse.newMousePos - offset, Color.White);
+                        drawLine(Globals.mouse.oldMousePos - offset - pos, Globals.mouse.newMousePos - offset - pos, Color.White);
                         break;
                     case ("BucketFill"):
-                        FloodFill(Globals.mouse.newMousePos - offset, Color.Gray);
+                        FloodFill(Globals.mouse.newMousePos - offset - pos, Color.Gray);
                         break;
                     default:
                         break;
@@ -56,16 +56,14 @@ namespace Kolibri.Source.Workspace.UIElements
 
         public void setPixel(Vector2 position, Color color)
         {
-            if((int)(position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X) < pixels.Length && (int)(position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X) >= 0)
-                pixels[(int)((position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X))] = (uint)((color.A << 24) | (color.B << 16) | (color.G << 8) | (color.R << 0));
+            if((int)(position.Y * dim.X + position.X) < pixels.Length && (int)(position.Y * dim.X + position.X) >= 0)
+                pixels[(int)(position.Y * dim.X + position.X)] = (uint)((color.A << 24) | (color.B << 16) | (color.G << 8) | (color.R << 0));
         }
 
         public Color getPixel(Vector2 position)
         {
-            if ((int)(position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X) < pixels.Length && (int)(position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X) >= 0)
-            {
-                return new Color(pixels[(int)((position.Y - pos.Y) * (int)dim.X + (int)(position.X - pos.X))]);
-            }
+            if ((int)(position.Y * dim.X + position.X) < pixels.Length && (int)(position.Y * dim.X + position.X) >= 0)
+                return new Color(pixels[(int)(position.Y * dim.X + position.X)]);
             else
                 return Color.Transparent;
         }
@@ -113,14 +111,7 @@ namespace Kolibri.Source.Workspace.UIElements
             drawCircle(centerPos, x, y);
             while (y >= x)
             {
-                // for each pixel we will
-                // draw all eight pixels
-
                 x++;
-
-                // check for decision parameter
-                // and correspondingly 
-                // update d, x, y
                 if (d > 0)
                 {
                     y--;
@@ -134,7 +125,6 @@ namespace Kolibri.Source.Workspace.UIElements
 
         private void FloodFill(Vector2 pt, Color color)
         {
-            pt = pt -  pos;
             Stack<Vector2> pixels = new Stack<Vector2>();
             Color targetColor = getPixel(pt);
             if (targetColor == color) return;

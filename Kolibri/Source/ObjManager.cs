@@ -26,6 +26,7 @@ namespace Kolibri.Source
             Globals.PassWindow(new Window(new Vector2(500,50),new Vector2(300,250),"I am a blank window"));
             Globals.PassWindow(new TimelineWindow(new Vector2(500, 350), new Vector2(400, 200)));
             Globals.PassWindow(new PlaybackWindow(new Vector2(50, 500), new Vector2(300, 200)));
+            Globals.PassWindow(new ColorPicker(new Vector2(50, 50), new Vector2(300, 200)));
             Globals.PassWindow(new ToolsWindow(new Vector2(500, 500), new Vector2(200, 200)));
             Globals.PassWindow(canvasWindow);
             menu = new Menu(Vector2.Zero, new Vector2(1000, 24));

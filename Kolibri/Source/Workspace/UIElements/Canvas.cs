@@ -42,24 +42,22 @@ namespace Kolibri.Source.Workspace.UIElements
                 {
                     cp = (ColorPicker)ObjManager.Windows.Find(x => x.GetType().Name == "ColorPicker");
                 }
-                drawLine((Globals.mouse.oldMousePos - offset), (Globals.mouse.newMousePos - offset), cp.currentColor);
-            }
                 switch (Globals.activeTool)
                 {
                     case ("Brush"):
-                        drawLine(Globals.mouse.oldMousePos - offset - pos, Globals.mouse.newMousePos - offset - pos, Color.Gray);
+                        drawLine(Globals.mouse.oldMousePos - offset - pos, Globals.mouse.newMousePos - offset - pos, cp.currentColor);
                         break;
                     case ("Erasor"):
                         drawLine(Globals.mouse.oldMousePos - offset - pos, Globals.mouse.newMousePos - offset - pos, Color.White);
                         break;
                     case ("BucketFill"):
-                        FloodFill(Globals.mouse.newMousePos - offset - pos, Color.Gray);
+                        FloodFill(Globals.mouse.newMousePos - offset - pos, cp.currentColor);
                         break;
                     default:
                         break;
                 }
             }
-
+            
             canvas.SetData<UInt32>(pixels, 0, (int)dim.X * (int)dim.Y);
             base.Update(OFFSET + offset);
         }

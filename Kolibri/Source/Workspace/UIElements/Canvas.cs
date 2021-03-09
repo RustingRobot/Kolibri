@@ -18,7 +18,7 @@ namespace Kolibri.Source.Workspace.UIElements
         public float zoom = 1;
         public UInt32[] pixels;
         private Color color;
-        private ColorPicker cp = new ColorPicker(new Vector2(50, 50),new Vector2(300, 200));
+        private ColorPicker cp;
 
         Texture2D canvas;
 
@@ -38,6 +38,10 @@ namespace Kolibri.Source.Workspace.UIElements
             Globals.graphicsDevice.Textures[0] = null;
             if (MouseHover() && Globals.mouse.LeftClickHold() && Globals.interactWindow == null) //only calculate if the mouse is supposed to draw on the canvas
             {
+                if (cp == null)
+                {
+                    cp = (ColorPicker)ObjManager.Windows.Find(x => x.GetType().Name == "ColorPicker");
+                }
                 drawLine((Globals.mouse.oldMousePos - offset), (Globals.mouse.newMousePos - offset), cp.currentColor);
             }
 

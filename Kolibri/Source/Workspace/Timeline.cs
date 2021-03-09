@@ -20,7 +20,7 @@ namespace Kolibri.Source.Workspace
         int layerIndex;
         Window window;
 
-        Layer layer;
+        public Layer layer;
 
         public Timeline(Layer LAYER, int LAYERINDEX,Window WINDOW)
         {
@@ -65,7 +65,7 @@ namespace Kolibri.Source.Workspace
 
                 for (int i = 0; i < frames.Count; i++)
                 {
-                    frames[i].Update(new Vector2(70 + (i * (frames[i].dim.X + 2)), 55));
+                    frames[i].Update(new Vector2(70 + (i * (frames[i].dim.X + 2)), 55+30*(layerIndex)));
                 }
 
                 if(window.dim.X / (frames[0].dim.X + 2) > frames.Count)

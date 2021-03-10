@@ -59,6 +59,7 @@ namespace Kolibri.Source.Workspace.Windows
            
         }
 
+        
         public void deleteLayer()
         {
             for (int j = 0; j < layers.Count; j++)
@@ -81,7 +82,29 @@ namespace Kolibri.Source.Workspace.Windows
            // timeline.Update();
            for (int i = 0; i < layers.Count; i++)
             {
+                //change Layer
+                if (Globals.keyboard.OnPress("Up")==true&&layers[i].currentLayer == true)
+                {
+                    
+                   if(i==0)
+                   {
+                        layers[i].currentLayer = false;   
+                        layers[layers.Count-1].currentLayer = true; 
+                   }
+                   else
+                   {
+                        layers[i].currentLayer = false;   
+                        layers[i-1].currentLayer = true;
+                   }
+                }
+                
+
+                //update Layers
                 layers[i].Update(OFFSET);
+
+                
+                
+                
             }
             
             

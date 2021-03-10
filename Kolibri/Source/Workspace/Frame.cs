@@ -32,6 +32,8 @@ namespace Kolibri.Source.Workspace
 
         public override void Update(Vector2 OFFSET)
         {
+            if(timeline.layer.hidden == false)
+            {
             pos = OFFSET + window.pos;
             index = timeline.frames.IndexOf(this);
             if (timeline.frames[timeline.currentFrame] == this)
@@ -57,7 +59,9 @@ namespace Kolibri.Source.Workspace
                 color = new Color(104, 152, 165);
             }
             else color = Color.Gray;
+
             base.Update(OFFSET);
+            }
         }
         public override void Draw(Vector2 OFFSET)
         {

@@ -42,9 +42,9 @@ namespace Kolibri.Source.Workspace
             leftWin.dim.Y = Globals.screenHeight;
 
             top.pos = new Vector2((Globals.screenWidth - (Globals.screenWidth - WindowFraming[2].pos.X) - WindowFraming[3].dim.X + WindowFraming[3].pos.X) / 2 + top.dim.X / 2 + WindowFraming[3].dim.X, iconBorder + top.dim.Y + WindowFraming[0].dim.Y + WindowFraming[0].pos.Y);
-            bottom.pos = new Vector2((Globals.screenWidth - (Globals.screenWidth - WindowFraming[2].pos.X) - WindowFraming[3].dim.X + WindowFraming[3].pos.X) / 2 - bottom.dim.X / 2 + WindowFraming[3].dim.X, Globals.screenHeight - bottom.dim.Y - iconBorder - WindowFraming[1].dim.Y);
-            left.pos = new Vector2(iconBorder + left.dim.X / 2 + WindowFraming[3].dim.X + WindowFraming[3].pos.X, (Globals.screenHeight - WindowFraming[1].dim.Y - WindowFraming[0].dim.Y - WindowFraming[0].pos.Y) / 2 - left.dim.Y + WindowFraming[0].dim.Y + WindowFraming[0].pos.Y);
-            right.pos = new Vector2(Globals.screenWidth - iconBorder - right.dim.X / 2 - (Globals.screenWidth - WindowFraming[2].pos.X), (Globals.screenHeight - WindowFraming[1].dim.Y - WindowFraming[0].dim.Y - WindowFraming[0].pos.Y) / 2 + right.dim.Y + iconBorder / 2 + WindowFraming[0].dim.Y + WindowFraming[0].pos.Y);
+            bottom.pos = new Vector2((Globals.screenWidth - (Globals.screenWidth - WindowFraming[2].pos.X) - WindowFraming[3].dim.X + WindowFraming[3].pos.X) / 2 - bottom.dim.X / 2 + WindowFraming[3].dim.X, Globals.screenHeight - (Globals.screenHeight - WindowFraming[1].pos.Y) - bottom.dim.Y - iconBorder);
+            left.pos = new Vector2(iconBorder + left.dim.X / 2 + WindowFraming[3].dim.X + WindowFraming[3].pos.X, (Globals.screenHeight - (Globals.screenHeight - WindowFraming[1].pos.Y) - WindowFraming[0].dim.Y - WindowFraming[0].pos.Y) / 2 - left.dim.Y + WindowFraming[0].dim.Y + WindowFraming[0].pos.Y);
+            right.pos = new Vector2(Globals.screenWidth - iconBorder - right.dim.X / 2 - (Globals.screenWidth - WindowFraming[2].pos.X), (Globals.screenHeight - (Globals.screenHeight - WindowFraming[1].pos.Y) - WindowFraming[0].dim.Y - WindowFraming[0].pos.Y) / 2 + right.dim.Y + iconBorder / 2 + WindowFraming[0].dim.Y + WindowFraming[0].pos.Y);
             bottom.Update(Vector2.Zero);
             left.Update(Vector2.Zero);
             right.Update(Vector2.Zero);

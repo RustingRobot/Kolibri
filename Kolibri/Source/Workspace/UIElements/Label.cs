@@ -7,7 +7,7 @@ namespace Kolibri.Source.Workspace.UIElements
 {
     public class Label : UIElement
     {
-        private string label;
+        public string label;
         
         public Vector2 strSize;
         public Color color;

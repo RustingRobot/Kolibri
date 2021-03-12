@@ -33,6 +33,7 @@ namespace Kolibri.Source
         }
         public void Update()
         {
+            Globals.hoverWindow = null;
             for (int i = Windows.Count -1; i > -1; i--) //dynamic windows update loop
             {
                 Windows[i].Update(offset);

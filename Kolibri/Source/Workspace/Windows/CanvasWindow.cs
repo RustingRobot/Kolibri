@@ -25,7 +25,17 @@ namespace Kolibri.Source.Workspace.Windows
                 if (Globals.keyboard.GetPress("LeftShift"))
                     Globals.canvas.offset.X += (Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue) * 0.2f;
                 else if (Globals.keyboard.GetPress("LeftControl") && Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue != 0)
-                    Globals.canvas.zoom += (Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue > 0) ? 0.1f : -0.1f;
+                {
+                    if (Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue > 0) {
+                        Globals.canvas.zoom += 0.1f;
+                        Globals.canvas.offset += (Globals.mouse.newMousePos - Globals.canvas.pos - Globals.canvas.offset) - (Globals.mouse.newMousePos - (Globals.canvas.pos + Globals.canvas.offset));
+                    }
+                    else
+                    {
+                        Globals.canvas.zoom -= 0.1f;
+                        Globals.canvas.offset += (Globals.mouse.newMousePos - Globals.canvas.pos - Globals.canvas.offset);
+                    }
+                }
                 else
                     Globals.canvas.offset.Y += (Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue) * 0.2f;
             }

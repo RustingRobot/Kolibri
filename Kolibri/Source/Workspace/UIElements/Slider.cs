@@ -2,6 +2,7 @@ using System;
 using Kolibri.Engine;
 using Microsoft.Xna.Framework;
 using Kolibri.Source.Workspace;
+using System.Diagnostics;
 
 namespace Kolibri.Source.Workspace.UIElements
 {
@@ -35,17 +36,8 @@ namespace Kolibri.Source.Workspace.UIElements
         }
         public void changeColor()
         {
-            if(toEdit == true)
-            {
-                //editBtn.normColor = new Color(0,128,0);
-                toEdit = false;
-            }
-            if(toEdit == false)
-            {
-               // editBtn.normColor = new Color(178,0,0);
-                toEdit = true;
-            }
-            
+            editBtn.normColor = (toEdit)? new Color(0, 128, 0) : new Color(178, 0, 0);
+            toEdit = !toEdit;
         }
 
         public int getValue()

@@ -16,8 +16,8 @@ namespace Kolibri.Source.Workspace.UIElements
     {
         public Vector2 offset = Vector2.Zero;
         public float zoom = 1;
+        public int BrushSize = 1, EraserSize = 1;
         public UInt32[] pixels;
-        private Color color;
         private ColorPicker cp;
 
         Texture2D canvas;
@@ -53,7 +53,7 @@ namespace Kolibri.Source.Workspace.UIElements
                         case ("Brush"):
                             drawLine(oldDrawPos, newDrawPos, cp.currentColor);
                             break;
-                        case ("Erasor"):
+                        case ("Eraser"):
                             drawLine(oldDrawPos, newDrawPos, Color.White);
                             break;
                         case ("BucketFill"):
@@ -64,7 +64,6 @@ namespace Kolibri.Source.Workspace.UIElements
                     }
                 }
             }
-            Debug.WriteLine(zoom);
             canvas.SetData<UInt32>(pixels, 0, (int)dim.X * (int)dim.Y);
             base.Update(OFFSET + offset);
         }
@@ -92,9 +91,15 @@ namespace Kolibri.Source.Workspace.UIElements
             int e = dx + dy;    //error
             while (true)
             {
-                //setPixel(pos0, color);
-                //drawCircle(pos0, 5, color);
-                drawFilledCircle(pos0, 3, color);
+                int drawSize = (Globals.activeTool == "Brush") ? BrushSize : EraserSize;
+                if(drawSize == 1) setPixel(pos0, color);
+                else if(drawSize == 2){
+                    setPixel(pos0, color);
+                    setPixel(pos0 + new Vector2(0,-1), color);
+                    setPixel(pos0 + new Vector2(-1, -1), color);
+                    setPixel(pos0 + new Vector2(-1, 0), color);
+                }
+                else drawFilledCircle(pos0, drawSize - 1, color);
                 if (pos0.X == pos1.X && pos0.Y == pos1.Y) break;    //step end
                 int e2 = 2 * e;
                 if (e2 >= dy)
@@ -120,11 +125,6 @@ namespace Kolibri.Source.Workspace.UIElements
             setPixel(new Vector2(p.X - y, p.Y + x), color);
             setPixel(new Vector2(p.X + y, p.Y - x), color);
             setPixel(new Vector2(p.X - y, p.Y - x), color);
-
-            //drawLine(new Vector2(p.X + x, p.Y + y), new Vector2(p.X - x, p.Y + y), color);
-            //drawLine(new Vector2(p.X + x, p.Y - y), new Vector2(p.X - x, p.Y - y), color);
-            //drawLine(new Vector2(p.X + y, p.Y + x), new Vector2(p.X - y, p.Y + x), color);
-            //drawLine(new Vector2(p.X + y, p.Y - x), new Vector2(p.X - y, p.Y - x), color);
         }
 
         public void drawCircle(Vector2 p, int r, Color color)
@@ -148,16 +148,11 @@ namespace Kolibri.Source.Workspace.UIElements
 
         public void drawFilledCircle(Vector2 p, int r, Color color)
         {
-            for (int x = -r; x < r; x++)
-            {
-                int height = (int)Math.Sqrt(r * r - x * x);
-                for (int y = -height; y < height; y++)
-                {
-                    setPixel(new Vector2(p.X + x, p.Y + y), color);
-                }
-            }
+            for (int y = -r; y <= r; y++)
+                for (int x = -r; x <= r; x++)
+                    if (x * x + y * y < r * r + r)
+                        setPixel(new Vector2(p.X + x, p.Y + y), color);
         }
-
         private void FloodFill(Vector2 pt, Color color)
         {
             Stack<Vector2> pixels = new Stack<Vector2>();

@@ -167,6 +167,16 @@ namespace Kolibri.Source.Workspace
             Globals.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, rasterizerState: rs);
         }
 
+        public void beginWindowContentAA()    //window content with anti aliasing
+        {
+            Globals.spriteBatch.End();
+            RasterizerState rs = new RasterizerState();
+            rs.ScissorTestEnable = true;
+            Globals.spriteBatch.GraphicsDevice.RasterizerState = rs;
+            Globals.spriteBatch.GraphicsDevice.ScissorRectangle = new Rectangle((int)(pos.X + border), (int)(pos.Y + handleHeight), (int)(dim.X - border * 2), (int)(dim.Y - border - handleHeight));
+            Globals.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, rasterizerState: rs);
+        }
+
         public void endWindowContent()  //switch back to normal sprite batch
         {
             Globals.spriteBatch.End();

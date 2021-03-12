@@ -10,7 +10,7 @@ namespace Kolibri.Source.Workspace.UIElements
 {
     public class Textfield : UIElement
     {
-        public string content, lastChar;
+        public string content, lastChar, defaultContent = "";
         public bool numberField;
         private float width, txtHeight;
         private bool selected;
@@ -23,8 +23,16 @@ namespace Kolibri.Source.Workspace.UIElements
             color = new Color(100, 100, 100);
         }
 
+        public void Update(Vector2 OFFSET, ref int syncVar)
+        {
+            Update(OFFSET);
+            try { syncVar = int.Parse(content); }
+            catch { syncVar = 0; }
+        }
+
         public override void Update(Vector2 OFFSET)
         {
+            if (content == "") content = defaultContent;
             width = Globals.font.MeasureString(content).X * Globals.fontSize.X;
 
             if (Globals.mouse.LeftClick())
@@ -49,7 +57,7 @@ namespace Kolibri.Source.Workspace.UIElements
                     if(!(numberField && !Int32.TryParse(Globals.keyboard.pressedKeys[0].print, out number)))
                     {
                         lastChar = Globals.keyboard.pressedKeys[0].print;
-                        content += lastChar;
+                        content = (content == "0" && numberField) ? lastChar : content + lastChar;
                     }
                 }
             }
@@ -75,6 +83,10 @@ namespace Kolibri.Source.Workspace.UIElements
             Globals.primitives.DrawTxt(content.ToLower(), new Vector2(pos.X + 5, pos.Y + dim.Y / 2 - txtHeight / 4), Globals.fontSize, new Color(245, 255, 250));
         } 
 
+        public void UpdateIntConnection(ref int connection) 
+        {
+            connection = int.Parse(content);
+        }
 
     }
     

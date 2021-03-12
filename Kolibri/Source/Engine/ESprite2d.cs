@@ -20,7 +20,7 @@ namespace Kolibri.Engine
     public class ESprite2d
     {
         public float rot;
-        public Vector2 pos, dim, imgSize;
+        public Vector2 pos, dim, imgSize, imgOffset;
         public Texture2D model;
 
         public ESprite2d(string PATH, Vector2 POS, Vector2 DIM)
@@ -53,7 +53,7 @@ namespace Kolibri.Engine
         public virtual void DrawCentered(Vector2 OFFSET)
         {
             if (model != null)
-                Globals.spriteBatch.Draw(model, new Rectangle((int)(pos.X + OFFSET.X + (dim.X * imgSize.X / 2)), (int)(pos.Y + OFFSET.Y + (dim.Y * imgSize.Y / 2)), (int)(dim.X * imgSize.X), (int)(dim.Y * imgSize.Y)), null, Color.White, rot, Vector2.Zero, new SpriteEffects(), 0);
+                Globals.spriteBatch.Draw(model, new Rectangle((int)(pos.X + OFFSET.X + imgOffset.X + (dim.X * imgSize.X / 2)), (int)(pos.Y + OFFSET.Y + imgOffset.Y + (dim.Y * imgSize.Y / 2)), (int)(dim.X * imgSize.X), (int)(dim.Y * imgSize.Y)), null, Color.White, rot, Vector2.Zero, new SpriteEffects(), 0);
         }
     }
 }

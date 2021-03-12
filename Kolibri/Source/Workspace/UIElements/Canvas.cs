@@ -36,35 +36,43 @@ namespace Kolibri.Source.Workspace.UIElements
         public override void Update(Vector2 OFFSET)
         {
             Globals.graphicsDevice.Textures[0] = null;
-            if (MouseHover() && Globals.mouse.LeftClickHold() && Globals.interactWindow == null) //only calculate if the mouse is supposed to draw on the canvas
+            if (Globals.mouse.LeftClickHold() && Globals.interactWindow == null)
             {
                 if (cp == null)
                 {
                     cp = (ColorPicker)ObjManager.Windows.Find(x => x.GetType().Name == "ColorPicker");
                 }
-                switch (Globals.activeTool)
+                else
                 {
-                    case ("Brush"):
-                        drawLine(Globals.mouse.oldMousePos - offset - pos, Globals.mouse.newMousePos - offset - pos, cp.currentColor);
-                        break;
-                    case ("Erasor"):
-                        drawLine(Globals.mouse.oldMousePos - offset - pos, Globals.mouse.newMousePos - offset - pos, Color.White);
-                        break;
-                    case ("BucketFill"):
-                        FloodFill(Globals.mouse.newMousePos - offset - pos, cp.currentColor);
-                        break;
-                    default:
-                        break;
+                    Vector2 newDrawPos = new Vector2((float)Math.Ceiling((Globals.mouse.newMousePos.X - offset.X - pos.X) / zoom), (float)Math.Ceiling((Globals.mouse.newMousePos.Y - offset.Y - pos.Y) / zoom));
+                    Vector2 oldDrawPos = new Vector2((float)Math.Ceiling((Globals.mouse.oldMousePos.X - offset.X - pos.X) / zoom), (float)Math.Ceiling((Globals.mouse.oldMousePos.Y - offset.Y - pos.Y) / zoom));
+                    //Vector2 oldDrawPos = (Globals.mouse.oldMousePos - offset - pos);
+
+                    switch (Globals.activeTool)
+                    {
+                        case ("Brush"):
+                            drawLine(oldDrawPos, newDrawPos, cp.currentColor);
+                            break;
+                        case ("Erasor"):
+                            drawLine(oldDrawPos, newDrawPos, Color.White);
+                            break;
+                        case ("BucketFill"):
+                            FloodFill(newDrawPos, cp.currentColor);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
-            
+            Debug.WriteLine(zoom);
             canvas.SetData<UInt32>(pixels, 0, (int)dim.X * (int)dim.Y);
             base.Update(OFFSET + offset);
         }
 
         public void setPixel(Vector2 position, Color color)
         {
-            if((int)(position.Y * dim.X + position.X) < pixels.Length && (int)(position.Y * dim.X + position.X) >= 0)
+            //if((int)(position.Y * dim.X + position.X) < pixels.Length && (int)(position.Y * dim.X + position.X) >= 0)
+            if (position.X < dim.X && position.X >= 0 && position.Y < dim.Y && position.Y >= 0)
                 pixels[(int)(position.Y * dim.X + position.X)] = (uint)((color.A << 24) | (color.B << 16) | (color.G << 8) | (color.R << 0));
         }
 
@@ -84,7 +92,9 @@ namespace Kolibri.Source.Workspace.UIElements
             int e = dx + dy;    //error
             while (true)
             {
-                setPixel(new Vector2(pos0.X, pos0.Y), color);
+                //setPixel(pos0, color);
+                //drawCircle(pos0, 5, color);
+                drawFilledCircle(pos0, 3, color);
                 if (pos0.X == pos1.X && pos0.Y == pos1.Y) break;    //step end
                 int e2 = 2 * e;
                 if (e2 >= dy)
@@ -100,23 +110,28 @@ namespace Kolibri.Source.Workspace.UIElements
             }
         }
 
-        void drawCircle(Vector2 centerPos, int x, int y)
+        void drawCircle(Vector2 p, int x, int y, Color color)
         {
-            setPixel(new Vector2(centerPos.X + x, centerPos.Y + y), Color.Gray);
-            setPixel(new Vector2(centerPos.X - x, centerPos.Y + y), Color.Gray);
-            setPixel(new Vector2(centerPos.X + x, centerPos.Y - y), Color.Gray);
-            setPixel(new Vector2(centerPos.X - x, centerPos.Y - y), Color.Gray);
-            setPixel(new Vector2(centerPos.X + y, centerPos.Y + x), Color.Gray);
-            setPixel(new Vector2(centerPos.X - y, centerPos.Y + x), Color.Gray);
-            setPixel(new Vector2(centerPos.X + y, centerPos.Y - x), Color.Gray);
-            setPixel(new Vector2(centerPos.X - y, centerPos.Y - x), Color.Gray);
+            setPixel(new Vector2(p.X + x, p.Y + y), color);
+            setPixel(new Vector2(p.X - x, p.Y + y), color);
+            setPixel(new Vector2(p.X + x, p.Y - y), color);
+            setPixel(new Vector2(p.X - x, p.Y - y), color);
+            setPixel(new Vector2(p.X + y, p.Y + x), color);
+            setPixel(new Vector2(p.X - y, p.Y + x), color);
+            setPixel(new Vector2(p.X + y, p.Y - x), color);
+            setPixel(new Vector2(p.X - y, p.Y - x), color);
+
+            //drawLine(new Vector2(p.X + x, p.Y + y), new Vector2(p.X - x, p.Y + y), color);
+            //drawLine(new Vector2(p.X + x, p.Y - y), new Vector2(p.X - x, p.Y - y), color);
+            //drawLine(new Vector2(p.X + y, p.Y + x), new Vector2(p.X - y, p.Y + x), color);
+            //drawLine(new Vector2(p.X + y, p.Y - x), new Vector2(p.X - y, p.Y - x), color);
         }
 
-        public void drawCircle(Vector2 centerPos, int r)
+        public void drawCircle(Vector2 p, int r, Color color)
         {
             int x = 0, y = r;
             int d = 3 - 2 * r;
-            drawCircle(centerPos, x, y);
+            drawCircle(p, x, y, color);
             while (y >= x)
             {
                 x++;
@@ -127,7 +142,19 @@ namespace Kolibri.Source.Workspace.UIElements
                 }
                 else
                     d = d + 4 * x + 6;
-                drawCircle(centerPos, x, y);
+                drawCircle(p, x, y, color);
+            }
+        }
+
+        public void drawFilledCircle(Vector2 p, int r, Color color)
+        {
+            for (int x = -r; x < r; x++)
+            {
+                int height = (int)Math.Sqrt(r * r - x * x);
+                for (int y = -height; y < height; y++)
+                {
+                    setPixel(new Vector2(p.X + x, p.Y + y), color);
+                }
             }
         }
 

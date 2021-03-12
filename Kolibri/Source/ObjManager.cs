@@ -23,10 +23,9 @@ namespace Kolibri.Source
             Window canvasWindow = new CanvasWindow(new Vector2(50, 50), new Vector2(400, 400));
             Globals.canvas = new Canvas(canvasWindow, new Vector2(20, 35), new Vector2(200, 200));
             //add windows
-            Globals.PassWindow(new Window(new Vector2(500,50),new Vector2(300,250),"I am a blank window"));
             Globals.PassWindow(new TimelineWindow(new Vector2(500, 350), new Vector2(400, 200)));
             Globals.PassWindow(new PlaybackWindow(new Vector2(50, 500), new Vector2(300, 200)));
-            Globals.PassWindow(new ColorPicker(new Vector2(50, 50), new Vector2(300, 200)));
+            Globals.PassWindow(new ColorPicker(new Vector2(500, 50), new Vector2(300, 250)));
             Globals.PassWindow(new ToolsWindow(new Vector2(500, 500), new Vector2(200, 200)));
             Globals.PassWindow(new TestWindow(new Vector2(50, 50), new Vector2(300, 200)));
             Globals.PassWindow(canvasWindow);

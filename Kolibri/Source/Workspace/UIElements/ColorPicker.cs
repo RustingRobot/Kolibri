@@ -11,7 +11,7 @@ namespace Kolibri.Source.Workspace.UIElements
     {
         private Button r, g, b;
         public Color currentColor;
-     
+        Slider[] colors = new Slider[3];   
         public ColorPicker(Vector2 POS, Vector2 DIM) : base(POS, DIM, "ColorPicker")
         {
             r = new Button(pickColorRed, this, new Vector2(10, 25), new Vector2(20,20),"");
@@ -26,7 +26,14 @@ namespace Kolibri.Source.Workspace.UIElements
             b.normColor = new Color(0, 0, 255);
             b.hoverColor = new Color(9, 9, 179);
             b.clickColor = new Color(12, 12, 207);
+            colors[0] = new Slider(0,255,1,this,new Vector2(10,50),new Vector2(40,5),"red"); 
+            colors[0].color = new Color(255, 0, 0);
+            colors[1] = new Slider(0, 255, 1, this, new Vector2(10, 90), new Vector2(40, 5), "green"); 
+            colors[1].color = new Color(15, 105, 15);
+            colors[2] = new Slider(0, 255, 1, this, new Vector2(10, 130), new Vector2(40, 5), "blue"); 
+            colors[2].color = new Color(0, 0, 255);
         }
+        
         public void pickColorRed()
         {
             currentColor = new Color(255, 0, 0); //red
@@ -45,6 +52,10 @@ namespace Kolibri.Source.Workspace.UIElements
             r.Update(OFFSET);
             g.Update(OFFSET);
             b.Update(OFFSET);
+            colors[0].Update(OFFSET);
+            colors[1].Update(OFFSET);
+            colors[2].Update(OFFSET);
+            
         }
 
         public override void Draw(Vector2 OFFSET, Color COLOR)
@@ -54,6 +65,9 @@ namespace Kolibri.Source.Workspace.UIElements
             r.Draw(OFFSET);
             g.Draw(OFFSET);
             b.Draw(OFFSET);
+            colors[0].Draw(OFFSET);
+            colors[1].Draw(OFFSET);
+            colors[2].Draw(OFFSET);
             endWindowContent();
         }
     }

@@ -21,9 +21,9 @@ namespace Kolibri.Source.Workspace.Windows
         {
             playBtn = new Button(play, this, new Vector2(10, 25), new Vector2(40, 25), "play");
             backBtn = new Button(back, this, new Vector2(55, 25), new Vector2(40, 25), "back");
-            fpsTxt = new Textfield(this, new Vector2(38, 55), new Vector2(57, 25), "1");
-            startFrameTxt = new Textfield(this, new Vector2(200, 25), new Vector2(57, 25), "");
-            endFrameTxt = new Textfield(this, new Vector2(200, 55), new Vector2(57, 25), "");
+            fpsTxt = new Textfield(this, new Vector2(38, 55), new Vector2(57, 25), "1") { defaultContent = "0" };
+            startFrameTxt = new Textfield(this, new Vector2(200, 25), new Vector2(57, 25), "") { defaultContent = "0" };
+            endFrameTxt = new Textfield(this, new Vector2(200, 55), new Vector2(57, 25), "") { defaultContent = "0" };
             startFrameTxt.numberField = true;
             endFrameTxt.numberField = true;
             fpsTxt.numberField = true;

@@ -45,74 +45,86 @@ namespace Kolibri.Source.Workspace
 
         public override void Update(Vector2 OFFSET)
         {
-            //Handle movement
-            if(dragged[0] || Globals.GetBoxOverlap(new Vector2(pos.X, pos.Y), new Vector2(dim.X, handleHeight), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero))
+            if ((Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero) || Globals.interactWindow == this) && Globals.hoverWindow == null)
             {
-                if(Globals.interactWindow == null) borderColors[0] = selectedBorder;
-                if (TopCW == null && dragged[0] || (Globals.interactWindow == null && Globals.mouse.LeftClickHold()))
-                {
-                    Globals.interactWindow = this;
-                    if (!docked) ObjManager.toFront(this);
-                    dragged[0] = true;
-                    clickOffset = Globals.mouse.oldMousePos - pos;
-                    pos = Globals.mouse.newMousePos - clickOffset;
-                }
+                Globals.hoverWindow = this;
             }
-            else { borderColors[0] = defaultBorder; }
-            //bottom border
-            if (dragged[1] || Globals.GetBoxOverlap(new Vector2(pos.X, pos.Y + dim.Y - border), new Vector2(dim.X, border), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero)) 
+
+            if (Globals.hoverWindow == this)
             {
-                if (Globals.interactWindow == null) borderColors[1] = selectedBorder;
-                if (BottomCW == null && dragged[1] || (Globals.interactWindow == null && Globals.mouse.LeftClickHold()))
+                //Handle movement
+                if (dragged[0] || Globals.GetBoxOverlap(new Vector2(pos.X, pos.Y), new Vector2(dim.X, handleHeight), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero))
                 {
-                    Globals.interactWindow = this;
-                    dragged[1] = true;
-                    dim.Y = Globals.mouse.newMousePos.Y - pos.Y;
-                    if (dim.Y < minDim.Y) dim.Y = minDim.Y;
-                }
-            }
-            else { borderColors[1] = defaultBorder; }
-            //right border
-            if (dragged[2] || Globals.GetBoxOverlap(new Vector2(pos.X + dim.X - border, pos.Y), new Vector2(border, dim.Y), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero)) 
-            {
-                if (Globals.interactWindow == null) borderColors[2] = selectedBorder;
-                if (RightCW == null && dragged[2] || (Globals.interactWindow == null && Globals.mouse.LeftClickHold()))
-                {
-                    Globals.interactWindow = this;
-                    dragged[2] = true;
-                    dim.X = Globals.mouse.newMousePos.X - pos.X;
-                    if (dim.X < minDim.X) dim.X = minDim.X;
-                }
-            }
-            else { borderColors[2] = defaultBorder; }
-            //left border
-            if (dragged[3] || Globals.GetBoxOverlap(new Vector2(pos.X, pos.Y), new Vector2(border, dim.Y), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero)) 
-            {
-                if (Globals.interactWindow == null)
-                {
-                    borderColors[3] = selectedBorder;
-                    initXWidth = dim.X;
-                    initXPos = pos.X;
-                }
-                if (LeftCW == null && dragged[3] || (Globals.interactWindow == null && Globals.mouse.LeftClickHold()))
-                {
-                    Globals.interactWindow = this;
-                    dragged[3] = true;
-                    if (dim.X > minDim.X || (Globals.mouse.newMousePos.X - Globals.mouse.oldMousePos.X < 0 && Globals.mouse.oldMousePos.X < pos.X))
+                    if (Globals.interactWindow == null) borderColors[0] = selectedBorder;
+                    if (TopCW == null && dragged[0] || (Globals.interactWindow == null && Globals.mouse.LeftClickHold()))
                     {
-                        clickOffset = (Globals.mouse.oldMousePos.X > pos.X)? Globals.mouse.oldMousePos - pos: Vector2.Zero;
-                        pos.X = Globals.mouse.newMousePos.X - clickOffset.X;
-                        dim.X = initXWidth - (pos.X - initXPos);
+                        Globals.interactWindow = this;
+                        if (!docked) ObjManager.toFront(this);
+                        dragged[0] = true;
+                        clickOffset = Globals.mouse.oldMousePos - pos;
+                        pos = Globals.mouse.newMousePos - clickOffset;
                     }
-                    if (dim.X < minDim.X)
-                    {
-                        dim.X = minDim.X;
-                        pos.X = initXPos + (initXWidth - minDim.X);
-                    }
-                    
                 }
+                else { borderColors[0] = defaultBorder; }
+                //bottom border
+                if (dragged[1] || Globals.GetBoxOverlap(new Vector2(pos.X, pos.Y + dim.Y - border), new Vector2(dim.X, border), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero))
+                {
+                    if (Globals.interactWindow == null) borderColors[1] = selectedBorder;
+                    if (BottomCW == null && dragged[1] || (Globals.interactWindow == null && Globals.mouse.LeftClickHold()))
+                    {
+                        Globals.interactWindow = this;
+                        dragged[1] = true;
+                        dim.Y = Globals.mouse.newMousePos.Y - pos.Y;
+                        if (dim.Y < minDim.Y) dim.Y = minDim.Y;
+                    }
+                }
+                else { borderColors[1] = defaultBorder; }
+                //right border
+                if (dragged[2] || Globals.GetBoxOverlap(new Vector2(pos.X + dim.X - border, pos.Y), new Vector2(border, dim.Y), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero))
+                {
+                    if (Globals.interactWindow == null) borderColors[2] = selectedBorder;
+                    if (RightCW == null && dragged[2] || (Globals.interactWindow == null && Globals.mouse.LeftClickHold()))
+                    {
+                        Globals.interactWindow = this;
+                        dragged[2] = true;
+                        dim.X = Globals.mouse.newMousePos.X - pos.X;
+                        if (dim.X < minDim.X) dim.X = minDim.X;
+                    }
+                }
+                else { borderColors[2] = defaultBorder; }
+                //left border
+                if (dragged[3] || Globals.GetBoxOverlap(new Vector2(pos.X, pos.Y), new Vector2(border, dim.Y), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero))
+                {
+                    if (Globals.interactWindow == null)
+                    {
+                        borderColors[3] = selectedBorder;
+                        initXWidth = dim.X;
+                        initXPos = pos.X;
+                    }
+                    if (LeftCW == null && dragged[3] || (Globals.interactWindow == null && Globals.mouse.LeftClickHold()))
+                    {
+                        Globals.interactWindow = this;
+                        dragged[3] = true;
+                        if (dim.X > minDim.X || (Globals.mouse.newMousePos.X - Globals.mouse.oldMousePos.X < 0 && Globals.mouse.oldMousePos.X < pos.X))
+                        {
+                            clickOffset = (Globals.mouse.oldMousePos.X > pos.X) ? Globals.mouse.oldMousePos - pos : Vector2.Zero;
+                            pos.X = Globals.mouse.newMousePos.X - clickOffset.X;
+                            dim.X = initXWidth - (pos.X - initXPos);
+                        }
+                        if (dim.X < minDim.X)
+                        {
+                            dim.X = minDim.X;
+                            pos.X = initXPos + (initXWidth - minDim.X);
+                        }
+
+                    }
+                }
+                else { borderColors[3] = defaultBorder; }
             }
-            else { borderColors[3] = defaultBorder; }
+            else
+            {
+                Array.Fill(borderColors, defaultBorder);
+            }
 
             if (docked)
             {
@@ -165,6 +177,16 @@ namespace Kolibri.Source.Workspace
             Globals.spriteBatch.GraphicsDevice.RasterizerState = rs;
             Globals.spriteBatch.GraphicsDevice.ScissorRectangle = new Rectangle((int)(pos.X + border), (int)(pos.Y + handleHeight), (int)(dim.X - border * 2), (int)(dim.Y - border - handleHeight));
             Globals.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, rasterizerState: rs);
+        }
+
+        public void beginWindowContentAA()    //window content with anti aliasing
+        {
+            Globals.spriteBatch.End();
+            RasterizerState rs = new RasterizerState();
+            rs.ScissorTestEnable = true;
+            Globals.spriteBatch.GraphicsDevice.RasterizerState = rs;
+            Globals.spriteBatch.GraphicsDevice.ScissorRectangle = new Rectangle((int)(pos.X + border), (int)(pos.Y + handleHeight), (int)(dim.X - border * 2), (int)(dim.Y - border - handleHeight));
+            Globals.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, rasterizerState: rs);
         }
 
         public void endWindowContent()  //switch back to normal sprite batch

@@ -10,6 +10,7 @@ namespace Kolibri.Source.Workspace
     {
         public Vector2 relativePos;
         public Window window;
+        public string tag;
 
         public UIElement(Window WINDOW, Vector2 POS, Vector2 DIM) : base(null, POS, DIM)
         {

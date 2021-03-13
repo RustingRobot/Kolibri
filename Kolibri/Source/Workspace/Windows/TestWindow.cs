@@ -18,8 +18,8 @@ namespace Kolibri.Source.Workspace.Windows
         {
             testBtn = new Button(click, this, new Vector2(10, 25), new Vector2(90, 25), "click me!");
             testField = new Textfield(this, new Vector2(10, 55), new Vector2(220, 25), "click to edit text");
-            testLabel = new Label(this, new Vector2(10, 140), new Vector2(90, 25), "teeeeest");
-            //testslider = new Slider(0, 100, 10, this, new Vector2(20, 120), new Vector2(200, 3), "Example");
+            testslider = new Slider(0, 100, 10, this, new Vector2(20, 120), new Vector2(250, 3), "test");
+            testLabel = new Label(this, new Vector2(10, 140), new Vector2(90, 25), "Value: "+testslider.getValue());
         }
         public void click()
         {
@@ -33,7 +33,8 @@ namespace Kolibri.Source.Workspace.Windows
             testBtn.Update(OFFSET);
             testField.Update(OFFSET);
             testLabel.Update(OFFSET);
-            //testslider.Update(OFFSET);
+            testLabel.label = "Value: " + testslider.getValue();
+            testslider.Update(OFFSET);
         }
 
         public override void Draw(Vector2 OFFSET, Color COLOR)
@@ -45,7 +46,7 @@ namespace Kolibri.Source.Workspace.Windows
             testLabel.Draw(OFFSET);
             Globals.primitives.DrawTxt($"x: {Globals.screenWidth}", new Vector2(10 + pos.X, 100 + pos.Y), Globals.fontSize, Color.Gray);
             Globals.primitives.DrawTxt($"y: {Globals.screenHeight}", new Vector2(10 + pos.X, 120 + pos.Y), Globals.fontSize, Color.Gray);
-            //testslider.Draw(OFFSET);
+            testslider.Draw(OFFSET);
             endWindowContent();
         }
     }

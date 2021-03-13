@@ -27,11 +27,13 @@ namespace Kolibri.Source
             Globals.PassWindow(new PlaybackWindow(new Vector2(50, 500), new Vector2(300, 200)));
             Globals.PassWindow(new ColorPicker(new Vector2(500, 50), new Vector2(300, 250)));
             Globals.PassWindow(new ToolsWindow(new Vector2(500, 500), new Vector2(200, 200)));
+            Globals.PassWindow(new TestWindow(new Vector2(50, 50), new Vector2(300, 200)));
             Globals.PassWindow(canvasWindow);
             menu = new Menu(Vector2.Zero, new Vector2(1000, 24));
         }
         public void Update()
         {
+            Globals.hoverWindow = null;
             for (int i = Windows.Count -1; i > -1; i--) //dynamic windows update loop
             {
                 Windows[i].Update(offset);

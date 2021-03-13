@@ -59,6 +59,11 @@ namespace Kolibri.Source.Workspace.UIElements
             value = (value+1)*steplength;
             return value;
         }
+        public void SetValue(int VALUE)
+        {
+            value = VALUE;
+           
+        }
 
        public override void Update(Vector2 OFFSET)
        {
@@ -73,7 +78,6 @@ namespace Kolibri.Source.Workspace.UIElements
                 posMarker.X= Globals.mouse.newMousePos.X;
               };
            }*/
-            
 
             if(toEdit == true)
             {
@@ -93,7 +97,11 @@ namespace Kolibri.Source.Workspace.UIElements
            {
                posMarker = posMarker - new Vector2((dim.X/((end-start))*steplength), 0) ;
            }
-           editBtn.Update(OFFSET);
+            /*if (Clicked()&& toEdit == true && posMarker.X > pos.X)
+            {
+                posMarker = posMarker - new Vector2((dim.X / ((end - start)) * steplength), 0);
+            }*/
+            editBtn.Update(OFFSET);
            base.Update(OFFSET);
 
        }

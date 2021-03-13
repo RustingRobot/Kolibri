@@ -72,8 +72,8 @@ namespace Kolibri.Source.Workspace.UIElements
               {
                 posMarker.X= Globals.mouse.newMousePos.X;
               };
-           }
-            */
+           }*/
+            
 
             if(toEdit == true)
             {

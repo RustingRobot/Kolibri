@@ -7,12 +7,13 @@ using Kolibri.Source.Workspace;
 
 namespace Kolibri.Source.Workspace.UIElements
 {
-    class ColorPicker : Window
+    class ColorPickerWindow : Window
     {
-        private Button r, g, b;
+        private Button r, g, b,rgb;
         public Color currentColor;
-        Slider[] colors = new Slider[3];   
-        public ColorPicker(Vector2 POS, Vector2 DIM) : base(POS, DIM, "ColorPicker")
+        Slider[] colors = new Slider[3];
+ 
+        public ColorPickerWindow(Vector2 POS, Vector2 DIM) : base(POS, DIM, "ColorPicker")
         {
             r = new Button(pickColorRed, this, new Vector2(10, 25), new Vector2(20,20),"");
             r.normColor = new Color(255, 0, 0);
@@ -26,12 +27,14 @@ namespace Kolibri.Source.Workspace.UIElements
             b.normColor = new Color(0, 0, 255);
             b.hoverColor = new Color(9, 9, 179);
             b.clickColor = new Color(12, 12, 207);
-            colors[0] = new Slider(0,255,1,this,new Vector2(10,50),new Vector2(40,5),"red"); 
+            rgb = new Button(pickColorRed, this, new Vector2(10, 140), new Vector2(100, 100), "");
+            colors[0] = new Slider(0,255,1,this,new Vector2(10,50),new Vector2(255,5),""); 
             colors[0].color = new Color(255, 0, 0);
-            colors[1] = new Slider(0, 255, 1, this, new Vector2(10, 90), new Vector2(40, 5), "green"); 
+            colors[1] = new Slider(0, 255, 1, this, new Vector2(10, 90), new Vector2(255, 5), ""); 
             colors[1].color = new Color(15, 105, 15);
-            colors[2] = new Slider(0, 255, 1, this, new Vector2(10, 130), new Vector2(40, 5), "blue"); 
+            colors[2] = new Slider(0, 255, 1, this, new Vector2(10, 130), new Vector2(255, 5), ""); 
             colors[2].color = new Color(0, 0, 255);
+            //value = new Label(this, new Vector2(10, 60), new Vector2(90, 25), "Value: " + colors[0].getValue());
         }
         
         public void pickColorRed()
@@ -52,6 +55,7 @@ namespace Kolibri.Source.Workspace.UIElements
             r.Update(OFFSET);
             g.Update(OFFSET);
             b.Update(OFFSET);
+            rgb.Update(OFFSET);
             colors[0].Update(OFFSET);
             colors[1].Update(OFFSET);
             colors[2].Update(OFFSET);
@@ -65,9 +69,12 @@ namespace Kolibri.Source.Workspace.UIElements
             r.Draw(OFFSET);
             g.Draw(OFFSET);
             b.Draw(OFFSET);
+            rgb.Draw(OFFSET);
             colors[0].Draw(OFFSET);
             colors[1].Draw(OFFSET);
             colors[2].Draw(OFFSET);
+            currentColor = new Color(colors[0].getValue(), colors[1].getValue(), colors[2].getValue());
+            rgb.normColor = currentColor;
             endWindowContent();
         }
     }

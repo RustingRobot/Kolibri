@@ -50,17 +50,21 @@ namespace Kolibri.Source.Workspace.UIElements
         int a = 1;  //to check the change from adding a layer 
         public override void Update(Vector2 OFFSET)
         {
-            a= textures.Count;
-            if(a<textures.Count)
+            if(timelineWindow==null)
             {
-                a=textures.Count;
+                timelineWindow = (TimelineWindow)ObjManager.Windows.Find(x => x.GetType().Name =="TimelineWindow");
+            }
+            if(a<timelineWindow.layers.Count)
+            {
+                a=a+1;
 
                 textures.Add(new Texture2D(Globals.graphicsDevice, (int)dim.X, (int)dim.Y, false, SurfaceFormat.Color));
                 pixelsList.Add(new UInt32[(int)dim.X * (int)dim.Y]);
-                for (int j = 0; j < Globals.canvas.pixelsList[a].Length; j++) //set all pixels to white
+                for (int j = 0; j < pixelsList[pixelsList.Count-1].Length; j++) //set all pixels to white
                 {
-                    Globals.canvas.pixelsList[a-1][j] = 0xFFFFFFFF;
+                    pixelsList[a-1][j] = 0xFFFFFFFF;
                 }
+                Console.WriteLine("this is aaaaa:"+a);
             }
             Globals.graphicsDevice.Textures[0] = null;
             if (Globals.mouse.LeftClickHold() && Globals.interactWindow == null)
@@ -234,13 +238,11 @@ namespace Kolibri.Source.Workspace.UIElements
         public override void Draw(Vector2 OFFSET)
         {
           //  Globals.spriteBatch.Draw(background, new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
-            if(timelineWindow==null)
-            {
-                timelineWindow = (TimelineWindow)ObjManager.Windows.Find(x => x.GetType().Name =="TimelineWindow");
-            }
+            
             
              for(int i=0;i<textures.Count;i++)
             {
+               
                 Globals.spriteBatch.Draw(textures[0], new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
                 
             }

@@ -215,5 +215,10 @@ namespace Kolibri.Source.Workspace
             }
             else delete = true;
         }
+
+        public bool MouseInWindow()
+        {
+            return Globals.GetBoxOverlap(new Vector2(pos.X + border, pos.Y + border), new Vector2(dim.X - border * 2, dim.Y - border * 2), Globals.mouse.newMousePos, Vector2.Zero);
+        }
     }
 }

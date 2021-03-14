@@ -50,7 +50,7 @@ namespace Kolibri.Source.Workspace
                     if (!Globals.keyboard.GetPress("LeftShift"))
                     {
                         currentFrame--;
-                        Globals.canvas.pixels = frames[currentFrame].pixels;
+                        Globals.canvas.pixelsList[layerIndex] = frames[currentFrame].pixels;
                     }
                 }
                 else if (Globals.keyboard.OnPress("Right") && currentFrame < frames.Count - 1 && selectEndFrame < frames.Count - 1) 
@@ -59,7 +59,7 @@ namespace Kolibri.Source.Workspace
                     if (!Globals.keyboard.GetPress("LeftShift"))
                     {
                         currentFrame++;
-                        Globals.canvas.pixels = frames[currentFrame].pixels;
+                        Globals.canvas.pixelsList[layerIndex] = frames[currentFrame].pixels;
                     }
                 }
 
@@ -79,21 +79,21 @@ namespace Kolibri.Source.Workspace
         {
             selectEndFrame++;
             currentFrame++;
-            Globals.canvas.pixels = frames[currentFrame].pixels;
+            Globals.canvas.pixelsList[layerIndex] = frames[currentFrame].pixels;
         }
 
         public void prevFrame()
         {
             selectEndFrame--;
             currentFrame--;
-            Globals.canvas.pixels = frames[currentFrame].pixels;
+            Globals.canvas.pixelsList[layerIndex] = frames[currentFrame].pixels;
         }
 
         public void gotoFrame(int FRAME)
         {
             selectEndFrame = FRAME;
             currentFrame = FRAME;
-            Globals.canvas.pixels = frames[FRAME].pixels;
+            Globals.canvas.pixelsList[layerIndex] = frames[FRAME].pixels;
         }
 
         public void clearFrames()

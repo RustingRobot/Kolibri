@@ -34,32 +34,35 @@ namespace Kolibri.Source.Workspace
         {
             if(timeline.layer.hidden == false)
             {
-            pos = OFFSET + window.pos;
-            index = timeline.frames.IndexOf(this);
-            if (timeline.frames[timeline.currentFrame] == this)
-            {
-                color = new Color(60, 104, 148);
-                pixels = Globals.canvas.pixels;
-            } 
-            else if (MouseHover())
-            {
-                color = Color.LightGray;
-                if (Clicked())
+                if(layerIndex==Globals.canvas.pixelsList.Count-1)
                 {
-                    timeline.selectEndFrame = index;
-                    if (!Globals.keyboard.GetPress("LeftShift"))
+                    pos = OFFSET + window.pos;
+                    index = timeline.frames.IndexOf(this);
+                    if (timeline.frames[timeline.currentFrame] == this)
                     {
-                        timeline.currentFrame = index;
-                        Globals.canvas.pixels = pixels;
+                        color = new Color(60, 104, 148);
+                        pixels = Globals.canvas.pixelsList[layerIndex];
+                        
+                    } 
+                    else if (MouseHover())
+                    {
+                        color = Color.LightGray;
+                        if (Clicked())
+                        {
+                            timeline.selectEndFrame = index;
+                            if (!Globals.keyboard.GetPress("LeftShift"))
+                            {
+                                timeline.currentFrame = index;
+                                Globals.canvas.pixelsList[layerIndex] = pixels;
+                            }
+                        }
                     }
+                    else if ((index <= timeline.selectEndFrame && index > timeline.currentFrame) || (index >= timeline.selectEndFrame && index < timeline.currentFrame))
+                    {
+                        color = new Color(104, 152, 165);
+                    }
+                    else color = Color.Gray;
                 }
-            }
-            else if ((index <= timeline.selectEndFrame && index > timeline.currentFrame) || (index >= timeline.selectEndFrame && index < timeline.currentFrame))
-            {
-                color = new Color(104, 152, 165);
-            }
-            else color = Color.Gray;
-
             base.Update(OFFSET);
             }
         }

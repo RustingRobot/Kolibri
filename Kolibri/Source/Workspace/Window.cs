@@ -11,7 +11,7 @@ namespace Kolibri.Source.Workspace
 {
     public class Window : ESprite2d //handles stuff like dragging and resizing of windows
     {
-        public bool delete;
+        public bool delete, popupWindow = false;
         public Vector2 minDim;
         public Window LeftCW, RightCW, TopCW, BottomCW; // CI = Constraint Index
         public bool docked = false;
@@ -67,7 +67,7 @@ namespace Kolibri.Source.Workspace
                 }
                 else { borderColors[0] = defaultBorder; }
                 //bottom border
-                if (dragged[1] || Globals.GetBoxOverlap(new Vector2(pos.X, pos.Y + dim.Y - border), new Vector2(dim.X, border), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero))
+                if (!popupWindow && (dragged[1] || Globals.GetBoxOverlap(new Vector2(pos.X, pos.Y + dim.Y - border), new Vector2(dim.X, border), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero)))
                 {
                     if (Globals.interactWindow == null) borderColors[1] = selectedBorder;
                     if (BottomCW == null && dragged[1] || (Globals.interactWindow == null && Globals.mouse.LeftClickHold()))
@@ -80,7 +80,7 @@ namespace Kolibri.Source.Workspace
                 }
                 else { borderColors[1] = defaultBorder; }
                 //right border
-                if (dragged[2] || Globals.GetBoxOverlap(new Vector2(pos.X + dim.X - border, pos.Y), new Vector2(border, dim.Y), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero))
+                if (!popupWindow && (dragged[2] || Globals.GetBoxOverlap(new Vector2(pos.X + dim.X - border, pos.Y), new Vector2(border, dim.Y), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero)))
                 {
                     if (Globals.interactWindow == null) borderColors[2] = selectedBorder;
                     if (RightCW == null && dragged[2] || (Globals.interactWindow == null && Globals.mouse.LeftClickHold()))
@@ -93,7 +93,7 @@ namespace Kolibri.Source.Workspace
                 }
                 else { borderColors[2] = defaultBorder; }
                 //left border
-                if (dragged[3] || Globals.GetBoxOverlap(new Vector2(pos.X, pos.Y), new Vector2(border, dim.Y), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero))
+                if (!popupWindow && (dragged[3] || Globals.GetBoxOverlap(new Vector2(pos.X, pos.Y), new Vector2(border, dim.Y), new Vector2(Globals.mouse.newMouse.X, Globals.mouse.newMouse.Y), Vector2.Zero)))
                 {
                     if (Globals.interactWindow == null)
                     {
@@ -126,7 +126,7 @@ namespace Kolibri.Source.Workspace
                 Array.Fill(borderColors, defaultBorder);
             }
 
-            if (docked)
+            if (!popupWindow && docked)
             {
                 if (LeftCW != null) pos.X = LeftCW.dim.X + LeftCW.pos.X - border;
                 

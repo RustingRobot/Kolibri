@@ -18,7 +18,7 @@ namespace Kolibri.Source.Workspace.UIElements
         public float zoom = 1;
         public int BrushSize = 1, EraserSize = 1;
         public UInt32[] pixels;
-        private ColorPicker cp;
+        private ColorPickerWindow cp;
 
         Texture2D canvas;
 
@@ -40,7 +40,7 @@ namespace Kolibri.Source.Workspace.UIElements
             {
                 if (cp == null)
                 {
-                    cp = (ColorPicker)ObjManager.Windows.Find(x => x.GetType().Name == "ColorPicker");
+                    cp = (ColorPickerWindow)ObjManager.Windows.Find(x => x.GetType().Name == "ColorPicker");
                 }
                 else
                 {

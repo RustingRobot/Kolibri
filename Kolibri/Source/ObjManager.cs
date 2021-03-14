@@ -26,7 +26,7 @@ namespace Kolibri.Source
             //add windows
             Globals.PassWindow(new TimelineWindow(new Vector2(500, 350), new Vector2(400, 200)));
             Globals.PassWindow(new PlaybackWindow(new Vector2(50, 500), new Vector2(300, 200)));
-            Globals.PassWindow(new ColorPicker(new Vector2(500, 50), new Vector2(300, 250)));
+            Globals.PassWindow(new ColorPickerWindow(new Vector2(500, 50), new Vector2(400, 350)));
             Globals.PassWindow(new ToolsWindow(new Vector2(500, 500), new Vector2(200, 200)));
             Globals.PassWindow(new TestWindow(new Vector2(50, 50), new Vector2(300, 200)));
             Globals.PassWindow(canvasWindow);

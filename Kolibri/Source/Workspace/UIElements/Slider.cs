@@ -6,21 +6,19 @@ using System.Diagnostics;
 
 namespace Kolibri.Source.Workspace.UIElements
 {
-    public class Slider : ESprite2d
+    public class Slider : UIElement
     {
-        private Window window;
-        public Vector2 posMarker, relativePos;
+        public Vector2 posMarker;
         public Color color;
         public int value = 0, handleWidth = 20;
         bool dragged = false;
 
         public int start, end, steplength;
-        public Slider(int START, int END, int STEPLENGTH, Window WINDOW, Vector2 POS, Vector2 DIM, string LABEL) :base("Square", POS, DIM)
+        public Slider(int START, int END, int STEPLENGTH, Window WINDOW, Vector2 POS, Vector2 DIM, string LABEL) :base(WINDOW, POS, DIM)
         {
             start = START;
             end = END;
             steplength = STEPLENGTH;
-            window = WINDOW;
             relativePos = POS;
             color = new Color(100, 100, 100);
             posMarker = relativePos + window.pos;
@@ -39,10 +37,10 @@ namespace Kolibri.Source.Workspace.UIElements
 
        public override void Update(Vector2 OFFSET)
        {
-            pos = relativePos + window.pos;
+            base.Update(OFFSET);
             posMarker.Y = pos.Y;
             posMarker.X = pos.X + (dim.X - handleWidth) / (end - start) * value;
-            if (dragged || (Globals.GetBoxOverlap(posMarker, new Vector2(posMarker.X + handleWidth, dim.Y), Globals.mouse.newMousePos, Vector2.Zero) && Globals.mouse.LeftClickHold() && window.MouseInWindow()))
+            if (dragged || (MouseHover() && Globals.mouse.LeftClickHold() && window.MouseInWindow()))
             {
                 value = (int)(Globals.mouse.newMousePos.X - pos.X);
                 value = Math.Clamp(value, start, end);
@@ -53,8 +51,6 @@ namespace Kolibri.Source.Workspace.UIElements
             {
                 dragged = false;
             }
-
-            base.Update(OFFSET);
 
        }
 

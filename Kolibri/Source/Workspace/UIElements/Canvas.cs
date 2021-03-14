@@ -16,6 +16,7 @@ namespace Kolibri.Source.Workspace.UIElements
     public class Canvas : UIElement //pixel grid to draw on
     {
         TimelineWindow timelineWindow;
+        PlaybackWindow playbackWindow;
         public Vector2 offset = Vector2.Zero;
         public float zoom = 1;
         public int BrushSize = 1, EraserSize = 1;
@@ -26,6 +27,7 @@ namespace Kolibri.Source.Workspace.UIElements
 
         public List<Texture2D> textures = new List<Texture2D>();
         public List<UInt32[]> pixelsList = new List<UInt32[]>();
+        public List<Boolean> pixelsIsThere = new List<Boolean>();
 
         public Canvas(Window WINDOW, Vector2 POS, Vector2 DIM) : base(WINDOW, POS, DIM)
         {
@@ -40,6 +42,7 @@ namespace Kolibri.Source.Workspace.UIElements
 
             textures.Add(new Texture2D(Globals.graphicsDevice, (int)dim.X, (int)dim.Y, false, SurfaceFormat.Color));
             pixelsList.Add(new UInt32[(int)dim.X * (int)dim.Y]);
+            pixelsIsThere.Add(true);
             for (int i = 0; i < pixelsList[0].Length; i++) //set all pixels to white
             {
                 pixelsList[0][i] = 0xFFFFFFFF;
@@ -48,11 +51,16 @@ namespace Kolibri.Source.Workspace.UIElements
         }
 
         int a = 1;  //to check the change from adding a layer 
+        
         public override void Update(Vector2 OFFSET)
         {
             if(timelineWindow==null)
             {
                 timelineWindow = (TimelineWindow)ObjManager.Windows.Find(x => x.GetType().Name =="TimelineWindow");
+            }
+            if(playbackWindow==null)
+            {
+                playbackWindow = (PlaybackWindow)ObjManager.Windows.Find(x => x.GetType().Name =="PlaybackWindow");
             }
             if(a<timelineWindow.layers.Count)
             {
@@ -60,10 +68,13 @@ namespace Kolibri.Source.Workspace.UIElements
 
                 textures.Add(new Texture2D(Globals.graphicsDevice, (int)dim.X, (int)dim.Y, false, SurfaceFormat.Color));
                 pixelsList.Add(new UInt32[(int)dim.X * (int)dim.Y]);
+                pixelsIsThere.Add(true);
                 for (int j = 0; j < pixelsList[pixelsList.Count-1].Length; j++) //set all pixels to white
                 {
                     pixelsList[a-1][j] = 0xFFFFFFFF;
+                    
                 }
+
                 Console.WriteLine("this is aaaaa:"+a);
             }
             Globals.graphicsDevice.Textures[0] = null;
@@ -246,9 +257,15 @@ namespace Kolibri.Source.Workspace.UIElements
             
              for(int i=0;i<textures.Count;i++)
             {
-               
-                Globals.spriteBatch.Draw(textures[0], new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
-                
+               if(playbackWindow.playing== true&&timelineWindow.layers[i].hidden==false)
+               {
+                Globals.spriteBatch.Draw(textures[i], new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
+               }
+               else
+               {
+                Globals.spriteBatch.Draw(textures[i], new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
+            
+               }
             }
         }
     }

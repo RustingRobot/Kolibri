@@ -13,7 +13,7 @@ namespace Kolibri.Source.Workspace.Windows
         Button playBtn, backBtn;
         Textfield fpsTxt, startFrameTxt, endFrameTxt;
         public int startFrame, endFrame;
-        bool playing;
+        public bool playing;
         ETimer timer;
         TimelineWindow timelineWindow;
 

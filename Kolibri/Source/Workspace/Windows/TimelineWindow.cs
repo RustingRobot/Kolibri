@@ -102,22 +102,22 @@ namespace Kolibri.Source.Workspace.Windows
             deleteLayerBtn.Update(OFFSET);
             duplicateFrameBtn.Update(OFFSET);
            // timeline.Update();
-           for (int i = 0; i < layers.Count; i++)
+           for (int m = 0; m < layers.Count; m++)
             {
-
-
+                
                 //change Layer
-                if (Globals.keyboard.OnPress("Up")==true&&layers[i].currentLayer == true)
+                if (Globals.keyboard.OnPress("Up")==true&&layers[m].currentLayer == true)
                 {
-                   if(i==0)
+                    
+                   if(m==0)
                    {
-                        layers[i].currentLayer = false;   
+                        layers[m].currentLayer = false;   
                         layers[layers.Count-1].currentLayer = true; 
                    }
                    else
                    {
-                        layers[i].currentLayer = false;   
-                        layers[i-1].currentLayer = true;
+                        layers[m].currentLayer = false;   
+                        layers[m-1].currentLayer = true;
                    }
                 
                 }
@@ -125,7 +125,7 @@ namespace Kolibri.Source.Workspace.Windows
                 
 
                 //update Layers
-                layers[i].Update(OFFSET);
+                layers[m].Update(OFFSET);
 
                 
                 

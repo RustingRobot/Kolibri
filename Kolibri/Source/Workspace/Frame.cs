@@ -3,6 +3,7 @@ using Kolibri.Engine.Input;
 using Kolibri.Source;
 using Kolibri.Source.Workspace;
 using Kolibri.Source.Workspace.UIElements;
+using Kolibri.Source.Workspace.Windows;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,6 +15,7 @@ namespace Kolibri.Source.Workspace
 {
     public class Frame: UIElement
     {
+        TimelineWindow timelineWindow;
         public UInt32[] pixels;
         Timeline timeline;
 
@@ -32,6 +34,10 @@ namespace Kolibri.Source.Workspace
 
         public override void Update(Vector2 OFFSET)
         {
+            if(timelineWindow==null)
+            {
+                timelineWindow = (TimelineWindow)ObjManager.Windows.Find(x => x.GetType().Name =="TimelineWindow");
+            }
             if(timeline.layer.currentLayer == true)
             {
                 if(layerIndex==Globals.canvas.pixelsList.Count-1)
@@ -50,6 +56,12 @@ namespace Kolibri.Source.Workspace
 
                         if (Clicked())
                         {
+                            /*for(int i=0;i<timelineWindow.layers.Count;i++)
+                            {
+                                timelineWindow.layers[i].currentLayer =false;
+                            }
+                            timeline.layer.currentLayer =true;*/
+                            
                             timeline.selectEndFrame = index;
                             if (!Globals.keyboard.GetPress("LeftShift"))
                             {
@@ -64,8 +76,9 @@ namespace Kolibri.Source.Workspace
                     }
                     else color = Color.Gray;
                 }
-            base.Update(OFFSET);
             }
+            base.Update(OFFSET);
+            
         }
         public override void Draw(Vector2 OFFSET)
         {
@@ -77,7 +90,7 @@ namespace Kolibri.Source.Workspace
                 Globals.primitives.DrawRect(new Vector2(OFFSET.X + window.pos.X + dim.X - border , OFFSET.Y + window.pos.Y+ 30*layerIndex), new Vector2(border, dim.Y), color);
                 Globals.primitives.DrawRect(new Vector2(OFFSET.X + window.pos.X , OFFSET.Y + window.pos.Y + dim.Y - border+ 30*layerIndex), new Vector2(dim.X, border), color);
             }
-            else Globals.primitives.DrawRect(OFFSET + window.pos, dim, color);
+            else Globals.primitives.DrawRect(OFFSET + window.pos+  new Vector2(0,30*layerIndex), dim, color);
         }
 
         public void clearFrame()

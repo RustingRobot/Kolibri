@@ -42,6 +42,7 @@ namespace Kolibri.Source.Workspace
 
         public void Update()
         {
+            
             if(layer.currentLayer == true)
             {
                 if (Globals.keyboard.OnPress("Left") && currentFrame > 0 && selectEndFrame > 0) 

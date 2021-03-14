@@ -9,11 +9,12 @@ namespace Kolibri.Source.Workspace.UIElements
 {
     class ColorPickerWindow : Window
     {
-        private Button r, g, b,rgb;
-        public Color currentColor;
+        private Button r, g, b, rgb, b1;
+        public Color currentColor,txtColor;
         Slider[] colors = new Slider[3];
         private Label testLabel;
         Textfield[] fields = new Textfield[3];
+        private int red, blue, green;
  
         public ColorPickerWindow(Vector2 POS, Vector2 DIM) : base(POS, DIM, "ColorPicker")
         {
@@ -35,6 +36,11 @@ namespace Kolibri.Source.Workspace.UIElements
             //button for sliders
             rgb = new Button(PickColorRGB, this, new Vector2(10, 140), new Vector2(100, 100), "");
             rgb.normColor = new Color(0,0,0);
+            //button for textfields
+            b1 = new Button(PickTxtColor, this, new Vector2(60, 300), new Vector2(20, 20), "");
+            b1.normColor = new Color(255, 0, 0);
+            b1.hoverColor = new Color(156, 20, 20);
+            b1.clickColor = new Color(181, 33, 33);
             //slider red
             colors[0] = new Slider(0,255,1,this,new Vector2(10,50),new Vector2(255,5),""); 
             colors[0].color = new Color(255, 0, 0);
@@ -44,10 +50,15 @@ namespace Kolibri.Source.Workspace.UIElements
             //slider blue
             colors[2] = new Slider(0, 255, 1, this, new Vector2(10, 130), new Vector2(255, 5), ""); 
             colors[2].color = new Color(0, 0, 255);
+            //lable
             testLabel = new Label(this, new Vector2(30, 245), new Vector2(90, 25), "Color:" + colors[0].getValue() + "," + colors[1].getValue() + "," + colors[2].getValue());
-            fields[0] = new Textfield(this,new Vector2(10,280),new Vector2(100,10),"") { defaultContent = "0" };
-            fields[1] = new Textfield(this, new Vector2(10, 295), new Vector2(100, 10), "") { defaultContent = "0" };
-            fields[2] = new Textfield(this, new Vector2(10, 310), new Vector2(100, 10), "") { defaultContent = "0" };
+            //textfields
+            fields[0] = new Textfield(this,new Vector2(10,280),new Vector2(40,20),"") { defaultContent = "0" };
+            fields[1] = new Textfield(this, new Vector2(10, 295), new Vector2(40, 20), "") { defaultContent = "0" };
+            fields[2] = new Textfield(this, new Vector2(10, 310), new Vector2(40, 20), "") { defaultContent = "0" };
+            fields[0].numberField = true;
+            fields[1].numberField = true;
+            fields[2].numberField = true;
         }
         
         public void PickColorRed()
@@ -76,20 +87,31 @@ namespace Kolibri.Source.Workspace.UIElements
             currentColor = new Color(colors[0].getValue(), colors[1].getValue(), colors[2].getValue()); //Chosen color with sliders
             rgb.normColor = currentColor;
         }
+        public void PickTxtColor()
+        {
+            currentColor = new Color(red,green,blue); //Chosen color with Textfields
+            b1.normColor = currentColor;
+        }
         public override void Update(Vector2 OFFSET)
         {
             base.Update(OFFSET);
             r.Update(OFFSET);
             g.Update(OFFSET);
             b.Update(OFFSET);
+            b1.Update(OFFSET);
             rgb.Update(OFFSET);
             colors[0].Update(OFFSET);
             colors[1].Update(OFFSET);
             colors[2].Update(OFFSET);
             rgb.Update(OFFSET);
             testLabel.Update(OFFSET);
+            testLabel.label = "Color: " + red +","+ green +","+blue;
             fields[0].Update(OFFSET); fields[1].Update(OFFSET); fields[2].Update(OFFSET);
-
+            //currentColor = new Color(colors[0].getValue(), colors[1].getValue(), colors[2].getValue()); //Chosen color with sliders
+            rgb.normColor = currentColor;
+            if (fields[0].content != "") red = int.Parse(fields[0].content);
+            if (fields[1].content != "") green = int.Parse(fields[1].content);
+            if (fields[2].content != "") blue = int.Parse(fields[2].content);
         }
 
         public override void Draw(Vector2 OFFSET, Color COLOR)
@@ -99,6 +121,7 @@ namespace Kolibri.Source.Workspace.UIElements
             r.Draw(OFFSET);
             g.Draw(OFFSET);
             b.Draw(OFFSET);
+            b1.Draw(OFFSET);
             rgb.Draw(OFFSET);
             testLabel.Draw(OFFSET);
             colors[0].Draw(OFFSET);

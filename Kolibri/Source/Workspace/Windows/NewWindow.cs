@@ -37,6 +37,7 @@ namespace Kolibri.Source.Workspace.Windows
             Globals.canvas = new Canvas(canvasWindow, new Vector2(20, 35), new Vector2(int.Parse(canvasX.content), int.Parse(canvasY.content)));
             Globals.PassWindow(canvasWindow);
             ObjManager.projName = ProjName.content;
+            Globals.interactWindow = null;
         }
 
         public override void Draw(Vector2 OFFSET, Color COLOR)

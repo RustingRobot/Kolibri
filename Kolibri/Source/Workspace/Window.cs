@@ -212,6 +212,7 @@ namespace Kolibri.Source.Workspace
                 dim = undockedDim;
                 pos.X += (pos.X > Globals.screenWidth / 2) ? -20 : 20;
                 pos.Y += (pos.Y > Globals.screenHeight / 2) ? -20 : 20;
+                ObjManager.toFront(this);
             }
             else delete = true;
         }

@@ -28,12 +28,12 @@ namespace Kolibri.Source.Workspace.Windows
                 {
                     if (Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue > 0) {
                         Globals.canvas.zoom += 0.1f;
-                        Globals.canvas.offset += (Globals.mouse.newMousePos - Globals.canvas.pos - Globals.canvas.offset) - (Globals.mouse.newMousePos - (Globals.canvas.pos + Globals.canvas.offset));
+                        //Globals.canvas.offset += (Globals.mouse.newMousePos - Globals.canvas.pos - Globals.canvas.offset) - (Globals.mouse.newMousePos - pos);
                     }
                     else
                     {
                         Globals.canvas.zoom -= 0.1f;
-                        Globals.canvas.offset += (Globals.mouse.newMousePos - Globals.canvas.pos - Globals.canvas.offset);
+                        //Globals.canvas.offset += (Globals.mouse.newMousePos - Globals.canvas.pos - Globals.canvas.offset);
                     }
                 }
                 else

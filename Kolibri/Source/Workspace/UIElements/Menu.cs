@@ -60,6 +60,7 @@ namespace Kolibri.Source.Workspace.UIElements
             if (subItemNames[1].Contains(type) && ObjManager.Windows.Find(x => x.GetType().Name == type + "Window") != null)
             {
                 Window tempWindow = ObjManager.Windows.Find(x => x.GetType().Name == type + "Window");
+                if(tempWindow.docked) return;
                 tempWindow.pos = defaultPos;
                 tempWindow.dim = defaultSize;
                 return;

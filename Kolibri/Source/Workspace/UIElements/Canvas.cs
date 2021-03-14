@@ -40,7 +40,7 @@ namespace Kolibri.Source.Workspace.UIElements
             {
                 if (cp == null)
                 {
-                    cp = (ColorPickerWindow)ObjManager.Windows.Find(x => x.GetType().Name == "ColorPicker");
+                    cp = (ColorPickerWindow)ObjManager.Windows.Find(x => x.GetType().Name == "ColorPickerWindow");
                 }
                 else
                 {

@@ -84,9 +84,6 @@ namespace Kolibri.Source.Workspace.UIElements
             if (fields[0].content != "") red = int.Parse(fields[0].content);
             if (fields[1].content != "") green = int.Parse(fields[1].content);
             if (fields[2].content != "") blue = int.Parse(fields[2].content);
-            colors[0].posMarker.X = 510 + red;
-            colors[1].posMarker.X = 510 + green;
-            colors[2].posMarker.X = 510 + blue;
         }
 
         public override void Draw(Vector2 OFFSET, Color COLOR)

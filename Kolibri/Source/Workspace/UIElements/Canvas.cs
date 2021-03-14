@@ -8,33 +8,60 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Kolibri.Source.Workspace.UIElements;
+using Kolibri.Source.Workspace.Windows;
 
 
 namespace Kolibri.Source.Workspace.UIElements
 {
     public class Canvas : UIElement //pixel grid to draw on
     {
+        TimelineWindow timelineWindow;
         public Vector2 offset = Vector2.Zero;
         public float zoom = 1;
         public int BrushSize = 1, EraserSize = 1;
-        public UInt32[] pixels;
+     //   public UInt32[] pixels;
         private ColorPickerWindow cp;
 
-        Texture2D canvas;
+      //  Texture2D background;
+
+        public List<Texture2D> textures = new List<Texture2D>();
+        public List<UInt32[]> pixelsList = new List<UInt32[]>();
 
         public Canvas(Window WINDOW, Vector2 POS, Vector2 DIM) : base(WINDOW, POS, DIM)
         {
             pos = POS;
             dim = DIM;
-            canvas = new Texture2D(Globals.graphicsDevice, (int)dim.X, (int)dim.Y, false, SurfaceFormat.Color);
-            pixels = new UInt32[(int)dim.X * (int)dim.Y];
-            for (int i = 0; i < pixels.Length; i++) //set all pixels to white
+         //   background = new Texture2D(Globals.graphicsDevice, (int)dim.X, (int)dim.Y, false, SurfaceFormat.Color);
+        //    pixels = new UInt32[(int)dim.X * (int)dim.Y];
+         /*   for (int i = 0; i < pixels.Length; i++) //set all pixels to white
             {
                 pixels[i] = 0xFFFFFFFF;
+            }*/
+
+            textures.Add(new Texture2D(Globals.graphicsDevice, (int)dim.X, (int)dim.Y, false, SurfaceFormat.Color));
+            pixelsList.Add(new UInt32[(int)dim.X * (int)dim.Y]);
+            for (int i = 0; i < pixelsList[0].Length; i++) //set all pixels to white
+            {
+                pixelsList[0][i] = 0xFFFFFFFF;
             }
+
         }
+
+        int a = 1;  //to check the change from adding a layer 
         public override void Update(Vector2 OFFSET)
         {
+            a= textures.Count;
+            if(a<textures.Count)
+            {
+                a=textures.Count;
+
+                textures.Add(new Texture2D(Globals.graphicsDevice, (int)dim.X, (int)dim.Y, false, SurfaceFormat.Color));
+                pixelsList.Add(new UInt32[(int)dim.X * (int)dim.Y]);
+                for (int j = 0; j < Globals.canvas.pixelsList[a].Length; j++) //set all pixels to white
+                {
+                    Globals.canvas.pixelsList[a-1][j] = 0xFFFFFFFF;
+                }
+            }
             Globals.graphicsDevice.Textures[0] = null;
             if (Globals.mouse.LeftClickHold() && Globals.interactWindow == null)
             {
@@ -67,23 +94,48 @@ namespace Kolibri.Source.Workspace.UIElements
                     }
                 }
             }
-            canvas.SetData<UInt32>(pixels, 0, (int)dim.X * (int)dim.Y);
+          //  background.SetData<UInt32>(pixels, 0, (int)dim.X * (int)dim.Y);
+            for(int i=0; i<textures.Count;i++)
+            {
+                textures[i].SetData<UInt32>(pixelsList[i],0,(int)dim.X * (int)dim.Y);
+            }
+            
             base.Update(OFFSET + offset);
         }
 
         public void setPixel(Vector2 position, Color color)
         {
             //if((int)(position.Y * dim.X + position.X) < pixels.Length && (int)(position.Y * dim.X + position.X) >= 0)
+          //  if (position.X < dim.X && position.X >= 0 && position.Y < dim.Y && position.Y >= 0)
+         //       pixels[(int)(position.Y * dim.X + position.X)] = (uint)((color.A << 24) | (color.B << 16) | (color.G << 8) | (color.R << 0));
+            for(int i=0;i<pixelsList.Count;i++)
+            {
             if (position.X < dim.X && position.X >= 0 && position.Y < dim.Y && position.Y >= 0)
-                pixels[(int)(position.Y * dim.X + position.X)] = (uint)((color.A << 24) | (color.B << 16) | (color.G << 8) | (color.R << 0));
+                pixelsList[i][(int)(position.Y * dim.X + position.X)] = (uint)((color.A << 24) | (color.B << 16) | (color.G << 8) | (color.R << 0));
+            }
+            
         }
 
         public Color getPixel(Vector2 position)
         {
-            if ((int)(position.Y * dim.X + position.X) < pixels.Length && (int)(position.Y * dim.X + position.X) >= 0)
+         /*   if ((int)(position.Y * dim.X + position.X) < pixels.Length && (int)(position.Y * dim.X + position.X) >= 0)
                 return new Color(pixels[(int)(position.Y * dim.X + position.X)]);
             else
                 return Color.Transparent;
+*/
+            
+            if ((int)(position.Y * dim.X + position.X) < pixelsList[0].Length && (int)(position.Y * dim.X + position.X) >= 0)
+                return new Color(pixelsList[0][(int)(position.Y * dim.X + position.X)]);
+            else
+                return Color.Transparent;
+            for(int i=1; i<pixelsList.Count;i++)
+            {
+                 if ((int)(position.Y * dim.X + position.X) < pixelsList[i].Length && (int)(position.Y * dim.X + position.X) >= 0)
+                return new Color(pixelsList[i][(int)(position.Y * dim.X + position.X)]);
+            else
+                return Color.Transparent;
+            }
+            
         }
 
         public void drawLine(Vector2 pos0, Vector2 pos1, Color color)   //implementation of Bresenham's line algorithm
@@ -185,7 +237,17 @@ namespace Kolibri.Source.Workspace.UIElements
 
         public override void Draw(Vector2 OFFSET)
         {
-            Globals.spriteBatch.Draw(canvas, new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
+          //  Globals.spriteBatch.Draw(background, new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
+            if(timelineWindow==null)
+            {
+                timelineWindow = (TimelineWindow)ObjManager.Windows.Find(x => x.GetType().Name =="TimelineWindow");
+            }
+            
+             for(int i=0;i<textures.Count;i++)
+            {
+                Globals.spriteBatch.Draw(textures[0], new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
+                
+            }
         }
     }
 }

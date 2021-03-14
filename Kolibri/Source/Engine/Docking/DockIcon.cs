@@ -56,7 +56,7 @@ namespace Kolibri.Source.Workspace.UIElements
 
         public override void Update(Vector2 OFFSET)
         {
-            if (Globals.interactWindow != null && !Globals.interactWindow.docked)
+            if (Globals.interactWindow != null && !Globals.interactWindow.docked && !Globals.interactWindow.popupWindow)
             {
                 color = (Globals.GetBoxOverlap(rotPos, rotDim, Globals.mouse.newMousePos, Vector2.Zero)) ? selectedColor : normColor;
                 switch (type)
@@ -84,7 +84,7 @@ namespace Kolibri.Source.Workspace.UIElements
 
         public override void Draw(Vector2 OFFSET)
         {
-            if (Globals.interactWindow != null && !Globals.interactWindow.docked)
+            if (Globals.interactWindow != null && !Globals.interactWindow.docked && !Globals.interactWindow.popupWindow)
             {
                 Globals.primitives.DrawRect(rotPos, rotDim, color);
                 base.Draw(OFFSET);

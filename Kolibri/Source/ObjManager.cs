@@ -15,6 +15,7 @@ namespace Kolibri.Source
         public Vector2 offset;
         public static List<Window> Windows = new List<Window>();
         public Menu menu;
+        public static string projName;
         public ObjManager()
         {
             Globals.PassWindow = AddWindow;

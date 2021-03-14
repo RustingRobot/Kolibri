@@ -46,7 +46,6 @@ namespace Kolibri.Source.Workspace.UIElements
                 {
                     Vector2 newDrawPos = new Vector2((float)Math.Ceiling((Globals.mouse.newMousePos.X - offset.X - pos.X) / zoom), (float)Math.Ceiling((Globals.mouse.newMousePos.Y - offset.Y - pos.Y) / zoom));
                     Vector2 oldDrawPos = new Vector2((float)Math.Ceiling((Globals.mouse.oldMousePos.X - offset.X - pos.X) / zoom), (float)Math.Ceiling((Globals.mouse.oldMousePos.Y - offset.Y - pos.Y) / zoom));
-                    //Vector2 oldDrawPos = (Globals.mouse.oldMousePos - offset - pos);
 
                     switch (Globals.activeTool)
                     {

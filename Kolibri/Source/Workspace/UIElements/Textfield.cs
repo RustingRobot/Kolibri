@@ -33,7 +33,7 @@ namespace Kolibri.Source.Workspace.UIElements
         public override void Update(Vector2 OFFSET)
         {
             if (content == "") content = defaultContent;
-            width = Globals.font.MeasureString(content).X * Globals.fontSize.X;
+            width = Globals.font.MeasureString(content + "W").X * Globals.fontSize.X;
 
             if (Globals.mouse.LeftClick())
             {
@@ -51,12 +51,12 @@ namespace Kolibri.Source.Workspace.UIElements
             
             if(Globals.keyboard.pressedKeys.Count > 0)  //add character
             {
-                if(Globals.keyboard.pressedKeys[0].print != lastChar && width < dim.X - 0.1f && selected)
+                if((lastChar == null || Globals.keyboard.pressedKeys[0].print.ToLower() != lastChar.ToLower()) && width < dim.X - 0.1f && selected)
                 {
                     int number;
                     if(!(numberField && !Int32.TryParse(Globals.keyboard.pressedKeys[0].print, out number)))
                     {
-                        lastChar = Globals.keyboard.pressedKeys[0].print;
+                        lastChar = (Globals.keyboard.GetPress("LeftShift") || Globals.keyboard.GetPress("RightShift")) ? Globals.keyboard.pressedKeys[0].print : Globals.keyboard.pressedKeys[0].print.ToLower();
                         content = (content == "0" && numberField) ? lastChar : content + lastChar;
                     }
                 }
@@ -68,7 +68,8 @@ namespace Kolibri.Source.Workspace.UIElements
 
             if (!Globals.keyboard.oldKeyboard.IsKeyDown(Keys.Back) && Globals.keyboard.newKeyboard.IsKeyDown(Keys.Back) && content.Length >= 1 && selected) //remove character
             {
-                 content = content.Remove(content.Length-1);
+                content = content.Remove(content.Length-1);
+                if (numberField && content.Length == 0) content = "0";
             }
 
             Console.WriteLine(content);
@@ -80,7 +81,7 @@ namespace Kolibri.Source.Workspace.UIElements
             //field
             Globals.primitives.DrawRect(pos,dim, color);
             //label        
-            Globals.primitives.DrawTxt(content.ToLower(), new Vector2(pos.X + 5, pos.Y + dim.Y / 2 - txtHeight / 4), Globals.fontSize, new Color(245, 255, 250));
+            Globals.primitives.DrawTxt(content, new Vector2(pos.X + 5, pos.Y + dim.Y / 2 - txtHeight / 4), Globals.fontSize, new Color(245, 255, 250));
         } 
 
         public void UpdateIntConnection(ref int connection) 

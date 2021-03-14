@@ -35,7 +35,8 @@ namespace Kolibri.Source.Workspace.Windows
             if (timelineWindow == null)
             {
                 timelineWindow = (TimelineWindow)ObjManager.Windows.Find(x => x.GetType().Name == "TimelineWindow");
-                timelineWindow.pbWindow = this;
+                if(timelineWindow != null)
+                    timelineWindow.pbWindow = this;
             }
             else
             {

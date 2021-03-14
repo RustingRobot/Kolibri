@@ -18,7 +18,7 @@ namespace Kolibri.Source.Workspace.UIElements
         public float zoom = 1;
         public int BrushSize = 1, EraserSize = 1;
         public UInt32[] pixels;
-        private ColorPicker cp;
+        private ColorPickerWindow cp;
 
         Texture2D canvas;
 
@@ -40,13 +40,12 @@ namespace Kolibri.Source.Workspace.UIElements
             {
                 if (cp == null)
                 {
-                    cp = (ColorPicker)ObjManager.Windows.Find(x => x.GetType().Name == "ColorPicker");
+                    cp = (ColorPickerWindow)ObjManager.Windows.Find(x => x.GetType().Name == "ColorPickerWindow");
                 }
                 else
                 {
                     Vector2 newDrawPos = new Vector2((float)Math.Ceiling((Globals.mouse.newMousePos.X - offset.X - pos.X) / zoom), (float)Math.Ceiling((Globals.mouse.newMousePos.Y - offset.Y - pos.Y) / zoom));
                     Vector2 oldDrawPos = new Vector2((float)Math.Ceiling((Globals.mouse.oldMousePos.X - offset.X - pos.X) / zoom), (float)Math.Ceiling((Globals.mouse.oldMousePos.Y - offset.Y - pos.Y) / zoom));
-                    //Vector2 oldDrawPos = (Globals.mouse.oldMousePos - offset - pos);
 
                     switch (Globals.activeTool)
                     {

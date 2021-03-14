@@ -22,8 +22,8 @@ namespace Kolibri.Source.Workspace.Windows
         Button clearFrameBtn;
         Texture2D clearFrame;
         Layer layer1;
-        //public Layer currentLayer;
-        int i; 
+        public Layer canvasTimeline;
+        public int i; 
         public TimelineWindow( Vector2 POS, Vector2 DIM) : base(POS, DIM, "Timeline")
         {   
             //timeline = new Timeline(this);
@@ -32,7 +32,9 @@ namespace Kolibri.Source.Workspace.Windows
             layer1.currentLayer = true;
            // currentLayer = layer1;
             layers.Add(layer1);
+            
             i = 2;
+          //  canvasTimeline = new Layer(i, this, "Canvas", new Vector2(10, 58+ 30*(i-1)));
 
             addLayerBtn = new Button(addLayer, this, new Vector2 (30, 24), new Vector2(18,18), "aL");
 
@@ -49,6 +51,7 @@ namespace Kolibri.Source.Workspace.Windows
 
         public void addLayer()
         {
+            
             layers.Add(new Layer((i-1),this, "Layer " + i, new Vector2(10, 58+ 30*(i-1))));
             layers[layers.Count-1].currentLayer = true;
             for (int i = 0; i < layers.Count-1; i++)
@@ -56,8 +59,9 @@ namespace Kolibri.Source.Workspace.Windows
                 layers[i].currentLayer = false;
             }
             i = i+1;
-           
-        }
+            
+            
+       }
 
         
         public void deleteLayer()
@@ -71,6 +75,7 @@ namespace Kolibri.Source.Workspace.Windows
                     i= i-1;
                 } 
             }
+            
         }
         public override void Update(Vector2 OFFSET)
         {
@@ -82,10 +87,11 @@ namespace Kolibri.Source.Workspace.Windows
            // timeline.Update();
            for (int i = 0; i < layers.Count; i++)
             {
+
+
                 //change Layer
                 if (Globals.keyboard.OnPress("Up")==true&&layers[i].currentLayer == true)
                 {
-                    
                    if(i==0)
                    {
                         layers[i].currentLayer = false;   
@@ -96,12 +102,15 @@ namespace Kolibri.Source.Workspace.Windows
                         layers[i].currentLayer = false;   
                         layers[i-1].currentLayer = true;
                    }
+                
                 }
+                
                 
 
                 //update Layers
                 layers[i].Update(OFFSET);
 
+                
                 
                 
                 
@@ -131,7 +140,7 @@ namespace Kolibri.Source.Workspace.Windows
                     Globals.primitives.DrawRect(layers[i].label.pos + new Vector2(layers[i].label.dim.X,0), new Vector2(1, layers[i].label.dim.Y), new Color(85, 209, 23));
                 }
             }
-
+           // canvasTimeline.Draw(OFFSET);
             
             //layer1.Draw(OFFSET);
             endWindowContent();

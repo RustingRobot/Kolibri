@@ -20,6 +20,7 @@ namespace Kolibri.Source.Workspace.Windows
         //int currentLayer;
         Button addLayerBtn, deleteLayerBtn;
         Button clearFrameBtn;
+        Button duplicateFrameBtn;
         Texture2D clearFrame;
         Layer layer1;
         public Layer canvasTimeline;
@@ -41,6 +42,8 @@ namespace Kolibri.Source.Workspace.Windows
             clearFrameBtn = new Button(layer1.timeline.clearFrames, this, new Vector2(7, 24), new Vector2(18, 18), "C");
 
             deleteLayerBtn = new Button(deleteLayer, this, new Vector2 (53, 24), new Vector2(18,18), "dL");
+
+            duplicateFrameBtn = new Button(duplicateFrame, this, new Vector2(76, 24), new Vector2(18,18), "dF");
 
             clearFrame = Globals.content.Load<Texture2D>("clearFrame");
 
@@ -79,6 +82,17 @@ namespace Kolibri.Source.Workspace.Windows
             }
             
         }
+
+        public void duplicateFrame()
+        {
+            for(int i=0;i<layers.Count;i++)
+            {
+                if(layers[i].currentLayer ==true)
+                {
+                    layers[i].timeline.frames[layers[i].timeline.currentFrame+1].pixels =layers[i].timeline.frames[layers[i].timeline.currentFrame].pixels;
+                }
+            }
+        }
         public override void Update(Vector2 OFFSET)
         {
              
@@ -86,6 +100,7 @@ namespace Kolibri.Source.Workspace.Windows
             clearFrameBtn.Update(OFFSET);
             addLayerBtn.Update(OFFSET);
             deleteLayerBtn.Update(OFFSET);
+            duplicateFrameBtn.Update(OFFSET);
            // timeline.Update();
            for (int i = 0; i < layers.Count; i++)
             {
@@ -129,6 +144,7 @@ namespace Kolibri.Source.Workspace.Windows
             clearFrameBtn.Draw(OFFSET);
             addLayerBtn.Draw(OFFSET);
             deleteLayerBtn.Draw(OFFSET);
+            duplicateFrameBtn.Draw(OFFSET);
             Globals.primitives.DrawLine(new Vector2(pos.X, pos.Y + 47), new Vector2(pos.X + dim.X, pos.Y + 47), 2, new Color(39, 44, 48));
            // timeline.Draw();
            for (int i = 0; i < layers.Count; i++)

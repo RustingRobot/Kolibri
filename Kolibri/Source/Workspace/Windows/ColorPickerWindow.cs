@@ -95,9 +95,6 @@ namespace Kolibri.Source.Workspace.UIElements
             slider[0].posMarker.X = 510 + redValue;
             slider[1].posMarker.X = 510 + greenValue;
             slider[2].posMarker.X = 510 + blueValue;
-            fields[0].content = Convert.ToString(slider[0].getValue());
-            fields[1].content = Convert.ToString(slider[1].getValue());
-            fields[2].content = Convert.ToString(slider[2].getValue());
         }
 
         public override void Draw(Vector2 OFFSET, Color COLOR)

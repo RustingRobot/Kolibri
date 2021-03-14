@@ -32,7 +32,7 @@ namespace Kolibri.Source.Workspace
 
         public override void Update(Vector2 OFFSET)
         {
-            if(timeline.layer.hidden == false)
+            if(timeline.layer.currentLayer == true)
             {
                 if(layerIndex==Globals.canvas.pixelsList.Count-1)
                 {
@@ -47,6 +47,7 @@ namespace Kolibri.Source.Workspace
                     else if (MouseHover())
                     {
                         color = Color.LightGray;
+
                         if (Clicked())
                         {
                             timeline.selectEndFrame = index;
@@ -70,6 +71,7 @@ namespace Kolibri.Source.Workspace
         {
             if (Array.TrueForAll(pixels, y => y == 0xFFFFFFFF))
             {
+            
                 Globals.primitives.DrawRect(OFFSET + window.pos + new Vector2(0, 30*layerIndex), new Vector2(dim.X,border), color);
                 Globals.primitives.DrawRect(OFFSET + window.pos +  new Vector2(0,30*layerIndex), new Vector2(border, dim.Y), color);
                 Globals.primitives.DrawRect(new Vector2(OFFSET.X + window.pos.X + dim.X - border , OFFSET.Y + window.pos.Y+ 30*layerIndex), new Vector2(border, dim.Y), color);

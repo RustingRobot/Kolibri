@@ -35,7 +35,7 @@ namespace Kolibri.Source.Workspace.UIElements
             for (int i = 1; i < menuitems.Length + 1; i++)
             {
                 menuitems[i - 1] = new Button(open, menuItemNames[i], null, new Vector2(pointer + (i - 1) * 15, 0), new Vector2(Globals.font.MeasureString(menuItemNames[i]).X * Globals.fontSize.X + 15, 24), menuItemNames[i]) 
-                { normColor = Color.Transparent, txtColor = new Color(200, 200, 200), hoverColor = new Color(80, 80, 85) };
+                { normColor = Color.Transparent, txtColor = new Color(200, 200, 200), hoverColor = new Color(55, 60, 65) };
                 pointer += Globals.font.MeasureString(menuItemNames[i]).X * Globals.fontSize.X;
             }
 
@@ -46,7 +46,7 @@ namespace Kolibri.Source.Workspace.UIElements
                 for (int j = 0; j < subItemNames[i].Count; j++)
                 {
                     subItems[i].Add(new Button(subItemClick, subItemNames[i][j], null, menuitems[i].pos + new Vector2(0, 24 * (j + 1)), new Vector2(Globals.font.MeasureString(longestString).X * Globals.fontSize.X + 15, 24), subItemNames[i][j])
-                    { normColor = new Color(39, 44, 48), txtColor = new Color(200, 200, 200), hoverColor = new Color(80, 80, 85), leftBound = true });
+                    { normColor = new Color(39, 44, 48), txtColor = new Color(200, 200, 200), hoverColor = new Color(55, 60, 65), leftBound = true });
                 }
             }
         }
@@ -79,7 +79,7 @@ namespace Kolibri.Source.Workspace.UIElements
                     Globals.PassWindow(new TimelineWindow(defaultPos, defaultSize));
                     break;
                 case "ColorPicker":
-                    Globals.PassWindow(new ColorPicker(defaultPos, defaultSize));
+                    Globals.PassWindow(new ColorPickerWindow(defaultPos, defaultSize));
                     break;
                 case "Playback":
                     Globals.PassWindow(new PlaybackWindow(defaultPos, defaultSize));
@@ -118,7 +118,7 @@ namespace Kolibri.Source.Workspace.UIElements
                 {
                     if(ObjManager.Windows.Find(x => x.GetType().Name == subItemNames[visibleSubMenu][i] + "Window") != null)
                     {
-                        subItems[visibleSubMenu][i].normColor = new Color(51, 57, 68);
+                        subItems[visibleSubMenu][i].normColor = new Color(51, 56, 61);
                     }
                     else
                     {

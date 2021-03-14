@@ -72,9 +72,9 @@ namespace Kolibri.Source.Workspace.UIElements
 
         public void setColor(Color color)
         {
-            colors[0].value = color.R;
-            colors[1].value = color.G;
-            colors[2].value = color.B;
+            slider[0].value = color.R;
+            slider[1].value = color.G;
+            slider[2].value = color.B;
         }
         public override void Update(Vector2 OFFSET)
         {
@@ -92,9 +92,6 @@ namespace Kolibri.Source.Workspace.UIElements
             if (fields[0].content != "") redValue = int.Parse(fields[0].content);
             if (fields[1].content != "") greenValue = int.Parse(fields[1].content);
             if (fields[2].content != "") blueValue = int.Parse(fields[2].content);
-            slider[0].posMarker.X = 510 + redValue;
-            slider[1].posMarker.X = 510 + greenValue;
-            slider[2].posMarker.X = 510 + blueValue;
         }
 
         public override void Draw(Vector2 OFFSET, Color COLOR)

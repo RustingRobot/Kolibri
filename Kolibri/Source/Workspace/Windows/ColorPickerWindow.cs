@@ -92,9 +92,9 @@ namespace Kolibri.Source.Workspace.UIElements
             if (fields[0].content != "") redValue = int.Parse(fields[0].content);
             if (fields[1].content != "") greenValue = int.Parse(fields[1].content);
             if (fields[2].content != "") blueValue = int.Parse(fields[2].content);
-            slider[0].posMarker.X = 510 + redValue;
-            slider[1].posMarker.X = 510 + greenValue;
-            slider[2].posMarker.X = 510 + blueValue;
+            fields[0].content = Convert.ToString(slider[0].getValue());
+            fields[1].content = Convert.ToString(slider[1].getValue());
+            fields[2].content = Convert.ToString(slider[2].getValue());
         }
 
         public override void Draw(Vector2 OFFSET, Color COLOR)

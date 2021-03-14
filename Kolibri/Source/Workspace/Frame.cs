@@ -39,7 +39,11 @@ namespace Kolibri.Source.Workspace
             if (timeline.frames[timeline.currentFrame] == this)
             {
                 color = new Color(60, 104, 148);
-                pixels = Globals.canvas.pixels;
+                Console.WriteLine("layer index is:  " + layerIndex);
+                if(layerIndex==Globals.canvas.pixelsList.Count-1)
+                {
+                pixels = Globals.canvas.pixelsList[layerIndex];
+                }
             } 
             else if (MouseHover())
             {
@@ -50,7 +54,7 @@ namespace Kolibri.Source.Workspace
                     if (!Globals.keyboard.GetPress("LeftShift"))
                     {
                         timeline.currentFrame = index;
-                        Globals.canvas.pixels = pixels;
+                        Globals.canvas.pixelsList[layerIndex] = pixels;
                     }
                 }
             }

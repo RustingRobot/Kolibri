@@ -58,6 +58,8 @@ namespace Kolibri.Source.Workspace.Windows
             {
                 layers[i].currentLayer = false;
             }
+            
+            
             i = i+1;
             
             

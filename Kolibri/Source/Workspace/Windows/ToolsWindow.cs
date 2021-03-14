@@ -11,7 +11,7 @@ namespace Kolibri.Source.Workspace.Windows
 {
     class ToolsWindow : Window
     {
-        string[] tools = new string[3] { "Brush", "Eraser", "BucketFill" };
+        string[] tools = new string[4] { "Brush", "Eraser", "BucketFill", "EyeDropper" };
         List<Texture2D> buttonTextures = new List<Texture2D>();
         List<Button> toolBtns = new List<Button>();
         List<List<UIElement>> toolOptions = new List<List<UIElement>>();
@@ -24,7 +24,7 @@ namespace Kolibri.Source.Workspace.Windows
 
             for (int i = 0; i < tools.Length; i++)
             {
-                toolBtns.Add(new Button(ToolClick, tools[i], this, new Vector2(16, 30 + i * 35), new Vector2(30, 30), "") { model = buttonTextures[i], imgSize = new Vector2(0.8f), imgOffset = new Vector2(-8) });
+                toolBtns.Add(new Button(ToolClick, tools[i], this, new Vector2(16, 30 + i * 35), new Vector2(30, 30), "") { model = buttonTextures[i], imgSize = new Vector2(0.95f), imgOffset = new Vector2(-13) });
             }
 
             toolOptions.Add(
@@ -41,6 +41,10 @@ namespace Kolibri.Source.Workspace.Windows
             });
             toolOptions.Add(
             new List<UIElement>()   //BucketFill
+            {
+            });
+            toolOptions.Add(
+            new List<UIElement>()   //EyeDropper
             {
             });
         }

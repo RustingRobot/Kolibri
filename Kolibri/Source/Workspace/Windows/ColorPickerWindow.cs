@@ -68,6 +68,13 @@ namespace Kolibri.Source.Workspace.UIElements
             currentColor = new Color(colors[0].getValue(), colors[1].getValue(), colors[2].getValue()); //Chosen color with sliders
             rgb.normColor = currentColor;
         }
+
+        public void setColor(Color color)
+        {
+            colors[0].value = color.R;
+            colors[1].value = color.G;
+            colors[2].value = color.B;
+        }
         public override void Update(Vector2 OFFSET)
         {
             base.Update(OFFSET);

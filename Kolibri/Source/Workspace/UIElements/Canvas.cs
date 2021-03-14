@@ -58,6 +58,10 @@ namespace Kolibri.Source.Workspace.UIElements
                         case ("BucketFill"):
                             FloodFill(newDrawPos, cp.currentColor);
                             break;
+                        case ("EyeDropper"):
+                            if(window.MouseInWindow())
+                                cp.setColor(getPixel(newDrawPos));
+                            break;
                         default:
                             break;
                     }

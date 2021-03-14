@@ -6,57 +6,27 @@ using System.Diagnostics;
 
 namespace Kolibri.Source.Workspace.UIElements
 {
-    public class Slider : ESprite2d
+    public class Slider : UIElement
     {
-  
-        private string label;
-        private Window window;
-        public Vector2   posMarker, relativePos;
+        public Vector2 posMarker;
         public Color color;
-        
-        public Button editBtn;
-        Boolean toEdit;
-        public int value;
+        public int value = 0, handleWidth = 20;
+        bool dragged = false;
 
         public int start, end, steplength;
-        public Slider(int START, int END, int STEPLENGTH, Window WINDOW, Vector2 POS, Vector2 DIM, string LABEL) :base("Square", POS, DIM)
+        public Slider(int START, int END, int STEPLENGTH, Window WINDOW, Vector2 POS, Vector2 DIM, string LABEL) :base(WINDOW, POS, DIM)
         {
-            editBtn = new Button(changeColor, WINDOW, new Vector2 (pos.X+dim.X+15, pos.Y), new Vector2(30,18), LABEL);
-            editBtn.color = new Color(178,0,0);
-            toEdit = true;
             start = START;
             end = END;
             steplength = STEPLENGTH;
-            //label=LABEL;
-            window = WINDOW;
             relativePos = POS;
             color = new Color(100, 100, 100);
             posMarker = relativePos + window.pos;
            
         }
-        public void changeColor()
-        {
-            editBtn.normColor = (toEdit)? new Color(0, 128, 0) : new Color(178, 0, 0);
-            toEdit = !toEdit;
-        }
 
         public int getValue()
         {
-            if(posMarker.X == pos.X)
-            {
-                value=-1;
-            }
-            else
-            {
-                int placeholder = Convert.ToInt32(posMarker.X);
-                for(int i = 0; placeholder> pos.X;i++)
-                {
-                    placeholder = placeholder -  Convert.ToInt32(dim.X/((end-start))*steplength);
-                    value=i;
-                }
-            }
-            
-            value = (value+1)*steplength;
             return value;
         }
         public void SetValue(int VALUE)
@@ -67,66 +37,33 @@ namespace Kolibri.Source.Workspace.UIElements
 
        public override void Update(Vector2 OFFSET)
        {
-           pos = relativePos + window.pos;
-          // posMarker.Y = pos.Y;
-           //posMarker.X = posMarker.X + window.pos.X;
-           
-          /* if(posMarker.X > pos.X||posMarker.X < pos.X+dim.X)
-           {
-              if (Globals.mouse.LeftClickHold()&&Globals.GetBoxOverlap(posMarker, new Vector2(5,7), Globals.mouse.newMousePos, Vector2.Zero))
-              {
-                posMarker.X= Globals.mouse.newMousePos.X;
-              };
-           }*/
-
-            if(toEdit == true)
+            base.Update(OFFSET);
+            posMarker.Y = pos.Y;
+            posMarker.X = pos.X + (dim.X - handleWidth) / (end - start) * value;
+            if (dragged || (MouseHover() && Globals.mouse.LeftClickHold() && window.MouseInWindow()))
             {
-                editBtn.normColor = new Color(0,178,0);
-            }
-            if(toEdit == false)
-            {
-                editBtn.normColor = new Color(178,0,0);
+                value = (int)(Globals.mouse.newMousePos.X - pos.X);
+                value = Math.Clamp(value, start, end);
+                dragged = true;
             }
 
-           if(Globals.keyboard.OnPress("Right")&&toEdit==true&&posMarker.X<pos.X+dim.X)
-           {
-               posMarker = new Vector2((dim.X/(end-start))*steplength, 0) + posMarker;
-               Console.WriteLine("value: " + this.getValue());
-           }
-           if(Globals.keyboard.OnPress("Left")&&toEdit==true&&posMarker.X>pos.X)
-           {
-               posMarker = posMarker - new Vector2((dim.X/((end-start))*steplength), 0) ;
-           }
-            /*if (Clicked()&& toEdit == true && posMarker.X > pos.X)
+            if (Globals.mouse.LeftClickRelease())
             {
-                posMarker = posMarker - new Vector2((dim.X / ((end - start)) * steplength), 0);
-            }*/
-            editBtn.Update(OFFSET);
-           base.Update(OFFSET);
+                dragged = false;
+            }
 
        }
 
        public override void Draw(Vector2 OFFSET)
        {
             base.Draw(OFFSET);
-            editBtn.Draw(OFFSET);
-            Globals.primitives.DrawTxt(Convert.ToString(start), new Vector2(pos.X, pos.Y+15), new Vector2(Globals.fontSize.X - 0.1f, Globals.fontSize.X - 0.1f), new Color(245,255,250));
-            Globals.primitives.DrawTxt(Convert.ToString(end), new Vector2(pos.X + dim.X, pos.Y+15), new Vector2(Globals.fontSize.X - 0.1f, Globals.fontSize.X - 0.1f), new Color(245,255,250));
-            
-            for (int i = 0; i < end/steplength+1; i++) 
-            {
-                Globals.primitives.DrawRect(new Vector2(pos.X+(dim.X/(end-start/steplength))*i,pos.Y),new Vector2 (3, 8),color);
-
-            }
-
-            //Globals.primitives.DrawTxt(label, new Vector2 (pos.X+dim.X +20, pos.Y-5),new Vector2(Globals.fontSize.X - 0.1f, Globals.fontSize.X - 0.1f), new Color(245,255,250));
-            
-            Globals.primitives.DrawRect(pos, new Vector2(dim.X,3), color);
+            Globals.primitives.DrawRect(pos, new Vector2(dim.X,dim.Y), color);
 
             //Marker
-            Globals.primitives.DrawRect(posMarker, new Vector2(5,7), new Color(160,210,20));
-            
-       } 
+            Globals.primitives.DrawRect(posMarker, new Vector2(handleWidth, dim.Y), new Color(39, 44, 48));
+            Globals.primitives.DrawTxt(value.ToString(), pos + new Vector2(dim.X / 2 - (Globals.font.MeasureString(value.ToString()).X * Globals.fontSize.X) / 2, 0), Globals.fontSize * 0.9f, new Color(245, 255, 250));
+
+        } 
 
     }
 

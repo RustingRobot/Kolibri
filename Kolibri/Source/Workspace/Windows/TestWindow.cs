@@ -12,14 +12,14 @@ namespace Kolibri.Source.Workspace.Windows
         private Button testBtn;
         private Textfield testField;
         private Label testLabel;
-        private Slider testslider;
+        //private Slider testslider;
         int clicks = 0;
         public TestWindow(Vector2 POS, Vector2 DIM) : base(POS, DIM, "Test Window")
         {
             testBtn = new Button(click, this, new Vector2(10, 25), new Vector2(90, 25), "click me!");
             testField = new Textfield(this, new Vector2(10, 55), new Vector2(220, 25), "click to edit text");
-            testslider = new Slider(0, 100, 10, this, new Vector2(20, 120), new Vector2(250, 3), "test");
-            testLabel = new Label(this, new Vector2(10, 140), new Vector2(90, 25), "Value: "+testslider.getValue());
+            //testslider = new Slider(0, 100, 10, this, new Vector2(20, 120), new Vector2(250, 3), "test");
+            //testLabel = new Label(this, new Vector2(10, 140), new Vector2(90, 25), "Value: "+testslider.getValue());
         }
         public void click()
         {
@@ -32,9 +32,9 @@ namespace Kolibri.Source.Workspace.Windows
             base.Update(OFFSET);
             testBtn.Update(OFFSET);
             testField.Update(OFFSET);
-            testLabel.Update(OFFSET);
-            testLabel.label = "Value: " + testslider.getValue();
-            testslider.Update(OFFSET);
+            //testLabel.Update(OFFSET);
+            //testLabel.label = "Value: " + testslider.getValue();
+            //testslider.Update(OFFSET);
         }
 
         public override void Draw(Vector2 OFFSET, Color COLOR)
@@ -43,10 +43,10 @@ namespace Kolibri.Source.Workspace.Windows
             beginWindowContent();
             testBtn.Draw(OFFSET);
             testField.Draw(OFFSET);
-            testLabel.Draw(OFFSET);
+            //testLabel.Draw(OFFSET);
             Globals.primitives.DrawTxt($"x: {Globals.screenWidth}", new Vector2(10 + pos.X, 100 + pos.Y), Globals.fontSize, Color.Gray);
             Globals.primitives.DrawTxt($"y: {Globals.screenHeight}", new Vector2(10 + pos.X, 120 + pos.Y), Globals.fontSize, Color.Gray);
-            testslider.Draw(OFFSET);
+            //testslider.Draw(OFFSET);
             endWindowContent();
         }
     }

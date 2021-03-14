@@ -14,13 +14,13 @@ namespace Kolibri.Source.Workspace.UIElements
         Slider[] colors = new Slider[3];
         private Label colorLabel;
         Textfield[] fields = new Textfield[3];
-        private int redValue, blueValue, greenValue;
+        private int red, green, blue;
  
         public ColorPickerWindow(Vector2 POS, Vector2 DIM) : base(POS, DIM, "ColorPicker")
         {
             //button for sliders
-            rgb = new Button(PickColorRGB, this, new Vector2(10, 155), new Vector2(100, 100), "");
-            rgb.normColor = new Color(0, 0, 0);
+            //rgb = new Button(PickColorRGB, this, new Vector2(10, 155), new Vector2(100, 100), "");
+            //rgb.normColor = new Color(0, 0, 0);
             //slider red
             colors[0] = new Slider(0,255,1,this,new Vector2(10,40),new Vector2(255,5),""); 
             colors[0].color = new Color(255, 0, 0);
@@ -71,31 +71,35 @@ namespace Kolibri.Source.Workspace.UIElements
         public override void Update(Vector2 OFFSET)
         {
             base.Update(OFFSET);
-            rgb.Update(OFFSET);
+            //rgb.Update(OFFSET);
             colors[0].Update(OFFSET);
             colors[1].Update(OFFSET);
             colors[2].Update(OFFSET);
-            rgb.Update(OFFSET);
+            //rgb.Update(OFFSET);
             colorLabel.Update(OFFSET);
-            colorLabel.label = "Color: " + redValue + "," + greenValue + "," + blueValue;
+            colorLabel.label = "Color: " + red + "," + green + "," + blue;
             fields[0].Update(OFFSET); fields[1].Update(OFFSET); fields[2].Update(OFFSET);
             currentColor = new Color(colors[0].getValue(), colors[1].getValue(), colors[2].getValue()); //Chosen color with sliders
-            rgb.normColor = currentColor;
+           //rgb.normColor = currentColor;
             if (fields[0].content != "") red = int.Parse(fields[0].content);
             if (fields[1].content != "") green = int.Parse(fields[1].content);
             if (fields[2].content != "") blue = int.Parse(fields[2].content);
+            colors[0].posMarker.X = 510 + red;
+            colors[1].posMarker.X = 510 + green;
+            colors[2].posMarker.X = 510 + blue;
         }
 
         public override void Draw(Vector2 OFFSET, Color COLOR)
         {
             base.Draw(OFFSET, COLOR);
             beginWindowContent();
-            rgb.Draw(OFFSET);
+            //rgb.Draw(OFFSET);
             colorLabel.Draw(OFFSET);
             colors[0].Draw(OFFSET);
             colors[1].Draw(OFFSET);
             colors[2].Draw(OFFSET);
             fields[0].Draw(OFFSET); fields[1].Draw(OFFSET); fields[2].Draw(OFFSET);
+            Globals.primitives.DrawRect(new Vector2(10, 205), new Vector2(100, 100), currentColor);
             endWindowContent();
         }
     }

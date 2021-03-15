@@ -79,9 +79,19 @@ namespace Kolibri.Source.Workspace.UIElements
 
         public void setColor(Color color)
         {
-            slider[0].value = color.R;
-            slider[1].value = color.G;
-            slider[2].value = color.B;
+            if (rgbMode)
+            {
+                slider[0].value = color.R;
+                slider[1].value = color.G;
+                slider[2].value = color.B;
+            }
+            else
+            {
+                float[] colorValues = RGBtoHSV((float)color.R, (float)color.G, (float)color.B);
+                slider[0].value = (int)colorValues[0];
+                slider[1].value = (int)(colorValues[1] * 100);
+                slider[2].value = (int)(colorValues[2] * 100);
+            }
         }
         public override void Update(Vector2 OFFSET)
         {

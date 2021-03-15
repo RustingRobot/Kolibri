@@ -27,6 +27,7 @@ namespace Kolibri.Source.Workspace.UIElements
 
         public List<Texture2D> textures = new List<Texture2D>();
         public List<UInt32[]> pixelsList = new List<UInt32[]>();
+        UInt32[] placeholderPixels;
         public List<Boolean> pixelsIsThere = new List<Boolean>();
 
         public Canvas(Window WINDOW, Vector2 POS, Vector2 DIM) : base(WINDOW, POS, DIM)
@@ -77,6 +78,7 @@ namespace Kolibri.Source.Workspace.UIElements
 
                 Console.WriteLine("this is aaaaa:"+a);
             }
+            
             Globals.graphicsDevice.Textures[0] = null;
             if (Globals.mouse.LeftClickHold() && Globals.interactWindow == null)
             {
@@ -110,11 +112,33 @@ namespace Kolibri.Source.Workspace.UIElements
                 }
             }
           //  background.SetData<UInt32>(pixels, 0, (int)dim.X * (int)dim.Y);
-            for(int i=0; i<textures.Count;i++)
+            if(textures.Count ==1)
+            {
+                textures[0].SetData<UInt32>(pixelsList[0],0,(int)dim.X * (int)dim.Y);
+          
+            }
+          for(int i=0;i<textures.Count-1;i++)
+            {          
+            if(playbackWindow.playing== true&&timelineWindow.layers[i].hidden==false)
+               {
+                for(int j=0; j<pixelsList[i].Length;j++)
+                {
+                    placeholderPixels = pixelsList[i];
+                    if(pixelsList[i][j]==16777215)      //if pixel is white set pixel of following texture
+                    {
+                    placeholderPixels[j]=pixelsList[i+1][j];
+                    }
+                    textures[i].SetData<UInt32>(placeholderPixels,0,(int)dim.X * (int)dim.Y);             
+                }
+                  }
+            
+            else
             {
                 textures[i].SetData<UInt32>(pixelsList[i],0,(int)dim.X * (int)dim.Y);
+          
             }
-            
+            }
+
             base.Update(OFFSET + offset);
         }
 
@@ -253,20 +277,27 @@ namespace Kolibri.Source.Workspace.UIElements
         public override void Draw(Vector2 OFFSET)
         {
           //  Globals.spriteBatch.Draw(background, new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
-            
-            
-             for(int i=0;i<textures.Count;i++)
+            if(textures.Count==1)
             {
-               if(playbackWindow.playing== true&&timelineWindow.layers[i].hidden==false)
+                Globals.spriteBatch.Draw(textures[0], new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
+            }
+            else
+            {
+            for(int i=0;i<textures.Count-1;i++)
+            {
+               if(playbackWindow.playing==true&&timelineWindow.layers[i].hidden==false)
                {
                 Globals.spriteBatch.Draw(textures[i], new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
                }
+               
                else
                {
                 Globals.spriteBatch.Draw(textures[i], new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
             
                }
             }
+            }
+            
         }
     }
 }

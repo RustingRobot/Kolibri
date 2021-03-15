@@ -23,6 +23,8 @@ namespace Kolibri.Source.Workspace
         int border = 2, index;
         int layerIndex;
 
+        Boolean check;
+
         public Frame(int LAYERINDEX,Window WINDOW, Timeline TIMELINE): base(WINDOW, Vector2.Zero, new Vector2(15, 25))
         {
             layerIndex = LAYERINDEX;
@@ -30,6 +32,7 @@ namespace Kolibri.Source.Workspace
             timeline = TIMELINE;
             pixels = new uint[(int)Globals.canvas.dim.X*(int)Globals.canvas.dim.Y];
             clearFrame();
+            check = false;
         }
 
         public override void Update(Vector2 OFFSET)
@@ -42,6 +45,44 @@ namespace Kolibri.Source.Workspace
             {
                 if(layerIndex==Globals.canvas.pixelsList.Count-1)
                 {
+                    check= true;
+                    pos = OFFSET + window.pos;
+                    index = timeline.frames.IndexOf(this);
+                    if (timeline.frames[timeline.currentFrame] == this)
+                    {
+                        color = new Color(60, 104, 148);
+                        pixels = Globals.canvas.pixelsList[layerIndex];
+                        
+                    } 
+                    else if (MouseHover())
+                    {
+                        color = Color.LightGray;
+
+                        if (Clicked())
+                        {
+                            /*for(int i=0;i<timelineWindow.layers.Count;i++)
+                            {
+                                timelineWindow.layers[i].currentLayer =false;
+                            }
+                            timeline.layer.currentLayer =true;*/
+                            
+                            timeline.selectEndFrame = index;
+                            if (!Globals.keyboard.GetPress("LeftShift"))
+                            {
+                                timeline.currentFrame = index;
+                                Globals.canvas.pixelsList[layerIndex] = pixels;
+                            }
+                        }
+                    }
+                    else if ((index <= timeline.selectEndFrame && index > timeline.currentFrame) || (index >= timeline.selectEndFrame && index < timeline.currentFrame))
+                    {
+                        color = new Color(104, 152, 165);
+                    }
+                    else color = Color.Gray;
+                }
+                if(check ==true)
+                {
+
                     pos = OFFSET + window.pos;
                     index = timeline.frames.IndexOf(this);
                     if (timeline.frames[timeline.currentFrame] == this)

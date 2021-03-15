@@ -21,7 +21,7 @@ namespace Kolibri.Source.Workspace
 
         Color color;
         int border = 2, index;
-        int layerIndex;
+        public int layerIndex;
 
         Boolean check;
 
@@ -43,6 +43,7 @@ namespace Kolibri.Source.Workspace
             }
             if(timeline.layer.currentLayer == true)
             {
+
                 if(layerIndex==Globals.canvas.pixelsList.Count-1)
                 {
                     check= true;
@@ -117,6 +118,7 @@ namespace Kolibri.Source.Workspace
                     }
                     else color = Color.Gray;
                 }
+                
             }
             base.Update(OFFSET);
             
@@ -146,14 +148,8 @@ namespace Kolibri.Source.Workspace
             {
                 Globals.primitives.DrawRect(OFFSET + window.pos+  new Vector2(0,30*layerIndex), dim, color);
                 
-                if(color == new Color(104, 152, 165))
-                {
-                    for(int i=0; i<timelineWindow.layers.Count; i++)
-                    {
-                        Globals.primitives.DrawRect(OFFSET + window.pos+  new Vector2(0,30*i), dim, color);
                 
-                    }
-                }
+                
             }
         }
 

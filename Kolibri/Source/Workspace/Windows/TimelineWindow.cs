@@ -68,11 +68,12 @@ namespace Kolibri.Source.Workspace.Windows
             
        }
 
-        
         public void deleteLayer()
         {
-            for (int j = 0; j < layers.Count; j++)
+          
+        for (int j = 0; j < layers.Count; j++)
             {
+                if(layers[j].currentLayer == true)
                 if(layers[j].currentLayer == true&&j!=0)
                 {
                     if(Globals.canvas.b == true&&Globals.canvas.a==layers.Count)
@@ -84,12 +85,49 @@ namespace Kolibri.Source.Workspace.Windows
                 }
                     layers.RemoveAt(j);
                     layers[j-1].currentLayer = true;
+                    for(int m = j; m<layers.Count;m++)
+                    {
+                        layers[m].layerIndex = layers[m].layerIndex-1;
+                        for(int k =0; k<layers[m].timeline.frames.Count;k++)
+                        {
+                            layers[m].timeline.frames[k].layerIndex = layers[m].timeline.frames[k].layerIndex -1;
+                        }
+                    }
                     i= i-1;
                 } 
             }
-            Console.WriteLine("layers count"+layers.Count);
-            Console.WriteLine("pixelslist count "+ Globals.canvas.pixelsList.Count);
-            Console.WriteLine("textures count" + Globals.canvas.textures.Count);
+           /* for (int j = 0; j < layers.Count; j++)
+            {
+                if(layers[j].currentLayer == true&&j!=0)
+                {
+                    if(j== layers.Count-1)
+                    {
+                        if(Globals.canvas.b == true&&Globals.canvas.a==layers.Count)
+                        {
+                            Globals.canvas.textures.RemoveAt(Globals.canvas.textures.Count-1);
+                            Globals.canvas.pixelsList.RemoveAt(Globals.canvas.pixelsList.Count-1);
+                            Globals.canvas.a=Globals.canvas.a-1;
+
+                        }
+                        layers.RemoveAt(j);
+                        layers[j-1].currentLayer = true;
+                        i= i-1;
+                    }
+                    else
+                    {
+                        if(Globals.canvas.b == true&&Globals.canvas.a==layers.Count)
+                        {
+                            Globals.canvas.textures.RemoveAt(Globals.canvas.textures.Count-1);
+                            Globals.canvas.pixelsList.RemoveAt(Globals.canvas.pixelsList.Count-1);
+
+                            Globals.canvas.a=Globals.canvas.a-1;
+
+                        }
+                        
+                        i= i-1;
+                    }
+                } 
+            }*/
             
         }
 
@@ -115,7 +153,7 @@ namespace Kolibri.Source.Workspace.Windows
            for (int m = 0; m < layers.Count; m++)
             {
                 
-                //change Layer
+                //change Layer by pressing "Up"
                 if (Globals.keyboard.OnPress("Up")==true&&layers[m].currentLayer == true)
                 {
                     
@@ -128,6 +166,22 @@ namespace Kolibri.Source.Workspace.Windows
                    {
                         layers[m].currentLayer = false;   
                         layers[m-1].currentLayer = true;
+                   }
+                
+                }
+                //change Layer by pressing "Down"
+                if (Globals.keyboard.OnPress("Down")==true&&layers[m].currentLayer == true)
+                {
+                    
+                   if(m<layers.Count-1)
+                   {
+                        layers[m].currentLayer = false;   
+                        layers[m+1].currentLayer = true; 
+                   }
+                   else
+                   {
+                        layers[m].currentLayer = false;   
+                        layers[0].currentLayer = true;
                    }
                 
                 }
@@ -162,10 +216,10 @@ namespace Kolibri.Source.Workspace.Windows
                 layers[i].Draw(OFFSET);
                 if(layers[i].currentLayer == true)
                 {
-                    Globals.primitives.DrawRect(layers[i].label.pos, new Vector2(1,layers[i].label.dim.Y), new Color(85, 209, 23));
-                    Globals.primitives.DrawRect(layers[i].label.pos, new Vector2(layers[i].label.dim.X,1), new Color(85, 209, 23));
-                    Globals.primitives.DrawRect(layers[i].label.pos + new Vector2(0,layers[i].label.dim.Y ), new Vector2(layers[i].label.dim.X,1), new Color(85, 209, 23));
-                    Globals.primitives.DrawRect(layers[i].label.pos + new Vector2(layers[i].label.dim.X,0), new Vector2(1, layers[i].label.dim.Y), new Color(85, 209, 23));
+                    Globals.primitives.DrawRect(layers[i].labelBtn.pos, new Vector2(1,layers[i].labelBtn.dim.Y), new Color(85, 209, 23));
+                    Globals.primitives.DrawRect(layers[i].labelBtn.pos, new Vector2(layers[i].labelBtn.dim.X,1), new Color(85, 209, 23));
+                    Globals.primitives.DrawRect(layers[i].labelBtn.pos + new Vector2(0,layers[i].labelBtn.dim.Y ), new Vector2(layers[i].labelBtn.dim.X,1), new Color(85, 209, 23));
+                    Globals.primitives.DrawRect(layers[i].labelBtn.pos + new Vector2(layers[i].labelBtn.dim.X,0), new Vector2(1, layers[i].labelBtn.dim.Y), new Color(85, 209, 23));
                 }
             }
            // canvasTimeline.Draw(OFFSET);

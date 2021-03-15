@@ -55,11 +55,13 @@ namespace Kolibri.Source.Workspace.UIElements
         
         public override void Update(Vector2 OFFSET)
         {
+            //access to TimelineWindow
             if(timelineWindow==null)
             {
                 timelineWindow = (TimelineWindow)ObjManager.Windows.Find(x => x.GetType().Name =="TimelineWindow");
             }
-            if(playbackWindow==null)
+            //access to PlaybackWindow
+            if (playbackWindow==null)
             {
                 playbackWindow = (PlaybackWindow)ObjManager.Windows.Find(x => x.GetType().Name =="PlaybackWindow");
             }
@@ -177,6 +179,7 @@ namespace Kolibri.Source.Workspace.UIElements
             
         }
 
+        //drawing 
         public void drawLine(Vector2 pos0, Vector2 pos1, Color color)   //implementation of Bresenham's line algorithm
         {
             int dx = Math.Abs((int)pos1.X - (int)pos0.X);   //delta x

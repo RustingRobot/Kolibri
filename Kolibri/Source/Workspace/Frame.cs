@@ -130,8 +130,31 @@ namespace Kolibri.Source.Workspace
                 Globals.primitives.DrawRect(OFFSET + window.pos +  new Vector2(0,30*layerIndex), new Vector2(border, dim.Y), color);
                 Globals.primitives.DrawRect(new Vector2(OFFSET.X + window.pos.X + dim.X - border , OFFSET.Y + window.pos.Y+ 30*layerIndex), new Vector2(border, dim.Y), color);
                 Globals.primitives.DrawRect(new Vector2(OFFSET.X + window.pos.X , OFFSET.Y + window.pos.Y + dim.Y - border+ 30*layerIndex), new Vector2(dim.X, border), color);
+                if(color == new Color(60, 104, 148))
+                {
+                    for(int i=0; i<timelineWindow.layers.Count; i++)
+                    {
+                        Globals.primitives.DrawRect(OFFSET + window.pos + new Vector2(0, 30*i), new Vector2(dim.X,border), color);
+                        Globals.primitives.DrawRect(OFFSET + window.pos +  new Vector2(0,30*i), new Vector2(border, dim.Y), color);
+                        Globals.primitives.DrawRect(new Vector2(OFFSET.X + window.pos.X + dim.X - border , OFFSET.Y + window.pos.Y+ 30*i), new Vector2(border, dim.Y), color);
+                        Globals.primitives.DrawRect(new Vector2(OFFSET.X + window.pos.X , OFFSET.Y + window.pos.Y + dim.Y - border+ 30*i), new Vector2(dim.X, border), color);
+                    }
+                }
             }
-            else Globals.primitives.DrawRect(OFFSET + window.pos+  new Vector2(0,30*layerIndex), dim, color);
+
+            else
+            {
+                Globals.primitives.DrawRect(OFFSET + window.pos+  new Vector2(0,30*layerIndex), dim, color);
+                
+                if(color == new Color(104, 152, 165))
+                {
+                    for(int i=0; i<timelineWindow.layers.Count; i++)
+                    {
+                        Globals.primitives.DrawRect(OFFSET + window.pos+  new Vector2(0,30*i), dim, color);
+                
+                    }
+                }
+            }
         }
 
         public void clearFrame()

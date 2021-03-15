@@ -37,13 +37,13 @@ namespace Kolibri.Source.Workspace.Windows
             i = 2;
           //  canvasTimeline = new Layer(i, this, "Canvas", new Vector2(10, 58+ 30*(i-1)));
 
-            addLayerBtn = new Button(addLayer, this, new Vector2 (30, 24), new Vector2(18,18), "aL");
+            addLayerBtn = new Button(addLayer, this, new Vector2 (72, 24), new Vector2(60,18), "add L");
 
-            clearFrameBtn = new Button(layer1.timeline.clearFrames, this, new Vector2(7, 24), new Vector2(18, 18), "C");
+            clearFrameBtn = new Button(layer1.timeline.clearFrames, this, new Vector2(7, 24), new Vector2(60, 18), "Clear");
 
-            deleteLayerBtn = new Button(deleteLayer, this, new Vector2 (53, 24), new Vector2(18,18), "dL");
+            deleteLayerBtn = new Button(deleteLayer, this, new Vector2 (137, 24), new Vector2(60,18), "delete L");
 
-            duplicateFrameBtn = new Button(duplicateFrame, this, new Vector2(76, 24), new Vector2(18,18), "dF");
+            duplicateFrameBtn = new Button(duplicateFrame, this, new Vector2(222, 24), new Vector2(60,18), "duplicate F");
 
             clearFrame = Globals.content.Load<Texture2D>("clearFrame");
 
@@ -73,13 +73,23 @@ namespace Kolibri.Source.Workspace.Windows
         {
             for (int j = 0; j < layers.Count; j++)
             {
-                if(layers[j].currentLayer == true)
+                if(layers[j].currentLayer == true&&j!=0)
                 {
+                    if(Globals.canvas.b == true&&Globals.canvas.a==layers.Count)
+                {
+                    Globals.canvas.textures.RemoveAt(Globals.canvas.textures.Count-1);
+                    Globals.canvas.pixelsList.RemoveAt(Globals.canvas.pixelsList.Count-1);
+                    Globals.canvas.a=Globals.canvas.a-1;
+
+                }
                     layers.RemoveAt(j);
                     layers[j-1].currentLayer = true;
                     i= i-1;
                 } 
             }
+            Console.WriteLine("layers count"+layers.Count);
+            Console.WriteLine("pixelslist count "+ Globals.canvas.pixelsList.Count);
+            Console.WriteLine("textures count" + Globals.canvas.textures.Count);
             
         }
 

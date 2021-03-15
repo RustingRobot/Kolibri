@@ -18,7 +18,7 @@ namespace Kolibri.Source.Workspace.UIElements
  
         public ColorPickerWindow(Vector2 POS, Vector2 DIM) : base(POS, DIM, "ColorPicker")
         {
-            //button
+            //buttons 
             rgb = new Button(changeMode, "rgb", this, new Vector2(60, 130), new Vector2(150, 20), "rgb mode");
             rgb.txtColor = new Color(200, 200, 200);
             hsv = new Button(changeMode, "hsv", this, new Vector2(215, 130), new Vector2(150, 20), "hsv mode");
@@ -44,6 +44,7 @@ namespace Kolibri.Source.Workspace.UIElements
         
         void changeMode(string mode)
         {
+            //RBG mode
             if(mode == "rgb")
             {
                 sliderDesc[0].label = "R";
@@ -57,6 +58,7 @@ namespace Kolibri.Source.Workspace.UIElements
                 rgbMode = true;
 
                 setColor(currentColor);
+             //HSV mode
             }
             else
             {
@@ -101,10 +103,14 @@ namespace Kolibri.Source.Workspace.UIElements
             sliderDesc[0].Update(OFFSET); sliderDesc[1].Update(OFFSET); sliderDesc[2].Update(OFFSET);
 
             if (rgbMode)
-                currentColor = new Color(slider[0].getValue(), slider[1].getValue(), slider[2].getValue()); //Chosen color with sliders
+                //chosen color with sliders for RGB mode
+                currentColor = new Color(slider[0].getValue(), slider[1].getValue(), slider[2].getValue()); 
             else
+                //chosen color with sliders for HSV mode
                 currentColor = HSVtoRGB(slider[0].getValue(), slider[1].getValue() / 100.0, slider[2].getValue() / 100.0);
+            //setting color through textfields
             if (fields[0].selected || fields[1].selected || fields[2].selected) setColor(new Color(int.Parse(fields[0].content), int.Parse(fields[1].content), int.Parse(fields[2].content)));
+            //setting color through sliders
             if (!fields[0].selected) fields[0].content = Convert.ToString(slider[0].getValue());
             if (!fields[1].selected) fields[1].content = Convert.ToString(slider[1].getValue());
             if (!fields[2].selected) fields[2].content = Convert.ToString(slider[2].getValue());
@@ -120,6 +126,7 @@ namespace Kolibri.Source.Workspace.UIElements
             slider[0].Draw(OFFSET); slider[1].Draw(OFFSET); slider[2].Draw(OFFSET);
             fields[0].Draw(OFFSET); fields[1].Draw(OFFSET); fields[2].Draw(OFFSET);
             sliderDesc[0].Draw(OFFSET); sliderDesc[1].Draw(OFFSET); sliderDesc[2].Draw(OFFSET);
+            //currentColor rectangle
             Globals.primitives.DrawRect(new Vector2(10,40) + pos, new Vector2(30, 75), currentColor);
             rgb.Draw(OFFSET);
             hsv.Draw(OFFSET);

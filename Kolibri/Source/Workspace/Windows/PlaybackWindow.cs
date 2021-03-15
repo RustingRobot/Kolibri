@@ -32,6 +32,7 @@ namespace Kolibri.Source.Workspace.Windows
 
         public override void Update(Vector2 OFFSET)
         {
+            //access to TimelineWindow
             if (timelineWindow == null)
             {
                 timelineWindow = (TimelineWindow)ObjManager.Windows.Find(x => x.GetType().Name == "TimelineWindow");
@@ -44,10 +45,12 @@ namespace Kolibri.Source.Workspace.Windows
                 {
                     for(int i=0; i<timelineWindow.layers.Count;i++)
                     {
+                        //play animation
                         if(timelineWindow.layers[i].hidden ==false)
                         {
                             if (timelineWindow.layers[i].timeline.currentFrame < endFrame)
                                 timelineWindow.layers[i].timeline.nextFrame();
+                            //start playing again
                             else
                                 back();
                             timer.ResetToZero();

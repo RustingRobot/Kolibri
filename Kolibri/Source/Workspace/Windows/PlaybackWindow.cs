@@ -11,10 +11,10 @@ namespace Kolibri.Source.Workspace.Windows
     class PlaybackWindow : Window
     {
         Button playBtn, backBtn;
-        Textfield fpsTxt, startFrameTxt, endFrameTxt;
+       public Textfield fpsTxt, startFrameTxt, endFrameTxt;
         public int startFrame, endFrame;
         public bool playing;
-        ETimer timer;
+        public ETimer timer;
         TimelineWindow timelineWindow;
 
         public PlaybackWindow(Vector2 POS, Vector2 DIM) : base(POS, DIM, "Playback")

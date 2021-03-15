@@ -11,9 +11,8 @@ namespace Kolibri.Source.Workspace.UIElements
     public class Textfield : UIElement
     {
         public string content, lastChar, defaultContent = "";
-        public bool numberField;
+        public bool numberField, selected;
         private float width, txtHeight;
-        private bool selected;
         public Color color;
         public Textfield(Window WINDOW, Vector2 POS, Vector2 DIM , string CONTENT) :base(WINDOW, POS, DIM)    
         {      

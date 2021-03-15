@@ -25,6 +25,9 @@ namespace Kolibri.Source.Workspace.UIElements
 
       //  Texture2D background;
 
+        UInt32[] pixels;
+        Texture2D background;
+
         public List<Texture2D> textures = new List<Texture2D>();
         public List<UInt32[]> pixelsList = new List<UInt32[]>();
         UInt32[] placeholderPixels;
@@ -40,13 +43,20 @@ namespace Kolibri.Source.Workspace.UIElements
             {
                 pixels[i] = 0xFFFFFFFF;
             }*/
+            background = new Texture2D(Globals.graphicsDevice, (int)dim.X, (int)dim.Y, false, SurfaceFormat.Color);
+            pixels = new uint[(int)dim.X * (int)dim.Y];
+            for (int i = 0; i < pixels.Length; i++) //set all pixels to white
+            {
+                pixels[i] = 0xFFFFFFFF;
+            }
+
 
             textures.Add(new Texture2D(Globals.graphicsDevice, (int)dim.X, (int)dim.Y, false, SurfaceFormat.Color));
             pixelsList.Add(new UInt32[(int)dim.X * (int)dim.Y]);
             pixelsIsThere.Add(true);
             for (int i = 0; i < pixelsList[0].Length; i++) //set all pixels to white
             {
-                pixelsList[0][i] = 0xFFFFFFFF;
+                pixelsList[0][i] = 0x00000000;
             }
 
         }
@@ -72,11 +82,10 @@ namespace Kolibri.Source.Workspace.UIElements
                 pixelsIsThere.Add(true);
                 for (int j = 0; j < pixelsList[pixelsList.Count-1].Length; j++) //set all pixels to white
                 {
-                    pixelsList[a-1][j] = 0xFFFFFFFF;
+                    pixelsList[a-1][j] = 0x00000000;
                     
                 }
 
-                Console.WriteLine("this is aaaaa:"+a);
             }
             
             Globals.graphicsDevice.Textures[0] = null;
@@ -111,34 +120,11 @@ namespace Kolibri.Source.Workspace.UIElements
                     }
                 }
             }
-          //  background.SetData<UInt32>(pixels, 0, (int)dim.X * (int)dim.Y);
-            if(textures.Count ==1)
-            {
-                textures[0].SetData<UInt32>(pixelsList[0],0,(int)dim.X * (int)dim.Y);
-          
-            }
-          for(int i=0;i<textures.Count-1;i++)
+            for(int i=0;i<textures.Count;i++)
             {          
-            if(playbackWindow.playing== true&&timelineWindow.layers[i].hidden==false)
-               {
-                for(int j=0; j<pixelsList[i].Length;j++)
-                {
-                    placeholderPixels = pixelsList[i];
-                    if(pixelsList[i][j]==16777215)      //if pixel is white set pixel of following texture
-                    {
-                    placeholderPixels[j]=pixelsList[i+1][j];
-                    }
-                    textures[i].SetData<UInt32>(placeholderPixels,0,(int)dim.X * (int)dim.Y);             
-                }
-                  }
-            
-            else
-            {
                 textures[i].SetData<UInt32>(pixelsList[i],0,(int)dim.X * (int)dim.Y);
-          
             }
-            }
-
+            background.SetData<UInt32>(pixels,0,(int)dim.X * (int)dim.Y);
             base.Update(OFFSET + offset);
         }
 
@@ -276,28 +262,20 @@ namespace Kolibri.Source.Workspace.UIElements
 
         public override void Draw(Vector2 OFFSET)
         {
-          //  Globals.spriteBatch.Draw(background, new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
-            if(textures.Count==1)
+            Globals.spriteBatch.Draw(background, new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
+            for(int i=0;i<textures.Count;i++)
             {
-                Globals.spriteBatch.Draw(textures[0], new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
-            }
-            else
-            {
-            for(int i=0;i<textures.Count-1;i++)
-            {
-               if(playbackWindow.playing==true&&timelineWindow.layers[i].hidden==false)
-               {
+                if(playbackWindow.playing ==false&&timelineWindow.layers[i].currentLayer==true)
+                {
                 Globals.spriteBatch.Draw(textures[i], new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
-               }
-               
-               else
-               {
-                Globals.spriteBatch.Draw(textures[i], new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
-            
-               }
+                }
+                if(playbackWindow.playing==true)
+                {
+                    Globals.spriteBatch.Draw(textures[i], new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
+              
+                }
             }
-            }
-            
+        
         }
     }
 }

@@ -44,11 +44,6 @@ You can define your animation parameters in here. Chose the frames to be played 
 
 The menu bar offers you some options you need for working with <strong>Kolibri</strong>.
 &nbsp;
-## Duplicate frames
-![ezgif com-gif-maker (8)](https://user-images.githubusercontent.com/77926314/111351666-b165ab00-8683-11eb-8fc2-e52f5db19c59.gif)
-
-This feature allows you to duplicate your last frame and makes your working flow better.
-&nbsp;
 ## Window docking system
 ![ezgif com-gif-maker (18)](https://user-images.githubusercontent.com/77926314/111382881-cc4a1680-86a7-11eb-85a0-fce7d43d261c.gif)
 

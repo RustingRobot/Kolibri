@@ -106,19 +106,26 @@ namespace Kolibri.Source.Workspace.UIElements
             fields[0].Update(OFFSET); fields[1].Update(OFFSET); fields[2].Update(OFFSET); fields[3].Update(OFFSET);
             sliderDesc[0].Update(OFFSET); sliderDesc[1].Update(OFFSET); sliderDesc[2].Update(OFFSET); sliderDesc[3].Update(OFFSET);
             AlphaSlider.Update(OFFSET);
-            if (rgbMode)
-                //chosen color with sliders for RGB mode
-                currentColor = new Color(slider[0].getValue(), slider[1].getValue(), slider[2].getValue(), AlphaSlider.getValue()); 
-            else
-                //chosen color with sliders for HSV mode
+            if (rgbMode)                //chosen color with sliders for RGB mode
+                currentColor = new Color(slider[0].getValue(), slider[1].getValue(), slider[2].getValue(), AlphaSlider.getValue());
+            else                //chosen color with sliders for HSV mode
                 currentColor = new Color(HSVtoRGB(slider[0].getValue(), slider[1].getValue() / 100.0, slider[2].getValue() / 100.0), AlphaSlider.getValue());
             //setting color through textfields
             if (fields[0].selected || fields[1].selected || fields[2].selected || fields[3].selected)
             {
                 if (rgbMode)
+                {
                     setColor(new Color(int.Parse(fields[0].content), int.Parse(fields[1].content), int.Parse(fields[2].content), int.Parse(fields[3].content)));
+                }
                 else
-                    setColor(new Color(packageColor(RGBtoHSV(int.Parse(fields[0].content), int.Parse(fields[1].content), int.Parse(fields[2].content))), int.Parse(fields[3].content)));
+                {
+                    slider[0].value = int.Parse(fields[0].content);
+                    slider[1].value = int.Parse(fields[1].content);
+                    slider[2].value = int.Parse(fields[2].content);
+                    if (slider[0].value > slider[0].end) slider[0].value = slider[0].end;
+                    if (slider[1].value > slider[1].end) slider[1].value = slider[1].end;
+                    if (slider[2].value > slider[2].end) slider[2].value = slider[2].end;
+                }
             }
             //setting color through sliders
             if (!fields[0].selected) fields[0].content = Convert.ToString(slider[0].getValue());

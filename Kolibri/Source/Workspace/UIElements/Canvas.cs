@@ -26,14 +26,14 @@ namespace Kolibri.Source.Workspace.UIElements
       //  Texture2D background;
         Texture2D succFrame;
         Texture2D predFrame;
-        UInt32[] succFramePixels;
-        UInt32[] predFramePixels;
+        UInt32[] succFramePixels;       //later for onion skin
+        UInt32[] predFramePixels;       //later for onion skin
         UInt32[] pixels;
         Texture2D background;
 
         public List<Texture2D> textures = new List<Texture2D>();
         public List<UInt32[]> pixelsList = new List<UInt32[]>();
-        UInt32[] placeholderPixels;
+
         public List<Boolean> pixelsIsThere = new List<Boolean>();
 
         public Canvas(Window WINDOW, Vector2 POS, Vector2 DIM) : base(WINDOW, POS, DIM)
@@ -46,13 +46,15 @@ namespace Kolibri.Source.Workspace.UIElements
             {
                 pixels[i] = 0xFFFFFFFF;
             }*/
-            background = new Texture2D(Globals.graphicsDevice, (int)dim.X, (int)dim.Y, false, SurfaceFormat.Color);
+            background = new Texture2D(Globals.graphicsDevice, (int)dim.X, (int)dim.Y, false, SurfaceFormat.Color); //to have a white background for the limitation of the canvas
             pixels = new uint[(int)dim.X * (int)dim.Y];
             for (int i = 0; i < pixels.Length; i++) //set all pixels to white
             {
                 pixels[i] = 0xFFFFFFFF;
             }
 
+
+            //later for onion skin
            /* predFrame = new Texture2D(Globals.graphicsDevice, (int)dim.X, (int)dim.Y, false, SurfaceFormat.Color);
             succFrame = new Texture2D(Globals.graphicsDevice, (int)dim.X, (int)dim.Y, false, SurfaceFormat.Color);
             predFramePixels = new uint[(int)dim.X * (int)dim.Y];
@@ -67,12 +69,13 @@ namespace Kolibri.Source.Workspace.UIElements
             }
             */
 
+            //every texture is representing a layer
             textures.Add(new Texture2D(Globals.graphicsDevice, (int)dim.X, (int)dim.Y, false, SurfaceFormat.Color));
             pixelsList.Add(new UInt32[(int)dim.X * (int)dim.Y]);
             pixelsIsThere.Add(true);
-            for (int i = 0; i < pixelsList[0].Length; i++) //set all pixels to white
+            for (int i = 0; i < pixelsList[0].Length; i++) 
             {
-                pixelsList[0][i] = 0x00000000;
+                pixelsList[0][i] = 0x00000000;  //set all the pixels of the texture to transparent 
             }
 
         }
@@ -91,10 +94,11 @@ namespace Kolibri.Source.Workspace.UIElements
             {
                 playbackWindow = (PlaybackWindow)ObjManager.Windows.Find(x => x.GetType().Name =="PlaybackWindow");
             }
-            if(a<timelineWindow.layers.Count)
+            if(a<timelineWindow.layers.Count)   //adding a layer included adding a texture an list of pixels 
+                                                //the update of the same when a layer is deleted happens directly in timelineWindow in the deleteLayer-function
             {
-                b=true;
-                a=a+1;
+                b=true;     //is needed in TimelineWindow
+                a=a+1;     
 
                 textures.Add(new Texture2D(Globals.graphicsDevice, (int)dim.X, (int)dim.Y, false, SurfaceFormat.Color));
                 pixelsList.Add(new UInt32[(int)dim.X * (int)dim.Y]);
@@ -141,7 +145,8 @@ namespace Kolibri.Source.Workspace.UIElements
                     }
                 }
             }
-            for(int i=0;i<textures.Count;i++)
+            
+            for(int i=0;i<textures.Count;i++)                   
             {          
                 textures[i].SetData<UInt32>(pixelsList[i],0,(int)dim.X * (int)dim.Y);
             }
@@ -323,13 +328,13 @@ namespace Kolibri.Source.Workspace.UIElements
             for(int i=0;i<textures.Count;i++)
             {
                 
-                if(playbackWindow.playing ==false&&timelineWindow.layers[i].currentLayer==true)
+                if(playbackWindow.playing ==false&&timelineWindow.layers[i].currentLayer==true) //only show the current texture(/layer) when the layer are in the edit mode
                 {
                   //  Globals.spriteBatch.Draw(succFrame, new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
                   //  Globals.spriteBatch.Draw(predFrame, new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
                     Globals.spriteBatch.Draw(textures[i], new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
                 }
-                if(playbackWindow.playing==true)
+                if(playbackWindow.playing==true&&timelineWindow.layers[i].hidden ==false)    
                 {
                     Globals.spriteBatch.Draw(textures[i], new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
               

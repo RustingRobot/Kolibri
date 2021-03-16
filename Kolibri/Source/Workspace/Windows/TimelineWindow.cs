@@ -77,12 +77,12 @@ namespace Kolibri.Source.Workspace.Windows
                 if(layers[j].currentLayer == true&&j!=0)
                 {
                     if(Globals.canvas.b == true&&Globals.canvas.a==layers.Count)
-                {
-                    Globals.canvas.textures.RemoveAt(Globals.canvas.textures.Count-1);
-                    Globals.canvas.pixelsList.RemoveAt(Globals.canvas.pixelsList.Count-1);
-                    Globals.canvas.a=Globals.canvas.a-1;
+                    {
+                        Globals.canvas.textures.RemoveAt(Globals.canvas.textures.Count-1);
+                        Globals.canvas.pixelsList.RemoveAt(Globals.canvas.pixelsList.Count-1);
+                        Globals.canvas.a=Globals.canvas.a-1;
 
-                }
+                    }
                     layers.RemoveAt(j);
                     layers[j-1].currentLayer = true;
                     for(int m = j; m<layers.Count;m++)
@@ -188,7 +188,6 @@ namespace Kolibri.Source.Workspace.Windows
                 
                 
 
-                //update Layers
                 layers[m].Update(OFFSET);
 
                 
@@ -196,25 +195,26 @@ namespace Kolibri.Source.Workspace.Windows
                 
                 
             }
-            
-            
-           //layer1.Update(OFFSET);
+           
         }
 
         public override void Draw(Vector2 OFFSET, Color COLOR)
         {
             base.Draw(OFFSET, COLOR);
             beginWindowContent();
+
+            //Buttons
             clearFrameBtn.Draw(OFFSET);
             addLayerBtn.Draw(OFFSET);
             deleteLayerBtn.Draw(OFFSET);
             duplicateFrameBtn.Draw(OFFSET);
+
             Globals.primitives.DrawLine(new Vector2(pos.X, pos.Y + 47), new Vector2(pos.X + dim.X, pos.Y + 47), 2, new Color(39, 44, 48));
            // timeline.Draw();
            for (int i = 0; i < layers.Count; i++)
             {
                 layers[i].Draw(OFFSET);
-                if(layers[i].currentLayer == true)
+                if(layers[i].currentLayer == true)      //marking the current layer with a green border
                 {
                     Globals.primitives.DrawRect(layers[i].labelBtn.pos, new Vector2(1,layers[i].labelBtn.dim.Y), new Color(85, 209, 23));
                     Globals.primitives.DrawRect(layers[i].labelBtn.pos, new Vector2(layers[i].labelBtn.dim.X,1), new Color(85, 209, 23));

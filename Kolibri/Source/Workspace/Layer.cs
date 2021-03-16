@@ -36,10 +36,11 @@ namespace Kolibri.Source.Workspace
             pos = POS; 
             timeline = new Timeline(this,layerIndex, WINDOW);
             currentLayer = true;
-            hidden = false;
+            hidden = false;         //if a layer is marked as hidden it doesn't should be drawn 
+                                    //in the canvas when the animation is played
         }
 
-        public void hideLayer()
+        public void hideLayer()     
         {
             if(hidden==false)
             {

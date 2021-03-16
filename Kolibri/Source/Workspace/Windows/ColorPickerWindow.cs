@@ -113,8 +113,13 @@ namespace Kolibri.Source.Workspace.UIElements
                 //chosen color with sliders for HSV mode
                 currentColor = new Color(HSVtoRGB(slider[0].getValue(), slider[1].getValue() / 100.0, slider[2].getValue() / 100.0), AlphaSlider.getValue());
             //setting color through textfields
-            if (fields[0].selected || fields[1].selected || fields[2].selected || fields[3].selected) 
-                setColor(new Color(int.Parse(fields[0].content), int.Parse(fields[1].content), int.Parse(fields[2].content), int.Parse(fields[3].content)));
+            if (fields[0].selected || fields[1].selected || fields[2].selected || fields[3].selected)
+            {
+                if (rgbMode)
+                    setColor(new Color(int.Parse(fields[0].content), int.Parse(fields[1].content), int.Parse(fields[2].content), int.Parse(fields[3].content)));
+                else
+                    setColor(new Color(packageColor(RGBtoHSV(int.Parse(fields[0].content), int.Parse(fields[1].content), int.Parse(fields[2].content))), int.Parse(fields[3].content)));
+            }
             //setting color through sliders
             if (!fields[0].selected) fields[0].content = Convert.ToString(slider[0].getValue());
             if (!fields[1].selected) fields[1].content = Convert.ToString(slider[1].getValue());
@@ -161,6 +166,11 @@ namespace Kolibri.Source.Workspace.UIElements
                 return new Color(t, p, v);
             else
                 return new Color(v, p, q);
+        }
+
+        public Color packageColor(float[] color)
+        {
+            return new Color(color[0], color[1], color[2]);
         }
 
         private float[] RGBtoHSV(float r, float g, float b)

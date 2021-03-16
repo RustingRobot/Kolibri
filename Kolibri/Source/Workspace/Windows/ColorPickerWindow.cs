@@ -11,35 +11,37 @@ namespace Kolibri.Source.Workspace.UIElements
         private Button rgb, hsv;
         public Color currentColor;
         Slider[] slider = new Slider[3];
-        Label[] sliderDesc = new Label[3];
-        Textfield[] fields = new Textfield[3];
+        Slider AlphaSlider;
+        Label[] sliderDesc = new Label[4];
+        Textfield[] fields = new Textfield[4];
         private int redValue, greenValue, blueValue;
         private bool rgbMode = true;
  
         public ColorPickerWindow(Vector2 POS, Vector2 DIM) : base(POS, DIM, "ColorPicker")
         {
             //buttons 
-            rgb = new Button(changeMode, "rgb", this, new Vector2(60, 130), new Vector2(150, 20), "rgb mode");
+            rgb = new Button(changeMode, "rgb", this, new Vector2(60, 160), new Vector2(150, 20), "rgb mode");
             rgb.txtColor = new Color(200, 200, 200);
-            hsv = new Button(changeMode, "hsv", this, new Vector2(215, 130), new Vector2(150, 20), "hsv mode");
+            hsv = new Button(changeMode, "hsv", this, new Vector2(215, 160), new Vector2(150, 20), "hsv mode");
             hsv.txtColor = new Color(200, 200, 200);
             //slider red
             slider[0] = new Slider(0,255,1,this,new Vector2(60,40),new Vector2(255,15),""); 
             //slider green
             slider[1] = new Slider(0, 255, 1, this, new Vector2(60, 70), new Vector2(255, 15), ""); 
             //slider blue
-            slider[2] = new Slider(0, 255, 1, this, new Vector2(60, 100), new Vector2(255, 15), ""); 
+            slider[2] = new Slider(0, 255, 1, this, new Vector2(60, 100), new Vector2(255, 15), "");
+            //slider alpha
+            AlphaSlider = new Slider(0, 255, 1, this, new Vector2(60, 130), new Vector2(255, 15), "");
             //textfields
-            fields[0] = new Textfield(this,new Vector2(325,38),new Vector2(40,20),"") { defaultContent = "0" };
-            fields[1] = new Textfield(this, new Vector2(325, 68), new Vector2(40, 20), "") { defaultContent = "0" };
-            fields[2] = new Textfield(this, new Vector2(325, 98), new Vector2(40, 20), "") { defaultContent = "0" };
-            fields[0].numberField = true;
-            fields[1].numberField = true;
-            fields[2].numberField = true;
+            fields[0] = new Textfield(this,new Vector2(325,38),new Vector2(40,20),"") { defaultContent = "0", numberField = true };
+            fields[1] = new Textfield(this, new Vector2(325, 68), new Vector2(40, 20), "") { defaultContent = "0", numberField = true };
+            fields[2] = new Textfield(this, new Vector2(325, 98), new Vector2(40, 20), "") { defaultContent = "0", numberField = true };
+            fields[3] = new Textfield(this, new Vector2(325, 128), new Vector2(40, 20), "") { defaultContent = "0", numberField = true };
             //slider descriptions
             sliderDesc[0] = new Label(this, new Vector2(50, 48), Globals.fontSize, "R");
             sliderDesc[1] = new Label(this, new Vector2(50, 78), Globals.fontSize, "G");
             sliderDesc[2] = new Label(this, new Vector2(50, 108), Globals.fontSize, "B");
+            sliderDesc[3] = new Label(this, new Vector2(50, 138), Globals.fontSize, "A");
         }
         
         void changeMode(string mode)
@@ -86,6 +88,7 @@ namespace Kolibri.Source.Workspace.UIElements
                 slider[0].value = color.R;
                 slider[1].value = color.G;
                 slider[2].value = color.B;
+                AlphaSlider.value = color.A;
             }
             else
             {
@@ -93,27 +96,35 @@ namespace Kolibri.Source.Workspace.UIElements
                 slider[0].value = (int)colorValues[0];
                 slider[1].value = (int)(colorValues[1] * 100);
                 slider[2].value = (int)(colorValues[2] * 100);
+                AlphaSlider.value = color.A;
             }
         }
         public override void Update(Vector2 OFFSET)
         {
             base.Update(OFFSET);
             slider[0].Update(OFFSET); slider[1].Update(OFFSET); slider[2].Update(OFFSET);
-            fields[0].Update(OFFSET); fields[1].Update(OFFSET); fields[2].Update(OFFSET);
-            sliderDesc[0].Update(OFFSET); sliderDesc[1].Update(OFFSET); sliderDesc[2].Update(OFFSET);
-
+            fields[0].Update(OFFSET); fields[1].Update(OFFSET); fields[2].Update(OFFSET); fields[3].Update(OFFSET);
+            sliderDesc[0].Update(OFFSET); sliderDesc[1].Update(OFFSET); sliderDesc[2].Update(OFFSET); sliderDesc[3].Update(OFFSET);
+            AlphaSlider.Update(OFFSET);
             if (rgbMode)
                 //chosen color with sliders for RGB mode
-                currentColor = new Color(slider[0].getValue(), slider[1].getValue(), slider[2].getValue()); 
+                currentColor = new Color(slider[0].getValue(), slider[1].getValue(), slider[2].getValue(), AlphaSlider.getValue()); 
             else
                 //chosen color with sliders for HSV mode
-                currentColor = HSVtoRGB(slider[0].getValue(), slider[1].getValue() / 100.0, slider[2].getValue() / 100.0);
+                currentColor = new Color(HSVtoRGB(slider[0].getValue(), slider[1].getValue() / 100.0, slider[2].getValue() / 100.0), AlphaSlider.getValue());
             //setting color through textfields
-            if (fields[0].selected || fields[1].selected || fields[2].selected) setColor(new Color(int.Parse(fields[0].content), int.Parse(fields[1].content), int.Parse(fields[2].content)));
+            if (fields[0].selected || fields[1].selected || fields[2].selected || fields[3].selected)
+            {
+                if (rgbMode)
+                    setColor(new Color(int.Parse(fields[0].content), int.Parse(fields[1].content), int.Parse(fields[2].content), int.Parse(fields[3].content)));
+                else
+                    setColor(new Color(packageColor(RGBtoHSV(int.Parse(fields[0].content), int.Parse(fields[1].content), int.Parse(fields[2].content))), int.Parse(fields[3].content)));
+            }
             //setting color through sliders
             if (!fields[0].selected) fields[0].content = Convert.ToString(slider[0].getValue());
             if (!fields[1].selected) fields[1].content = Convert.ToString(slider[1].getValue());
             if (!fields[2].selected) fields[2].content = Convert.ToString(slider[2].getValue());
+            if (!fields[3].selected) fields[3].content = Convert.ToString(AlphaSlider.getValue());
 
             rgb.Update(OFFSET);
             hsv.Update(OFFSET);
@@ -124,8 +135,9 @@ namespace Kolibri.Source.Workspace.UIElements
             base.Draw(OFFSET, COLOR);
             beginWindowContent();
             slider[0].Draw(OFFSET); slider[1].Draw(OFFSET); slider[2].Draw(OFFSET);
-            fields[0].Draw(OFFSET); fields[1].Draw(OFFSET); fields[2].Draw(OFFSET);
-            sliderDesc[0].Draw(OFFSET); sliderDesc[1].Draw(OFFSET); sliderDesc[2].Draw(OFFSET);
+            fields[0].Draw(OFFSET); fields[1].Draw(OFFSET); fields[2].Draw(OFFSET); fields[3].Draw(OFFSET);
+            sliderDesc[0].Draw(OFFSET); sliderDesc[1].Draw(OFFSET); sliderDesc[2].Draw(OFFSET); ; sliderDesc[3].Draw(OFFSET);
+            AlphaSlider.Draw(OFFSET);
             //currentColor rectangle
             Globals.primitives.DrawRect(new Vector2(10,40) + pos, new Vector2(30, 75), currentColor);
             rgb.Draw(OFFSET);
@@ -154,6 +166,11 @@ namespace Kolibri.Source.Workspace.UIElements
                 return new Color(t, p, v);
             else
                 return new Color(v, p, q);
+        }
+
+        public Color packageColor(float[] color)
+        {
+            return new Color(color[0], color[1], color[2]);
         }
 
         private float[] RGBtoHSV(float r, float g, float b)

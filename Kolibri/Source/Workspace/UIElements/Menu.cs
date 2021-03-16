@@ -16,16 +16,15 @@ namespace Kolibri.Source.Workspace.UIElements
 {
     public class Menu : ESprite2d
     {
-        Button[] menuitems = new Button[4];
+        Button[] menuitems = new Button[3];
         List<Button>[] subItems = new List<Button>[4];
         int visibleSubMenu = -1;
 
-        string[] menuItemNames = new string[5] { "", "File", "View", "Workspace", "Help" };
-        List<string>[] subItemNames = new List<string>[4]
+        string[] menuItemNames = new string[4] { "", "File", "View", "Help" };
+        List<string>[] subItemNames = new List<string>[3]
         {
                 new List<string>() {"Open", "Save", "New" },
                 new List<string>() {"Canvas","Tools", "Timeline", "ColorPicker", "Playback" },
-                new List<string>() {"work in progress" },
                 new List<string>() { "GitHub" }
         };
 

@@ -43,20 +43,17 @@ namespace Kolibri.Source.Workspace.Windows
             {
                 if (timer.Test() && playing && fpsTxt.content != "0")
                 {
-                    for(int i=0; i<timelineWindow.layers.Count;i++)
+                    for(int i=0; i<timelineWindow.timeline.Layers.Count;i++)
                     {
                         //play animation
-                        if(timelineWindow.layers[i].hidden ==false)
-                        {
-                            if (timelineWindow.layers[i].timeline.currentFrame < endFrame)
-                                timelineWindow.layers[i].timeline.nextFrame();
-                            //start playing again
-                            else
-                                back();
-                            timer.ResetToZero();
-                            if (fpsTxt.content == "") timer.Ms = 1000;
-                            else timer.Ms = 1000 / int.Parse( fpsTxt.content);
-                        }
+                        if (timelineWindow.timeline.currentFrame < endFrame)
+                            timelineWindow.timeline.nextFrame();
+                        //start playing again
+                        else
+                            back();
+                        timer.ResetToZero();
+                        if (fpsTxt.content == "") timer.Ms = 1000;
+                        else timer.Ms = 1000 / int.Parse( fpsTxt.content);
                     }
                 }
                 timer.UpdateTimer();
@@ -95,9 +92,9 @@ namespace Kolibri.Source.Workspace.Windows
 
         public void back()
         {
-            for(int i=0; i<timelineWindow.layers.Count;i++)
+            for(int i=0; i<timelineWindow.timeline.Layers.Count;i++)
             {
-            timelineWindow.layers[i].timeline.gotoFrame(startFrame);
+            timelineWindow.timeline.gotoFrame(startFrame);
             }
         }
     }

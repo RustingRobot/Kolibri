@@ -26,7 +26,7 @@ namespace Kolibri.Engine
     public class Globals    //every class has access to Globas so it's the ideal place to put stuff like mouse or keyboard controlls!
     {
         public static PassObject PassWindow;
-        public static Window interactWindow, hoverWindow;
+        public static Window interactWindow;
         public static float screenHeight, screenWidth;
         public static string SystemFont, activeTool = "Brush";
         public static Vector2 fontSize;

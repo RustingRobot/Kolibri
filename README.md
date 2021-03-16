@@ -20,37 +20,32 @@ A small program that allows you to create pixel based, frame-by-frame animation.
 
 
 ## Changing colors
-![ezgif com-gif-maker](https://user-images.githubusercontent.com/77926314/111334974-4c568900-8674-11eb-96d9-345021dbdd2c.gif)
+![ezgif com-gif-maker (12)](https://user-images.githubusercontent.com/77926314/111382404-3d3cfe80-86a7-11eb-9486-d3f7b0e54cc6.gif)
 
 You are able to set every color in RGB and HSV.
 &nbsp;
 ## Toolbar
-![ezgif com-gif-maker (11)](https://user-images.githubusercontent.com/77926314/111352593-a19a9680-8684-11eb-9c05-761395cfff64.gif)
+![ezgif com-gif-maker (13)](https://user-images.githubusercontent.com/77926314/111382428-4332df80-86a7-11eb-82b6-f5240d088eb6.gif)
 
 This toolbar allows you to chose between brush, eraser, dropper and filling tool.
 &nbsp;
 ## Adding / deleting layers
-![ezgif com-gif-maker (5)](https://user-images.githubusercontent.com/77926314/111348904-f0463180-8680-11eb-8b9f-c81a0c86461f.gif)
+![ezgif com-gif-maker (14)](https://user-images.githubusercontent.com/77926314/111382446-49c15700-86a7-11eb-87a5-b19bc6fad158.gif)
 
 The layer system makes it easy for you to work with multiple layers by adding them and deleting them if not needed.
 &nbsp;
 ## Playing options
-![ezgif com-gif-maker (9)](https://user-images.githubusercontent.com/77926314/111351976-00134500-8684-11eb-8dfa-ffbeb66177aa.gif)
+![ezgif com-gif-maker (15)](https://user-images.githubusercontent.com/77926314/111382464-4e860b00-86a7-11eb-9ede-16d1eb900dff.gif)
 
 You can define your animation parameters in here. Chose the frames to be played and your wanted fps. Start and stop your animation as you want to.
 &nbsp;
 ## Menu bar
-![ezgif com-gif-maker (10)](https://user-images.githubusercontent.com/77926314/111352295-4f597580-8684-11eb-82ae-b4486d9b59d5.gif)
+![ezgif com-gif-maker (16)](https://user-images.githubusercontent.com/77926314/111382505-59d93680-86a7-11eb-9f1a-5bc2f7cb9cb3.gif)
 
 The menu bar offers you some options you need for working with <strong>Kolibri</strong>.
 &nbsp;
-## Duplicate frames
-![ezgif com-gif-maker (8)](https://user-images.githubusercontent.com/77926314/111351666-b165ab00-8683-11eb-8fc2-e52f5db19c59.gif)
-
-This feature allows you to duplicate your last frame and makes your working flow better.
-&nbsp;
 ## Window docking system
-![ezgif com-gif-maker (7)](https://user-images.githubusercontent.com/77926314/111351389-6c417900-8683-11eb-9ae9-73ee352d091c.gif)
+![ezgif com-gif-maker (18)](https://user-images.githubusercontent.com/77926314/111382881-cc4a1680-86a7-11eb-85a0-fce7d43d261c.gif)
 
 To guarantee a individual working space, a window docking system is implemented with which you can position the windows the way you want them.
 &nbsp;

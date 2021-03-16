@@ -34,6 +34,7 @@ namespace Kolibri.Source.Workspace
         {
             if (layer.timeline.currentFrame == index)
             {
+                Debug.WriteLine(Globals.canvas.pixelsList.Count);
                 Globals.canvas.pixelsList[layer.layerIndex] = pixels;
             }
 

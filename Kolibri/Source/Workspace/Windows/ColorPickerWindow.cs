@@ -150,6 +150,7 @@ namespace Kolibri.Source.Workspace.UIElements
             sliderDesc[0].Draw(OFFSET); sliderDesc[1].Draw(OFFSET); sliderDesc[2].Draw(OFFSET); ; sliderDesc[3].Draw(OFFSET);
             AlphaSlider.Draw(OFFSET);
             //currentColor rectangle
+            Globals.primitives.DrawRect(new Vector2(10, 40) + pos, new Vector2(30, 105), Color.White);
             Globals.primitives.DrawRect(new Vector2(10,40) + pos, new Vector2(30, 105), currentColor);
             rgb.Draw(OFFSET);
             hsv.Draw(OFFSET);

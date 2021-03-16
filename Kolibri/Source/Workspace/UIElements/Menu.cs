@@ -23,7 +23,7 @@ namespace Kolibri.Source.Workspace.UIElements
         string[] menuItemNames = new string[4] { "", "File", "View", "Help" };
         List<string>[] subItemNames = new List<string>[3]
         {
-                new List<string>() {"Open", "Save", "New" },
+                new List<string>() {"Save", "New" },
                 new List<string>() {"Canvas","Tools", "Timeline", "ColorPicker", "Playback" },
                 new List<string>() { "GitHub" }
         };

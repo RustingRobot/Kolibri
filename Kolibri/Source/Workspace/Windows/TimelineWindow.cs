@@ -14,9 +14,9 @@ namespace Kolibri.Source.Workspace.Windows
     {
         public Timeline timeline;
         public PlaybackWindow pbWindow;
+        public bool osActive = false;
         public Label currentFrameTxt, currentLayerTxt;
-        Button addLayerBtn, deleteLayerBtn;
-        Button clearFrameBtn; 
+        Button addLayerBtn, deleteLayerBtn, clearFrameBtn, onionSkinBtn;
         public TimelineWindow( Vector2 POS, Vector2 DIM) : base(POS, DIM, "Timeline")
         {   
             timeline = new Timeline(this);
@@ -24,13 +24,19 @@ namespace Kolibri.Source.Workspace.Windows
             addLayerBtn = new Button(timeline.AddLayer, this, new Vector2 (80, 24), new Vector2(18,18), "+");
             deleteLayerBtn = new Button(timeline.DeleteLayer, this, new Vector2(100, 24), new Vector2(18, 18), "-");
             clearFrameBtn = new Button(timeline.clearFrames, this, new Vector2(7, 24), new Vector2(70, 18), "Clear");
-
+            onionSkinBtn = new Button(onionSkin, this, new Vector2(320, 24), new Vector2(24, 18), "os");
             currentFrameTxt = new Label(this, new Vector2(160, 32), Globals.fontSize, "Frame: ");
             currentLayerTxt = new Label(this, new Vector2(240, 32), Globals.fontSize, "Layer: ");
 
             clearFrameBtn.normColor = Color.Transparent;
             clearFrameBtn.imgSize = new Vector2(0.6f, 0.6f);
             //clearFrameBtn.model = clearFrame;
+        }
+
+        public void onionSkin()
+        {
+            osActive = !osActive;
+            onionSkinBtn.normColor = (osActive) ? new Color(60, 104, 148) : new Color(100, 100, 100);
         }
 
         public override void Update(Vector2 OFFSET)
@@ -40,6 +46,7 @@ namespace Kolibri.Source.Workspace.Windows
             clearFrameBtn.Update(OFFSET);
             addLayerBtn.Update(OFFSET);
             deleteLayerBtn.Update(OFFSET);
+            onionSkinBtn.Update(OFFSET);
             timeline.Update(OFFSET);
             currentFrameTxt.label = $"Frame: {timeline.currentFrame}";
             currentLayerTxt.label = $"Layer: {timeline.currentLayer}";
@@ -73,6 +80,7 @@ namespace Kolibri.Source.Workspace.Windows
             clearFrameBtn.Draw(OFFSET);
             addLayerBtn.Draw(OFFSET);
             deleteLayerBtn.Draw(OFFSET);
+            onionSkinBtn.Draw(OFFSET);
             currentFrameTxt.Draw(OFFSET);
             currentLayerTxt.Draw(OFFSET);
             Globals.primitives.DrawLine(new Vector2(pos.X, pos.Y + 47), new Vector2(pos.X + dim.X, pos.Y + 47), 3, new Color(39, 44, 48));

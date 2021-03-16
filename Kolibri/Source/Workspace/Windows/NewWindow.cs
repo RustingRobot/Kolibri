@@ -35,7 +35,7 @@ namespace Kolibri.Source.Workspace.Windows
             }
             Window canvasWindow = new CanvasWindow(new Vector2(50, 50), new Vector2(400, 400));
             Globals.canvas = new Canvas(canvasWindow, new Vector2(20, 35), new Vector2(int.Parse(canvasX.content), int.Parse(canvasY.content)));
-            Globals.PassWindow(canvasWindow);
+            //Globals.PassWindow(canvasWindow);
             ObjManager.projName = ProjName.content;
             Globals.interactWindow = null;
         }

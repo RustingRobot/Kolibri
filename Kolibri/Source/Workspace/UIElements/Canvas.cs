@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Kolibri.Source.Workspace.UIElements;
 using Kolibri.Source.Workspace.Windows;
-
+using System.Linq;
 
 namespace Kolibri.Source.Workspace.UIElements
 {
@@ -20,13 +20,11 @@ namespace Kolibri.Source.Workspace.UIElements
         public Vector2 offset = Vector2.Zero;
         public float zoom = 1;
         public int BrushSize = 1, EraserSize = 1;
-     //   public UInt32[] pixels;
         private ColorPickerWindow cp;
 
-      //  Texture2D background;
         Texture2D background;
 
-        public List<Texture2D> textures = new List<Texture2D>();
+        public List<Texture2D> textures = new List<Texture2D>(), predFrames = new List<Texture2D>(), succFrame = new List<Texture2D>();
         public List<UInt32[]> pixelsList = new List<UInt32[]>();
 
         public Canvas(Window WINDOW, Vector2 POS, Vector2 DIM) : base(WINDOW, POS, DIM)
@@ -56,8 +54,6 @@ namespace Kolibri.Source.Workspace.UIElements
                 playbackWindow = (PlaybackWindow)ObjManager.Windows.Find(x => x.GetType().Name =="PlaybackWindow");
             }
             
-            
-            //Globals.graphicsDevice.Textures[0] = null;
             if (Globals.mouse.LeftClickHold() && Globals.interactWindow == null)
             {
                 if (cp == null)
@@ -75,7 +71,7 @@ namespace Kolibri.Source.Workspace.UIElements
                             drawLine(oldDrawPos, newDrawPos, cp.currentColor);
                             break;
                         case ("Eraser"):
-                            drawLine(oldDrawPos, newDrawPos, Color.White);
+                            drawLine(oldDrawPos, newDrawPos, Color.Transparent);
                             break;
                         case ("BucketFill"):
                             FloodFill(newDrawPos, cp.currentColor);
@@ -93,14 +89,29 @@ namespace Kolibri.Source.Workspace.UIElements
             {
                 textures[i].SetData<UInt32>(pixelsList[i], 0, (int)dim.X * (int)dim.Y);
             }
+            if (timelineWindow.osActive)
+            {
+                predFrames = Enumerable.Repeat<Texture2D>(new Texture2D(Globals.graphicsDevice, (int)Globals.canvas.dim.X, (int)Globals.canvas.dim.Y, false, SurfaceFormat.Color), textures.Count).ToList();
+                succFrame = Enumerable.Repeat<Texture2D>(new Texture2D(Globals.graphicsDevice, (int)Globals.canvas.dim.X, (int)Globals.canvas.dim.Y, false, SurfaceFormat.Color), textures.Count).ToList();
+
+                if (timelineWindow.timeline.currentFrame > 0)
+                {
+                    for (int i = 0; i < timelineWindow.timeline.Layers.Count; i++)
+                    {
+                        predFrames[i].SetData<UInt32>(timelineWindow.timeline.Layers[i].Frames[timelineWindow.timeline.currentFrame - 1].pixels);
+                    }
+                }
+                if(timelineWindow.timeline.currentFrame < timelineWindow.timeline.Layers[0].Frames.Count)
+                for (int i = 0; i < timelineWindow.timeline.Layers.Count; i++)
+                {
+                    succFrame[i].SetData<UInt32>(timelineWindow.timeline.Layers[i].Frames[timelineWindow.timeline.currentFrame + 1].pixels);
+                }
+            }
             base.Update(OFFSET + offset);
         }
 
         public void setPixel(Vector2 position, Color color)
         {
-            //if((int)(position.Y * dim.X + position.X) < pixels.Length && (int)(position.Y * dim.X + position.X) >= 0)
-          //  if (position.X < dim.X && position.X >= 0 && position.Y < dim.Y && position.Y >= 0)
-         //       pixels[(int)(position.Y * dim.X + position.X)] = (uint)((color.A << 24) | (color.B << 16) | (color.G << 8) | (color.R << 0));
             if (position.X < dim.X && position.X >= 0 && position.Y < dim.Y && position.Y >= 0)
                 pixelsList[timelineWindow.timeline.currentLayer][(int)(position.Y * dim.X + position.X)] = (uint)((color.A << 24) | (color.B << 16) | (color.G << 8) | (color.R << 0));
             
@@ -108,12 +119,6 @@ namespace Kolibri.Source.Workspace.UIElements
 
         public Color getPixel(Vector2 position)
         {
-         /*   if ((int)(position.Y * dim.X + position.X) < pixels.Length && (int)(position.Y * dim.X + position.X) >= 0)
-                return new Color(pixels[(int)(position.Y * dim.X + position.X)]);
-            else
-                return Color.Transparent;
-*/
-            
             if ((int)(position.Y * dim.X + position.X) < pixelsList[0].Length && (int)(position.Y * dim.X + position.X) >= 0)
                 return new Color(pixelsList[timelineWindow.timeline.currentLayer][(int)(position.Y * dim.X + position.X)]);
             else
@@ -221,11 +226,19 @@ namespace Kolibri.Source.Workspace.UIElements
         public override void Draw(Vector2 OFFSET)
         {
             Globals.spriteBatch.Draw(background, new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
-            for(int i=0;i<textures.Count;i++)
+            for (int i = 0; i < predFrames.Count; i++)
             {
-                Globals.spriteBatch.Draw(textures[i], new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
+                Globals.spriteBatch.Draw(predFrames[i], new Rectangle((int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White * 0.5f);
             }
-        
+            for (int i = 0; i < succFrame.Count; i++)
+            {
+                Globals.spriteBatch.Draw(succFrame[i], new Rectangle((int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White * 0.5f);
+            }
+            for (int i = 0; i < textures.Count; i++)
+            {
+                Globals.spriteBatch.Draw(textures[i], new Rectangle((int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
+            }
+
         }
     }
 }

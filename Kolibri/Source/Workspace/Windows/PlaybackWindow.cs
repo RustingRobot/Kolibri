@@ -83,6 +83,7 @@ namespace Kolibri.Source.Workspace.Windows
 
         public void play()
         {
+            timelineWindow.osActive = false;
             playing = !playing;
             playBtn.label = (playing) ? "stop" : "play";
         }

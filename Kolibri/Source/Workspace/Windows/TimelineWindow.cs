@@ -21,16 +21,15 @@ namespace Kolibri.Source.Workspace.Windows
         {   
             timeline = new Timeline(this);
 
-            addLayerBtn = new Button(timeline.AddLayer, this, new Vector2 (72, 24), new Vector2(60,18), "add L");
+            addLayerBtn = new Button(timeline.AddLayer, this, new Vector2 (80, 24), new Vector2(18,18), "+");
+            deleteLayerBtn = new Button(timeline.DeleteLayer, this, new Vector2(100, 24), new Vector2(18, 18), "-");
+            clearFrameBtn = new Button(timeline.clearFrames, this, new Vector2(7, 24), new Vector2(70, 18), "Clear");
 
-            //clearFrameBtn = new Button(layer1.timeline.clearFrames, this, new Vector2(7, 24), new Vector2(60, 18), "Clear");
+            currentFrameTxt = new Label(this, new Vector2(160, 32), Globals.fontSize, "Frame: ");
+            currentLayerTxt = new Label(this, new Vector2(240, 32), Globals.fontSize, "Layer: ");
 
-            deleteLayerBtn = new Button(timeline.DeleteLayer, this, new Vector2 (137, 24), new Vector2(60,18), "delete L");
-            currentFrameTxt = new Label(this, new Vector2(230, 32), Globals.fontSize, "Frame: ");
-            currentLayerTxt = new Label(this, new Vector2(310, 32), Globals.fontSize, "Layer: ");
-
-            //clearFrameBtn.normColor = Color.Transparent;
-            //clearFrameBtn.imgSize = new Vector2(0.6f, 0.6f);
+            clearFrameBtn.normColor = Color.Transparent;
+            clearFrameBtn.imgSize = new Vector2(0.6f, 0.6f);
             //clearFrameBtn.model = clearFrame;
         }
 
@@ -38,7 +37,7 @@ namespace Kolibri.Source.Workspace.Windows
         {
              
             base.Update(OFFSET);
-            //clearFrameBtn.Update(OFFSET);
+            clearFrameBtn.Update(OFFSET);
             addLayerBtn.Update(OFFSET);
             deleteLayerBtn.Update(OFFSET);
             timeline.Update(OFFSET);
@@ -71,7 +70,7 @@ namespace Kolibri.Source.Workspace.Windows
         {
             base.Draw(OFFSET, COLOR);
             beginWindowContent();
-            //clearFrameBtn.Draw(OFFSET);
+            clearFrameBtn.Draw(OFFSET);
             addLayerBtn.Draw(OFFSET);
             deleteLayerBtn.Draw(OFFSET);
             currentFrameTxt.Draw(OFFSET);

@@ -14,7 +14,6 @@ namespace Kolibri.Source.Workspace.UIElements
         Slider AlphaSlider;
         Label[] sliderDesc = new Label[4];
         Textfield[] fields = new Textfield[4];
-        private int redValue, greenValue, blueValue;
         private bool rgbMode = true;
  
         public ColorPickerWindow(Vector2 POS, Vector2 DIM) : base(POS, DIM, "ColorPicker")
@@ -31,7 +30,7 @@ namespace Kolibri.Source.Workspace.UIElements
             //slider blue
             slider[2] = new Slider(0, 255, 1, this, new Vector2(60, 100), new Vector2(255, 15), "");
             //slider alpha
-            AlphaSlider = new Slider(0, 255, 1, this, new Vector2(60, 130), new Vector2(255, 15), "");
+            AlphaSlider = new Slider(0, 255, 1, this, new Vector2(60, 130), new Vector2(255, 15), "") { value = 255 };
             //textfields
             fields[0] = new Textfield(this,new Vector2(325,38),new Vector2(40,20),"") { defaultContent = "0", numberField = true };
             fields[1] = new Textfield(this, new Vector2(325, 68), new Vector2(40, 20), "") { defaultContent = "0", numberField = true };
@@ -78,6 +77,7 @@ namespace Kolibri.Source.Workspace.UIElements
                 slider[0].value = (int)colorValues[0];
                 slider[1].value = (int)(colorValues[1] * 100);
                 slider[2].value = (int)(colorValues[2] * 100);
+                if (slider[0].value < 0) slider[0].value += 360;
             }
         }
 
@@ -97,6 +97,8 @@ namespace Kolibri.Source.Workspace.UIElements
                 slider[1].value = (int)(colorValues[1] * 100);
                 slider[2].value = (int)(colorValues[2] * 100);
                 AlphaSlider.value = color.A;
+
+                if (slider[0].value < 0) slider[0].value += 360;
             }
         }
         public override void Update(Vector2 OFFSET)
@@ -125,6 +127,8 @@ namespace Kolibri.Source.Workspace.UIElements
                     if (slider[0].value > slider[0].end) slider[0].value = slider[0].end;
                     if (slider[1].value > slider[1].end) slider[1].value = slider[1].end;
                     if (slider[2].value > slider[2].end) slider[2].value = slider[2].end;
+
+                    if (slider[0].value < 0) slider[0].value += 360;
                 }
             }
             //setting color through sliders
@@ -146,7 +150,7 @@ namespace Kolibri.Source.Workspace.UIElements
             sliderDesc[0].Draw(OFFSET); sliderDesc[1].Draw(OFFSET); sliderDesc[2].Draw(OFFSET); ; sliderDesc[3].Draw(OFFSET);
             AlphaSlider.Draw(OFFSET);
             //currentColor rectangle
-            Globals.primitives.DrawRect(new Vector2(10,40) + pos, new Vector2(30, 75), currentColor);
+            Globals.primitives.DrawRect(new Vector2(10,40) + pos, new Vector2(30, 105), currentColor);
             rgb.Draw(OFFSET);
             hsv.Draw(OFFSET);
             endWindowContent();

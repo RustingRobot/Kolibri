@@ -81,5 +81,16 @@ namespace Kolibri.Source.Workspace
             currentFrame--;
             selectEndFrame--;
         }
+
+        public void clearFrames()
+        {
+            int i = currentFrame;
+            while(i != selectEndFrame)
+            {
+                Layers[currentLayer].Frames[i].clearFrame();
+                i += (i < selectEndFrame)? 1: -1;
+            }
+            Layers[currentLayer].Frames[i].clearFrame();
+        }
     }
 }

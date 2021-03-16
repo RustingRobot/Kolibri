@@ -14,7 +14,7 @@ namespace Kolibri.Source.Workspace.Windows
     {
         public Timeline timeline;
         public PlaybackWindow pbWindow;
-
+        public Label currentFrameTxt, currentLayerTxt;
         Button addLayerBtn, deleteLayerBtn;
         Button clearFrameBtn; 
         public TimelineWindow( Vector2 POS, Vector2 DIM) : base(POS, DIM, "Timeline")
@@ -26,7 +26,8 @@ namespace Kolibri.Source.Workspace.Windows
             //clearFrameBtn = new Button(layer1.timeline.clearFrames, this, new Vector2(7, 24), new Vector2(60, 18), "Clear");
 
             deleteLayerBtn = new Button(timeline.DeleteLayer, this, new Vector2 (137, 24), new Vector2(60,18), "delete L");
-
+            currentFrameTxt = new Label(this, new Vector2(230, 32), Globals.fontSize, "Frame: ");
+            currentLayerTxt = new Label(this, new Vector2(310, 32), Globals.fontSize, "Layer: ");
 
             //clearFrameBtn.normColor = Color.Transparent;
             //clearFrameBtn.imgSize = new Vector2(0.6f, 0.6f);
@@ -41,6 +42,10 @@ namespace Kolibri.Source.Workspace.Windows
             addLayerBtn.Update(OFFSET);
             deleteLayerBtn.Update(OFFSET);
             timeline.Update(OFFSET);
+            currentFrameTxt.label = $"Frame: {timeline.currentFrame}";
+            currentLayerTxt.label = $"Layer: {timeline.currentLayer}";
+            currentFrameTxt.Update(OFFSET);
+            currentLayerTxt.Update(OFFSET);
             if (Globals.keyboard.OnPress("Up") && timeline.currentLayer > 0)
             {
                 timeline.currentLayer--;
@@ -69,6 +74,8 @@ namespace Kolibri.Source.Workspace.Windows
             //clearFrameBtn.Draw(OFFSET);
             addLayerBtn.Draw(OFFSET);
             deleteLayerBtn.Draw(OFFSET);
+            currentFrameTxt.Draw(OFFSET);
+            currentLayerTxt.Draw(OFFSET);
             Globals.primitives.DrawLine(new Vector2(pos.X, pos.Y + 47), new Vector2(pos.X + dim.X, pos.Y + 47), 3, new Color(39, 44, 48));
             timeline.Draw(Vector2.Zero);
             endWindowContent();

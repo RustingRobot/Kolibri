@@ -53,7 +53,15 @@ namespace Kolibri.Source.Workspace
 
         public void DeleteLayer()
         {
-
+            if (currentLayer == 0) return;
+            Globals.canvas.textures.RemoveAt(currentLayer);
+            Globals.canvas.pixelsList.RemoveAt(currentLayer);
+            Layers.RemoveAt(currentLayer);
+            for (int i = currentLayer; i < Layers.Count; i++)
+            {
+                Layers[i].moveUp();
+            }
+            if (currentLayer == Layers.Count) currentLayer--;
         }
 
         public void gotoFrame(int FrameIndex)

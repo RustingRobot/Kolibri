@@ -55,6 +55,10 @@ namespace Kolibri.Source.Workspace
             
         }
 
-        
+        public void moveUp()
+        {
+            layerIndex--;
+            nameField.relativePos.Y -= 27;
+        }
     }
 }

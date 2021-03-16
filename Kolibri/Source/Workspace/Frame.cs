@@ -44,22 +44,23 @@ namespace Kolibri.Source.Workspace
             if(timeline.layer.currentLayer == true)
             {
 
-                if(layerIndex==Globals.canvas.pixelsList.Count-1)
+                if(layerIndex==Globals.canvas.pixelsList.Count-1)   //to check the existence of pixels for the corresponding layer in 
+                                                                    //pixelslist[layerIndex] to work around a runtime error 
                 {
-                    check= true;
+                    check= true;                    //now this Update-function can be used without if-condition 
                     pos = OFFSET + window.pos;
                     index = timeline.frames.IndexOf(this);
                     if (timeline.frames[timeline.currentFrame] == this)
                     {
                         color = new Color(60, 104, 148);
-                        pixels = Globals.canvas.pixelsList[layerIndex];
+                        pixels = Globals.canvas.pixelsList[layerIndex];         //to take the pixels of the current texture from canvas 
                         
                     } 
                     else if (MouseHover())
                     {
                         color = Color.LightGray;
 
-                        if (Clicked())
+                        if (Clicked())                              //canvas shows the current frame
                         {
                             /*for(int i=0;i<timelineWindow.layers.Count;i++)
                             {
@@ -81,7 +82,7 @@ namespace Kolibri.Source.Workspace
                     }
                     else color = Color.Gray;
                 }
-                if(check ==true)
+                if(check ==true)        //the same content like the above if-condition
                 {
 
                     pos = OFFSET + window.pos;
@@ -125,16 +126,16 @@ namespace Kolibri.Source.Workspace
         }
         public override void Draw(Vector2 OFFSET)
         {
-            if (Array.TrueForAll(pixels, y => y == 0xFFFFFFFF))
+            if (Array.TrueForAll(pixels, y => y == 0x00000000))
             {
             
                 Globals.primitives.DrawRect(OFFSET + window.pos + new Vector2(0, 30*layerIndex), new Vector2(dim.X,border), color);
                 Globals.primitives.DrawRect(OFFSET + window.pos +  new Vector2(0,30*layerIndex), new Vector2(border, dim.Y), color);
                 Globals.primitives.DrawRect(new Vector2(OFFSET.X + window.pos.X + dim.X - border , OFFSET.Y + window.pos.Y+ 30*layerIndex), new Vector2(border, dim.Y), color);
                 Globals.primitives.DrawRect(new Vector2(OFFSET.X + window.pos.X , OFFSET.Y + window.pos.Y + dim.Y - border+ 30*layerIndex), new Vector2(dim.X, border), color);
-                if(color == new Color(60, 104, 148))
+                if(color == new Color(60, 104, 148))        //if the current frame is marked blue, a vertical of this frame should be als marked blue 
                 {
-                    for(int i=0; i<timelineWindow.layers.Count; i++)
+                    for(int i=0; i<timelineWindow.layers.Count; i++)    
                     {
                         Globals.primitives.DrawRect(OFFSET + window.pos + new Vector2(0, 30*i), new Vector2(dim.X,border), color);
                         Globals.primitives.DrawRect(OFFSET + window.pos +  new Vector2(0,30*i), new Vector2(border, dim.Y), color);
@@ -144,7 +145,7 @@ namespace Kolibri.Source.Workspace
                 }
             }
 
-            else
+            else            //the frame is filled when it doesn't be empty
             {
                 Globals.primitives.DrawRect(OFFSET + window.pos+  new Vector2(0,30*layerIndex), dim, color);
                 
@@ -153,11 +154,11 @@ namespace Kolibri.Source.Workspace
             }
         }
 
-        public void clearFrame()
+        public void clearFrame()        
         {
             for (int i = 0; i < pixels.Length; i++)
             {
-                pixels[i] = 0xFFFFFFFF;
+                pixels[i] = 0x00000000; 
             }
         }
     }

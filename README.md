@@ -10,7 +10,7 @@ A small program that allows you to create pixel based, frame-by-frame animation.
 
 ### Table of contents
 * [Changing colors](#Changing-colors)
-* [Picking tools](#Cicking-tools)
+* [Picking tools](#Picking-tools)
 * [Adding/deleting layers](#Adding-layers)
 * [Playing options](#Playing-options)
 * [Menu bar](#Menu-bar)
@@ -26,26 +26,34 @@ A small program that allows you to create pixel based, frame-by-frame animation.
 &nbsp;
 
 ## Picking tools
-![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/77926314/111336228-5462f880-8675-11eb-811d-1341e866db74.gif)
+![ezgif com-gif-maker (11)](https://user-images.githubusercontent.com/77926314/111352593-a19a9680-8684-11eb-9c05-761395cfff64.gif)
+
 
 &nbsp;
-## adding / deleting layers
+## Adding / deleting layers
+![ezgif com-gif-maker (5)](https://user-images.githubusercontent.com/77926314/111348904-f0463180-8680-11eb-8b9f-c81a0c86461f.gif)
 
 
 &nbsp;
 ## Playing options
-![ezgif com-gif-maker (3)](https://user-images.githubusercontent.com/77926314/111346985-110d8780-867f-11eb-86f6-f71c3cdd12c9.gif)
+![ezgif com-gif-maker (9)](https://user-images.githubusercontent.com/77926314/111351976-00134500-8684-11eb-8dfa-ffbeb66177aa.gif)
 
 
 &nbsp;
+
 ## Menu bar
-![ezgif com-gif-maker (2)](https://user-images.githubusercontent.com/77926314/111340612-17006a00-8679-11eb-9241-3caa82150866.gif)
+
+![ezgif com-gif-maker (10)](https://user-images.githubusercontent.com/77926314/111352295-4f597580-8684-11eb-82ae-b4486d9b59d5.gif)
+
 
 &nbsp;
 ## Duplicate frames
-![ezgif com-gif-maker (4)](https://user-images.githubusercontent.com/77926314/111347553-9d1faf00-867f-11eb-953b-9c24893968ed.gif)
+![ezgif com-gif-maker (8)](https://user-images.githubusercontent.com/77926314/111351666-b165ab00-8683-11eb-8fc2-e52f5db19c59.gif)
 
+&nbsp;
 
+## Window docking system
+![ezgif com-gif-maker (7)](https://user-images.githubusercontent.com/77926314/111351389-6c417900-8683-11eb-9ae9-73ee352d091c.gif)
 
 &nbsp;
 

@@ -26,7 +26,7 @@ namespace Kolibri.Source.Workspace
 
         public void Draw(Vector2 OFFSET)
         {
-            Globals.primitives.DrawRect(window.pos + new Vector2(currentFrame * 17 + 80, 47), new Vector2(15, Layers.Count * 30 + 3), new Color(40,44,50));
+            Globals.primitives.DrawRect(window.pos + new Vector2(currentFrame * 17 + 80, 47), new Vector2(15, Layers.Count * 27 + 3), new Color(40,44,50));
 
             for (int i = 0; i < Layers.Count; i++) 
             {

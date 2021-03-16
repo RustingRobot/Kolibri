@@ -26,7 +26,7 @@ namespace Kolibri.Source.Workspace
             layerIndex=LAYERINDEX;
             timeline = TIMELINE;
             label = "Layer "+ layerIndex;
-            nameField = new Textfield(WINDOW, new Vector2(6, 55 + 30 * layerIndex), new Vector2(70, 25), label);
+            nameField = new Textfield(WINDOW, new Vector2(6, 55 + 27 * layerIndex), new Vector2(70, 25), label);
         }
 
         
@@ -40,7 +40,7 @@ namespace Kolibri.Source.Workspace
 
             for (int i = 0; i < Frames.Count; i++)
             {
-                Frames[i].Update(new Vector2(OFFSET.X + i * 17 + 80, OFFSET.Y + layerIndex * 30 + 55));
+                Frames[i].Update(new Vector2(OFFSET.X + i * 17 + 80, OFFSET.Y + layerIndex * 27 + 55));
             }
             nameField.Update(OFFSET);
         }
@@ -48,7 +48,7 @@ namespace Kolibri.Source.Workspace
         {
             for (int i = 0; i < Frames.Count; i++)
             {
-                Frames[i].Draw(new Vector2(OFFSET.X + i * 17 + 80, OFFSET.Y + layerIndex * 30 + 55));
+                Frames[i].Draw(new Vector2(OFFSET.X + i * 17 + 80, OFFSET.Y + layerIndex * 27 + 55));
             }
             nameField.Draw(OFFSET);
             base.Draw(OFFSET);

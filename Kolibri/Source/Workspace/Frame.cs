@@ -60,7 +60,7 @@ namespace Kolibri.Source.Workspace
                     }
                 }
             }
-            else if ((index <= layer.timeline.selectEndFrame && index > layer.timeline.currentFrame) || (index >= layer.timeline.selectEndFrame && index < layer.timeline.currentFrame))
+            else if (((index <= layer.timeline.selectEndFrame && index > layer.timeline.currentFrame) || (index >= layer.timeline.selectEndFrame && index < layer.timeline.currentFrame)) && layer.timeline.currentLayer == layer.layerIndex)
             {
                 color = new Color(104, 152, 165);
             }

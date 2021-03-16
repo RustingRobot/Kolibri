@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Kolibri.Source.Workspace.Windows
 {
-    class PlaybackWindow : Window
+    public class PlaybackWindow : Window
     {
         Button playBtn, backBtn;
        public Textfield fpsTxt, startFrameTxt, endFrameTxt;
@@ -84,6 +84,7 @@ namespace Kolibri.Source.Workspace.Windows
         public void play()
         {
             timelineWindow.osActive = false;
+            timelineWindow.onionSkinBtn.normColor = new Color(100, 100, 100);
             playing = !playing;
             playBtn.label = (playing) ? "stop" : "play";
         }

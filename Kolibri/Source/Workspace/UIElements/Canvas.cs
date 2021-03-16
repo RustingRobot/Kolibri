@@ -15,8 +15,8 @@ namespace Kolibri.Source.Workspace.UIElements
 {
     public class Canvas : UIElement //pixel grid to draw on
     {
-        TimelineWindow timelineWindow;
-        PlaybackWindow playbackWindow;
+        public TimelineWindow timelineWindow;
+        public PlaybackWindow playbackWindow;
         public Vector2 offset = Vector2.Zero;
         public float zoom = 1;
         public int BrushSize = 1, EraserSize = 1;
@@ -24,7 +24,7 @@ namespace Kolibri.Source.Workspace.UIElements
 
         Texture2D background;
 
-        public List<Texture2D> textures = new List<Texture2D>(), predFrames = new List<Texture2D>(), succFrame = new List<Texture2D>();
+        public List<Texture2D> textures = new List<Texture2D>(), predFrames = new List<Texture2D>(), succFrames = new List<Texture2D>();
         public List<UInt32[]> pixelsList = new List<UInt32[]>();
 
         public Canvas(Window WINDOW, Vector2 POS, Vector2 DIM) : base(WINDOW, POS, DIM)
@@ -92,7 +92,7 @@ namespace Kolibri.Source.Workspace.UIElements
             if (timelineWindow.osActive)
             {
                 predFrames = Enumerable.Repeat<Texture2D>(new Texture2D(Globals.graphicsDevice, (int)Globals.canvas.dim.X, (int)Globals.canvas.dim.Y, false, SurfaceFormat.Color), textures.Count).ToList();
-                succFrame = Enumerable.Repeat<Texture2D>(new Texture2D(Globals.graphicsDevice, (int)Globals.canvas.dim.X, (int)Globals.canvas.dim.Y, false, SurfaceFormat.Color), textures.Count).ToList();
+                succFrames = Enumerable.Repeat<Texture2D>(new Texture2D(Globals.graphicsDevice, (int)Globals.canvas.dim.X, (int)Globals.canvas.dim.Y, false, SurfaceFormat.Color), textures.Count).ToList();
 
                 if (timelineWindow.timeline.currentFrame > 0)
                 {
@@ -101,11 +101,22 @@ namespace Kolibri.Source.Workspace.UIElements
                         predFrames[i].SetData<UInt32>(timelineWindow.timeline.Layers[i].Frames[timelineWindow.timeline.currentFrame - 1].pixels);
                     }
                 }
-                if(timelineWindow.timeline.currentFrame < timelineWindow.timeline.Layers[0].Frames.Count)
-                for (int i = 0; i < timelineWindow.timeline.Layers.Count; i++)
+                try
                 {
-                    succFrame[i].SetData<UInt32>(timelineWindow.timeline.Layers[i].Frames[timelineWindow.timeline.currentFrame + 1].pixels);
+                    if (timelineWindow.timeline.currentFrame < timelineWindow.timeline.Layers[0].Frames.Count - 1)
+                    {
+                        for (int i = 0; i < timelineWindow.timeline.Layers.Count; i++)
+                        {
+                            succFrames[i].SetData<UInt32>(timelineWindow.timeline.Layers[i].Frames[timelineWindow.timeline.currentFrame + 1].pixels);
+                        }
+                    }
                 }
+                catch { }
+            }
+            else
+            {
+                predFrames = new List<Texture2D>();
+                succFrames = new List<Texture2D>();
             }
             base.Update(OFFSET + offset);
         }
@@ -228,11 +239,11 @@ namespace Kolibri.Source.Workspace.UIElements
             Globals.spriteBatch.Draw(background, new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
             for (int i = 0; i < predFrames.Count; i++)
             {
-                Globals.spriteBatch.Draw(predFrames[i], new Rectangle((int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White * 0.5f);
+                Globals.spriteBatch.Draw(predFrames[i], new Rectangle((int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White * 0.2f);
             }
-            for (int i = 0; i < succFrame.Count; i++)
+            for (int i = 0; i < succFrames.Count; i++)
             {
-                Globals.spriteBatch.Draw(succFrame[i], new Rectangle((int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White * 0.5f);
+                Globals.spriteBatch.Draw(succFrames[i], new Rectangle((int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White * 0.2f);
             }
             for (int i = 0; i < textures.Count; i++)
             {

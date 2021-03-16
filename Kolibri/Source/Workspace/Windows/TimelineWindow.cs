@@ -10,13 +10,13 @@ using System.Text;
 
 namespace Kolibri.Source.Workspace.Windows
 {
-    class TimelineWindow : Window
+    public class TimelineWindow : Window
     {
         public Timeline timeline;
         public PlaybackWindow pbWindow;
         public bool osActive = false;
         public Label currentFrameTxt, currentLayerTxt;
-        Button addLayerBtn, deleteLayerBtn, clearFrameBtn, onionSkinBtn;
+        public Button addLayerBtn, deleteLayerBtn, clearFrameBtn, onionSkinBtn;
         public TimelineWindow( Vector2 POS, Vector2 DIM) : base(POS, DIM, "Timeline")
         {   
             timeline = new Timeline(this);
@@ -30,7 +30,6 @@ namespace Kolibri.Source.Workspace.Windows
 
             clearFrameBtn.normColor = Color.Transparent;
             clearFrameBtn.imgSize = new Vector2(0.6f, 0.6f);
-            //clearFrameBtn.model = clearFrame;
         }
 
         public void onionSkin()

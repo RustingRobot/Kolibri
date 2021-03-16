@@ -50,7 +50,7 @@ The menu bar offers you some options you need for working with <strong>Kolibri</
 This feature allows you to duplicate your last frame and makes your working flow better.
 &nbsp;
 ## Window docking system
-![ezgif com-gif-maker (17)](https://user-images.githubusercontent.com/77926314/111382514-5d6cbd80-86a7-11eb-867c-e4355d608409.gif)
+![ezgif com-gif-maker (18)](https://user-images.githubusercontent.com/77926314/111382881-cc4a1680-86a7-11eb-85a0-fce7d43d261c.gif)
 
 To guarantee a individual working space, a window docking system is implemented with which you can position the windows the way you want them.
 &nbsp;

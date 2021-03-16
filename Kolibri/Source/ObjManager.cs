@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
+using System.IO;
 
 namespace Kolibri.Source
 {
@@ -15,7 +17,7 @@ namespace Kolibri.Source
         public Vector2 offset;
         public static List<Window> Windows = new List<Window>();
         public Menu menu;
-        public static string projName;
+        public static string projName = "MyProjekt";
         public ObjManager()
         {
             Globals.PassWindow = AddWindow;
@@ -74,7 +76,7 @@ namespace Kolibri.Source
             Windows = Windows.Prepend(WINDOW).ToList();
         }
 
-        public static void CWRemoveUpdate(Window removedWindow, Window Top, Window Bottom, Window Right, Window Left)
+        public static void CWRemoveUpdate(Window removedWindow, Window Top, Window Bottom, Window Right, Window Left)   //update other windows if attached window was undocked
         {
             for (int i = 0; i < Windows.Count(); i++)
             {
@@ -83,6 +85,95 @@ namespace Kolibri.Source
                 if (Windows[i].RightCW == removedWindow) Windows[i].RightCW = Right;
                 if (Windows[i].LeftCW == removedWindow) Windows[i].LeftCW = Left;
             }
+        }
+
+        public static void createGif()  //work in progress
+        {
+        //    TimelineWindow timelineWindow = (TimelineWindow)ObjManager.Windows.Find(x => x.GetType().Name == "TimelineWindow");
+        //    if (timelineWindow != null) return;
+        //    PlaybackWindow playbackWindow = (PlaybackWindow)ObjManager.Windows.Find(x => x.GetType().Name == "PlaybackWindow");
+        //    if (playbackWindow != null) return;
+
+        //    using (FileStream fileStream = new FileStream(@$"D:\{projName}.gif", FileMode.Create))
+        //    {
+        //        using (BinaryWriter binaryWriter = new BinaryWriter(fileStream))
+        //        {
+        //            // header
+        //            binaryWriter.Write(new char[3] { 'G', 'I', 'F' });
+        //            binaryWriter.Write(new char[3] { '8', '9', 'a' });
+
+        //            // logical screen descriptor
+        //            binaryWriter.Write((ushort)2);
+        //            binaryWriter.Write((ushort)2);
+        //            binaryWriter.Write((byte)0x91);
+        //            binaryWriter.Write((byte)0);
+        //            binaryWriter.Write((byte)0);
+
+        //            // global color table
+        //            binaryWriter.Write((byte)255);
+        //            binaryWriter.Write((byte)255);
+        //            binaryWriter.Write((byte)255);
+        //            binaryWriter.Write((byte)0);
+        //            binaryWriter.Write((byte)0);
+        //            binaryWriter.Write((byte)0);
+        //            binaryWriter.Write((byte)255);
+        //            binaryWriter.Write((byte)0);
+        //            binaryWriter.Write((byte)0);
+        //            binaryWriter.Write((byte)0);
+        //            binaryWriter.Write((byte)255);
+        //            binaryWriter.Write((byte)0);
+
+        //            // application extension
+        //            binaryWriter.Write((byte)0x21);
+        //            binaryWriter.Write((byte)0xff);
+        //            binaryWriter.Write((byte)0x0b);
+        //            binaryWriter.Write('N');
+        //            binaryWriter.Write('E');
+        //            binaryWriter.Write('T');
+        //            binaryWriter.Write('S');
+        //            binaryWriter.Write('C');
+        //            binaryWriter.Write('A');
+        //            binaryWriter.Write('P');
+        //            binaryWriter.Write('E');
+        //            binaryWriter.Write('2');
+        //            binaryWriter.Write('.');
+        //            binaryWriter.Write('0');
+        //            binaryWriter.Write((byte)3);
+        //            binaryWriter.Write((byte)1);
+        //            binaryWriter.Write((byte)0xff);
+        //            binaryWriter.Write((byte)0xff);
+        //            binaryWriter.Write((byte)0);
+
+        //            // graphic control extension
+        //            binaryWriter.Write((byte)0x21);
+        //            binaryWriter.Write((byte)0xf9);
+        //            binaryWriter.Write((byte)4);
+        //            binaryWriter.Write((byte)4);
+        //            binaryWriter.Write((ushort)100);
+        //            binaryWriter.Write((byte)0);
+        //            binaryWriter.Write((byte)0);
+
+        //            // image descriptor
+        //            binaryWriter.Write((byte)0x2c);
+        //            binaryWriter.Write((ushort)0);
+        //            binaryWriter.Write((ushort)0);
+        //            binaryWriter.Write((ushort)Globals.canvas.dim.X);
+        //            binaryWriter.Write((ushort)Globals.canvas.dim.Y);
+        //            binaryWriter.Write((byte)0);
+
+        //            // image data
+        //            for (int i = playbackWindow.startFrame; i < playbackWindow.endFrame; i++)
+        //            {
+        //                for (int j = 0; j < timelineWindow.timeline.Layers[0].Frames[i].pixels.Length; j++)
+        //                {
+        //                    binaryWriter.Write((byte)timelineWindow.timeline.Layers[0].Frames[i].pixels[j]);
+        //                }
+        //            }
+
+        //            // terminating character
+        //            binaryWriter.Write((byte)0x3b);
+        //        }
+        //    }
         }
     }
 }

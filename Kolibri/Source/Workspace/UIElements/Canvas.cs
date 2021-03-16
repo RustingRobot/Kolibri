@@ -16,11 +16,10 @@ namespace Kolibri.Source.Workspace.UIElements
     public class Canvas : UIElement //pixel grid to draw on
     {
         public TimelineWindow timelineWindow;
-        public PlaybackWindow playbackWindow;
         public Vector2 offset = Vector2.Zero;
         public float zoom = 1;
         public int BrushSize = 1, EraserSize = 1;
-        private ColorPickerWindow cp;
+        public ColorPickerWindow cp;
 
         Texture2D background;
 
@@ -33,7 +32,7 @@ namespace Kolibri.Source.Workspace.UIElements
             dim = DIM;
 
             UInt32[] pixels = new uint[(int)dim.X * (int)dim.Y];
-            for (int i = 0; i < pixels.Length; i++) //set all pixels to white
+            for (int i = 0; i < pixels.Length; i++) //set all pixels to white (background will not change color)
             {
                 pixels[i] = 0xFFFFFFFF;
             }
@@ -47,18 +46,16 @@ namespace Kolibri.Source.Workspace.UIElements
             if(timelineWindow==null)
             {
                 timelineWindow = (TimelineWindow)ObjManager.Windows.Find(x => x.GetType().Name =="TimelineWindow");
+                if (timelineWindow != null && timelineWindow.delete) timelineWindow = null; //prevent reasignment before old window could be deleted
             }
-            //access to PlaybackWindow
-            if (playbackWindow==null)
-            {
-                playbackWindow = (PlaybackWindow)ObjManager.Windows.Find(x => x.GetType().Name =="PlaybackWindow");
-            }
-            
+
             if (Globals.mouse.LeftClickHold() && Globals.interactWindow == null)
             {
+                //access to ColorPickerWindow
                 if (cp == null)
                 {
                     cp = (ColorPickerWindow)ObjManager.Windows.Find(x => x.GetType().Name == "ColorPickerWindow");
+                    if (cp != null && cp.delete) cp = null; //prevent reasignment before old window could be deleted
                 }
                 else
                 {
@@ -68,7 +65,7 @@ namespace Kolibri.Source.Workspace.UIElements
                     switch (Globals.activeTool)
                     {
                         case ("Brush"):
-                            drawLine(oldDrawPos, newDrawPos, cp.currentColor);
+                            drawLine(oldDrawPos, newDrawPos, cp.currentColor);  //draw a line since the mouse "teleports" across the screen
                             break;
                         case ("Eraser"):
                             drawLine(oldDrawPos, newDrawPos, Color.Transparent);
@@ -85,18 +82,18 @@ namespace Kolibri.Source.Workspace.UIElements
                     }
                 }
             }
-            for (int i = 0; i < textures.Count; i++)
+            for (int i = 0; i < textures.Count; i++)    //turn pixels (from the frames) into textures
             {
                 textures[i].SetData<UInt32>(pixelsList[i], 0, (int)dim.X * (int)dim.Y);
             }
-            if (timelineWindow.osActive)
+            if (timelineWindow != null && timelineWindow.osActive)  //get onion skin textures
             {
                 predFrames = Enumerable.Repeat<Texture2D>(new Texture2D(Globals.graphicsDevice, (int)Globals.canvas.dim.X, (int)Globals.canvas.dim.Y, false, SurfaceFormat.Color), textures.Count).ToList();
                 succFrames = Enumerable.Repeat<Texture2D>(new Texture2D(Globals.graphicsDevice, (int)Globals.canvas.dim.X, (int)Globals.canvas.dim.Y, false, SurfaceFormat.Color), textures.Count).ToList();
 
                 if (timelineWindow.timeline.currentFrame > 0)
                 {
-                    for (int i = 0; i < timelineWindow.timeline.Layers.Count; i++)
+                    for (int i = 0; i < predFrames.Count; i++)
                     {
                         predFrames[i].SetData<UInt32>(timelineWindow.timeline.Layers[i].Frames[timelineWindow.timeline.currentFrame - 1].pixels);
                     }
@@ -105,7 +102,7 @@ namespace Kolibri.Source.Workspace.UIElements
                 {
                     if (timelineWindow.timeline.currentFrame < timelineWindow.timeline.Layers[0].Frames.Count - 1)
                     {
-                        for (int i = 0; i < timelineWindow.timeline.Layers.Count; i++)
+                        for (int i = 0; i < succFrames.Count; i++)
                         {
                             succFrames[i].SetData<UInt32>(timelineWindow.timeline.Layers[i].Frames[timelineWindow.timeline.currentFrame + 1].pixels);
                         }
@@ -123,17 +120,17 @@ namespace Kolibri.Source.Workspace.UIElements
 
         public void setPixel(Vector2 position, Color color)
         {
-            if (position.X < dim.X && position.X >= 0 && position.Y < dim.Y && position.Y >= 0)
+            if (position.X < dim.X && position.X >= 0 && position.Y < dim.Y && position.Y >= 0 && timelineWindow != null)
                 pixelsList[timelineWindow.timeline.currentLayer][(int)(position.Y * dim.X + position.X)] = (uint)((color.A << 24) | (color.B << 16) | (color.G << 8) | (color.R << 0));
-            
+
         }
 
         public Color getPixel(Vector2 position)
         {
-            if ((int)(position.Y * dim.X + position.X) < pixelsList[0].Length && (int)(position.Y * dim.X + position.X) >= 0)
+            if ((int)(position.Y * dim.X + position.X) < pixelsList[0].Length && (int)(position.Y * dim.X + position.X) >= 0 && timelineWindow != null)
                 return new Color(pixelsList[timelineWindow.timeline.currentLayer][(int)(position.Y * dim.X + position.X)]);
             else
-                return Color.Transparent;          
+                return Color.Transparent;
         }
 
         //drawing 
@@ -181,25 +178,6 @@ namespace Kolibri.Source.Workspace.UIElements
             setPixel(new Vector2(p.X - y, p.Y - x), color);
         }
 
-        public void drawCircle(Vector2 p, int r, Color color)
-        {
-            int x = 0, y = r;
-            int d = 3 - 2 * r;
-            drawCircle(p, x, y, color);
-            while (y >= x)
-            {
-                x++;
-                if (d > 0)
-                {
-                    y--;
-                    d = d + 4 * (x - y) + 10;
-                }
-                else
-                    d = d + 4 * x + 6;
-                drawCircle(p, x, y, color);
-            }
-        }
-
         public void drawFilledCircle(Vector2 p, int r, Color color)
         {
             for (int y = -r; y <= r; y++)
@@ -217,7 +195,7 @@ namespace Kolibri.Source.Workspace.UIElements
             while (pixels.Count > 0)
             {
                 Vector2 a = pixels.Pop();
-                if (a.X < dim.X && a.X >= 0 && a.Y < dim.Y && a.Y >= 0)//in bounds
+                if (a.X < dim.X && a.X >= 0 && a.Y < dim.Y && a.Y >= 0) //in bounds
                 {
                     if (getPixel(a) == targetColor)
                     {
@@ -237,15 +215,15 @@ namespace Kolibri.Source.Workspace.UIElements
         public override void Draw(Vector2 OFFSET)
         {
             Globals.spriteBatch.Draw(background, new Rectangle( (int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
-            for (int i = 0; i < predFrames.Count; i++)
+            for (int i = 0; i < predFrames.Count; i++)  //onion skin previous frames
             {
                 Globals.spriteBatch.Draw(predFrames[i], new Rectangle((int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White * 0.2f);
             }
-            for (int i = 0; i < succFrames.Count; i++)
+            for (int i = 0; i < succFrames.Count; i++) //onion skin next frames
             {
                 Globals.spriteBatch.Draw(succFrames[i], new Rectangle((int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White * 0.2f);
             }
-            for (int i = 0; i < textures.Count; i++)
+            for (int i = 0; i < textures.Count; i++)    //all Frames of all Layers in that are active
             {
                 Globals.spriteBatch.Draw(textures[i], new Rectangle((int)(pos.X + offset.X), (int)(pos.Y + offset.Y), (int)(dim.X * zoom), (int)(dim.Y * zoom)), Color.White);
             }

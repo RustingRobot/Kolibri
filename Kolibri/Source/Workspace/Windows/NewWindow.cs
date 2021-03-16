@@ -30,17 +30,18 @@ namespace Kolibri.Source.Workspace.Windows
         void OK()
         {
             TimelineWindow timelineWindow = (TimelineWindow)ObjManager.Windows.Find(x => x.GetType().Name == "TimelineWindow");
-            timelineWindow.timeline.Layers = new List<Layer>();
+            if(timelineWindow != null)
+                timelineWindow.timeline.Layers = new List<Layer>();
             for (int i = 0; i < ObjManager.Windows.Count; i++)
             {
                 ObjManager.Windows[i].delete = true;
             }
             Window canvasWindow = new CanvasWindow(new Vector2(50, 50), new Vector2(400, 400));
+            //we need a fresh canvas
             Globals.canvas = new Canvas(canvasWindow, new Vector2(20, 35), new Vector2(int.Parse(canvasX.content), int.Parse(canvasY.content)));
-            TimelineWindow newTimelineWindow = new TimelineWindow(new Vector2(500, 50), new Vector2(400, 200));
-            Globals.canvas.timelineWindow = newTimelineWindow;
+            Globals.canvas.cp = null;
+            Globals.canvas.timelineWindow = null;
             Globals.PassWindow(canvasWindow);
-            Globals.PassWindow(newTimelineWindow);
             ObjManager.projName = ProjName.content;
             Globals.interactWindow = null;
         }

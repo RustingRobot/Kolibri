@@ -22,22 +22,20 @@ namespace Kolibri.Source.Workspace.Windows
             base.Update(OFFSET);
             if (Globals.GetBoxOverlap(pos, dim, Globals.mouse.newMousePos, Vector2.Zero))
             {
-                if (Globals.keyboard.GetPress("LeftShift"))
+                if (Globals.keyboard.GetPress("LeftShift")) // horizontal movement
                     Globals.canvas.offset.X += (Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue) * 0.2f;
-                else if (Globals.keyboard.GetPress("LeftControl") && Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue != 0)
+                else if (Globals.keyboard.GetPress("LeftControl") && Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue != 0) // zoom
                 {
                     if (Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue > 0) {
                         Globals.canvas.zoom += 0.1f;
-                        //Globals.canvas.offset += (Globals.mouse.newMousePos - Globals.canvas.pos - Globals.canvas.offset) - (Globals.mouse.newMousePos - pos);
                     }
                     else
                     {
                         Globals.canvas.zoom -= 0.1f;
-                        //Globals.canvas.offset += (Globals.mouse.newMousePos - Globals.canvas.pos - Globals.canvas.offset);
                     }
                 }
                 else
-                    Globals.canvas.offset.Y += (Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue) * 0.2f;
+                    Globals.canvas.offset.Y += (Globals.mouse.newMouse.ScrollWheelValue - Globals.mouse.oldMouse.ScrollWheelValue) * 0.2f; // vertical movement
             }
             Globals.canvas.Update(OFFSET);
         }

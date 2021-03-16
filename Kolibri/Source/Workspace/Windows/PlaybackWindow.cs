@@ -83,7 +83,7 @@ namespace Kolibri.Source.Workspace.Windows
 
         public void play()
         {
-            timelineWindow.osActive = false;
+            timelineWindow.osActive = false;    //no onion skin on play
             timelineWindow.onionSkinBtn.normColor = new Color(100, 100, 100);
             playing = !playing;
             playBtn.label = (playing) ? "stop" : "play";

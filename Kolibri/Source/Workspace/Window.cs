@@ -115,7 +115,7 @@ namespace Kolibri.Source.Workspace
             }
             else { borderColors[3] = defaultBorder; }
 
-            if (!popupWindow && docked)
+            if (!popupWindow && docked)//adjust position if docked
             {
                 if (LeftCW != null) pos.X = LeftCW.dim.X + LeftCW.pos.X - border;
                 
@@ -186,7 +186,7 @@ namespace Kolibri.Source.Workspace
 
         public void closeWindow()
         {
-            if (docked)
+            if (docked)// first do a propper undock...
             {
                 if (this == DockSpace.WindowFraming[3]) DockSpace.WindowFraming[3] = LeftCW;
                 if (this == DockSpace.WindowFraming[2]) DockSpace.WindowFraming[2] = RightCW;
@@ -203,7 +203,7 @@ namespace Kolibri.Source.Workspace
                 pos.Y += (pos.Y > Globals.screenHeight / 2) ? -20 : 20;
                 ObjManager.toFront(this);
             }
-            else delete = true;
+            else delete = true;//...then delete
         }
 
         public bool MouseInWindow()

@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Kolibri.Source.Workspace.UIElements
 {
-    class ColorPickerWindow : Window
+    public class ColorPickerWindow : Window
     {
         private Button rgb, hsv;
         public Color currentColor;

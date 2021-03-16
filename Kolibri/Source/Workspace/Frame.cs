@@ -34,16 +34,15 @@ namespace Kolibri.Source.Workspace
         {
             if (layer.timeline.currentFrame == index)
             {
-                Debug.WriteLine(Globals.canvas.pixelsList.Count);
                 Globals.canvas.pixelsList[layer.layerIndex] = pixels;
             }
 
-            if (layer.timeline.currentFrame == index && layer.timeline.currentLayer == layer.layerIndex)
+            if (layer.timeline.currentFrame == index && layer.timeline.currentLayer == layer.layerIndex) //frame that is currently drawn on
             {
                 color = new Color(60, 104, 148);
                 
             } 
-            else if (Globals.GetBoxOverlap(OFFSET + window.pos, dim, Globals.mouse.newMousePos, Vector2.Zero))
+            else if (Globals.GetBoxOverlap(OFFSET + window.pos, dim, Globals.mouse.newMousePos, Vector2.Zero)) //not active frame
             {
                 color = Color.LightGray;
 
@@ -60,7 +59,7 @@ namespace Kolibri.Source.Workspace
                     }
                 }
             }
-            else if (((index <= layer.timeline.selectEndFrame && index > layer.timeline.currentFrame) || (index >= layer.timeline.selectEndFrame && index < layer.timeline.currentFrame)) && layer.timeline.currentLayer == layer.layerIndex)
+            else if (((index <= layer.timeline.selectEndFrame && index > layer.timeline.currentFrame) || (index >= layer.timeline.selectEndFrame && index < layer.timeline.currentFrame)) && layer.timeline.currentLayer == layer.layerIndex) //selected frame
             {
                 color = new Color(104, 152, 165);
             }
@@ -69,7 +68,7 @@ namespace Kolibri.Source.Workspace
         }
         public override void Draw(Vector2 OFFSET)
         {
-            if (Array.TrueForAll(pixels, y => y == 0x00000000))
+            if (Array.TrueForAll(pixels, y => y == 0x00000000)) //empty frame
             {
             
                 Globals.primitives.DrawRect(OFFSET + window.pos, new Vector2(dim.X,border), color);
@@ -78,7 +77,7 @@ namespace Kolibri.Source.Workspace
                 Globals.primitives.DrawRect(new Vector2(OFFSET.X + window.pos.X , OFFSET.Y + window.pos.Y + dim.Y - border), new Vector2(dim.X, border), color);
             }
 
-            else
+            else //filled frame
             {
                 Globals.primitives.DrawRect(OFFSET + window.pos, dim, color);
             }

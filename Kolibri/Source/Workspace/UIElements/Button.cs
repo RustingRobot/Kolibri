@@ -51,7 +51,7 @@ namespace Kolibri.Source.Workspace.UIElements
                     if (ClickOptionEvent == null)
                         ClickEvent();   //let instantiator decide what function gets called
                     else
-                        ClickOptionEvent(option);
+                        ClickOptionEvent(option);   //event with string option
                 }
             }
             else color = normColor;

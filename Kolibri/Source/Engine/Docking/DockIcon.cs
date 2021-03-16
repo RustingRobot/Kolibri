@@ -15,7 +15,7 @@ namespace Kolibri.Source.Workspace.UIElements
         public DockIcon(string TYPE) : base("DockIcon", Vector2.Zero, Vector2.Zero)
         {
             type = TYPE;
-            switch (type)
+            switch (type) // rotate instead of using a new texture
             {
                 case "top":
                     rot = (float)Math.PI;

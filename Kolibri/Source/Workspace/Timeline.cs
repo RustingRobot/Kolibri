@@ -82,7 +82,7 @@ namespace Kolibri.Source.Workspace
             selectEndFrame--;
         }
 
-        public void clearFrames()
+        public void clearFrames()   //clear all frames that are in the multi select
         {
             int i = currentFrame;
             while(i != selectEndFrame)

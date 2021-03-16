@@ -31,14 +31,14 @@ namespace Kolibri.Source.Workspace.UIElements
         public Menu(Vector2 POS, Vector2 DIM) :base("square", POS,DIM)    
         {
             float pointer = 0;
-            for (int i = 1; i < menuitems.Length + 1; i++)
+            for (int i = 1; i < menuitems.Length + 1; i++)  //add menuItems
             {
                 menuitems[i - 1] = new Button(open, menuItemNames[i], null, new Vector2(pointer + (i - 1) * 15, 0), new Vector2(Globals.font.MeasureString(menuItemNames[i]).X * Globals.fontSize.X + 15, 24), menuItemNames[i]) 
                 { normColor = Color.Transparent, txtColor = new Color(200, 200, 200), hoverColor = new Color(55, 60, 65) };
                 pointer += Globals.font.MeasureString(menuItemNames[i]).X * Globals.fontSize.X;
             }
 
-            for (int i = 0; i < subItemNames.Length; i++)
+            for (int i = 0; i < subItemNames.Length; i++)   //add subMenuItems
             {
                 subItems[i] = new List<Button>();
                 string longestString = subItemNames[i].Aggregate("", (max, cur) => max.Length > cur.Length ? max : cur);
@@ -56,7 +56,8 @@ namespace Kolibri.Source.Workspace.UIElements
         {
             Vector2 defaultSize = new Vector2(300, 250);
             Vector2 defaultPos = new Vector2(Globals.screenWidth / 2, Globals.screenHeight / 2) - new Vector2(defaultSize.X / 2, defaultSize.Y / 2);
-            if (subItemNames[1].Contains(type) && ObjManager.Windows.Find(x => x.GetType().Name == type + "Window") != null)
+
+            if (subItemNames[1].Contains(type) && ObjManager.Windows.Find(x => x.GetType().Name == type + "Window") != null)    //the window already exists
             {
                 Window tempWindow = ObjManager.Windows.Find(x => x.GetType().Name == type + "Window");
                 if(tempWindow.docked) return;
@@ -65,8 +66,11 @@ namespace Kolibri.Source.Workspace.UIElements
                 return;
             }
 
-            switch (type)
+            switch (type)   //the window doesn't already exist / a different submenu item was clicked
             {
+                case "Save":
+                    ObjManager.createGif();
+                    break;
                 case "Canvas":
                     CanvasWindow cw = new CanvasWindow(defaultPos, defaultSize);
                     Globals.canvas.window = cw;
@@ -116,7 +120,7 @@ namespace Kolibri.Source.Workspace.UIElements
             {
                 if(visibleSubMenu == 1)
                 {
-                    if(ObjManager.Windows.Find(x => x.GetType().Name == subItemNames[visibleSubMenu][i] + "Window") != null)
+                    if(ObjManager.Windows.Find(x => x.GetType().Name == subItemNames[visibleSubMenu][i] + "Window") != null) //show existing Windows in different color
                     {
                         subItems[visibleSubMenu][i].normColor = new Color(51, 56, 61);
                     }

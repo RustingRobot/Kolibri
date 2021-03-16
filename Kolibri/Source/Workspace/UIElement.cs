@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Kolibri.Source.Workspace
 {
-    public class UIElement : ESprite2d
+    public class UIElement : ESprite2d //general Class for all UI Elements
     {
         public Vector2 relativePos;
         public Window window;

@@ -51,6 +51,7 @@ namespace Kolibri.Source.Workspace.Windows
             currentLayerTxt.label = $"Layer: {timeline.currentLayer}";
             currentFrameTxt.Update(OFFSET);
             currentLayerTxt.Update(OFFSET);
+            //timeline navigation without mouse
             if (Globals.keyboard.OnPress("Up") && timeline.currentLayer > 0)
             {
                 timeline.currentLayer--;

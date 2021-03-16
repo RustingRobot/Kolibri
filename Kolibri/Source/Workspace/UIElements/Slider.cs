@@ -46,7 +46,6 @@ namespace Kolibri.Source.Workspace.UIElements
                 value = (int)((Globals.mouse.newMousePos.X - pos.X) * (end / dim.X) );
                 if (value > end) value = end;
                 if (value < start) value = start;
-                //value = Math.Clamp(value, start, end);
                 dragged = true;
             }
 

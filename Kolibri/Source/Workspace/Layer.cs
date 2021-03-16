@@ -55,7 +55,7 @@ namespace Kolibri.Source.Workspace
             
         }
 
-        public void moveUp()
+        public void moveUp() //don't let the layerIndex get messed up if a layer over this one gets deleted
         {
             layerIndex--;
             nameField.relativePos.Y -= 27;

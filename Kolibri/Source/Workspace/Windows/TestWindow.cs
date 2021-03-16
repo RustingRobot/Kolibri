@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Kolibri.Source.Workspace.Windows
 {
-    class TestWindow : Window
+    class TestWindow : Window   //just a test for UI elements
     {
         private Button testBtn;
         private Textfield testField;
